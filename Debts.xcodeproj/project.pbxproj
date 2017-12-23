@@ -8,12 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		B42296931FEDB4240067F913 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296921FEDB4240067F913 /* AppDelegate.swift */; };
-		B42296951FEDB4240067F913 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296941FEDB4240067F913 /* ViewController.swift */; };
 		B42296981FEDB4240067F913 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B42296961FEDB4240067F913 /* Main.storyboard */; };
 		B422969A1FEDB4240067F913 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42296991FEDB4240067F913 /* Assets.xcassets */; };
 		B422969D1FEDB4240067F913 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B422969B1FEDB4240067F913 /* LaunchScreen.storyboard */; };
-		B42296A81FEDB4240067F913 /* DebtsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296A71FEDB4240067F913 /* DebtsTests.swift */; };
-		B42296B31FEDB4240067F913 /* DebtsUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296B21FEDB4240067F913 /* DebtsUITests.swift */; };
+		B42296C21FEDB43F0067F913 /* Realm.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B42296C01FEDB43F0067F913 /* Realm.framework */; };
+		B42296C31FEDB43F0067F913 /* Realm.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B42296C01FEDB43F0067F913 /* Realm.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B42296C41FEDB43F0067F913 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B42296C11FEDB43F0067F913 /* RealmSwift.framework */; };
+		B42296C51FEDB43F0067F913 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B42296C11FEDB43F0067F913 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B42296C91FEDBE5C0067F913 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296C81FEDBE5C0067F913 /* Models.swift */; };
+		B42296CB1FEDBFB10067F913 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296CA1FEDBFB10067F913 /* ViewController.swift */; };
+		B42296CD1FEDCF240067F913 /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296CC1FEDCF240067F913 /* PeopleViewController.swift */; };
+		B42296CF1FEDD0CF0067F913 /* PersonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296CE1FEDD0CF0067F913 /* PersonDetailViewController.swift */; };
+		B4858A3E1FEE65AF0051A45E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A3D1FEE65AF0051A45E /* Constants.swift */; };
+		B4858A401FEE663C0051A45E /* RealmHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A3F1FEE663C0051A45E /* RealmHelper.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -33,20 +40,38 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		B42296C61FEDB4400067F913 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B42296C51FEDB43F0067F913 /* RealmSwift.framework in Embed Frameworks */,
+				B42296C31FEDB43F0067F913 /* Realm.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		B422968F1FEDB4240067F913 /* Debts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Debts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B42296921FEDB4240067F913 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		B42296941FEDB4240067F913 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B42296971FEDB4240067F913 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		B42296991FEDB4240067F913 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B422969C1FEDB4240067F913 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B422969E1FEDB4240067F913 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B42296A31FEDB4240067F913 /* DebtsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DebtsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B42296A71FEDB4240067F913 /* DebtsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtsTests.swift; sourceTree = "<group>"; };
-		B42296A91FEDB4240067F913 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B42296AE1FEDB4240067F913 /* DebtsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DebtsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B42296B21FEDB4240067F913 /* DebtsUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtsUITests.swift; sourceTree = "<group>"; };
-		B42296B41FEDB4240067F913 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B42296C01FEDB43F0067F913 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Realm.framework; sourceTree = "<group>"; };
+		B42296C11FEDB43F0067F913 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = RealmSwift.framework; sourceTree = "<group>"; };
+		B42296C81FEDBE5C0067F913 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
+		B42296CA1FEDBFB10067F913 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		B42296CC1FEDCF240067F913 /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
+		B42296CE1FEDD0CF0067F913 /* PersonDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailViewController.swift; sourceTree = "<group>"; };
+		B4858A3D1FEE65AF0051A45E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
+		B4858A3F1FEE663C0051A45E /* RealmHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHelper.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +79,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B42296C41FEDB43F0067F913 /* RealmSwift.framework in Frameworks */,
+				B42296C21FEDB43F0067F913 /* Realm.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -77,9 +104,9 @@
 		B42296861FEDB4240067F913 = {
 			isa = PBXGroup;
 			children = (
+				B42296C01FEDB43F0067F913 /* Realm.framework */,
+				B42296C11FEDB43F0067F913 /* RealmSwift.framework */,
 				B42296911FEDB4240067F913 /* Debts */,
-				B42296A61FEDB4240067F913 /* DebtsTests */,
-				B42296B11FEDB4240067F913 /* DebtsUITests */,
 				B42296901FEDB4240067F913 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -98,31 +125,18 @@
 			isa = PBXGroup;
 			children = (
 				B42296921FEDB4240067F913 /* AppDelegate.swift */,
-				B42296941FEDB4240067F913 /* ViewController.swift */,
+				B42296C81FEDBE5C0067F913 /* Models.swift */,
+				B42296CA1FEDBFB10067F913 /* ViewController.swift */,
+				B42296CC1FEDCF240067F913 /* PeopleViewController.swift */,
+				B42296CE1FEDD0CF0067F913 /* PersonDetailViewController.swift */,
+				B4858A3D1FEE65AF0051A45E /* Constants.swift */,
+				B4858A3F1FEE663C0051A45E /* RealmHelper.swift */,
 				B42296961FEDB4240067F913 /* Main.storyboard */,
-				B42296991FEDB4240067F913 /* Assets.xcassets */,
 				B422969B1FEDB4240067F913 /* LaunchScreen.storyboard */,
+				B42296991FEDB4240067F913 /* Assets.xcassets */,
 				B422969E1FEDB4240067F913 /* Info.plist */,
 			);
 			path = Debts;
-			sourceTree = "<group>";
-		};
-		B42296A61FEDB4240067F913 /* DebtsTests */ = {
-			isa = PBXGroup;
-			children = (
-				B42296A71FEDB4240067F913 /* DebtsTests.swift */,
-				B42296A91FEDB4240067F913 /* Info.plist */,
-			);
-			path = DebtsTests;
-			sourceTree = "<group>";
-		};
-		B42296B11FEDB4240067F913 /* DebtsUITests */ = {
-			isa = PBXGroup;
-			children = (
-				B42296B21FEDB4240067F913 /* DebtsUITests.swift */,
-				B42296B41FEDB4240067F913 /* Info.plist */,
-			);
-			path = DebtsUITests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -135,6 +149,8 @@
 				B422968B1FEDB4240067F913 /* Sources */,
 				B422968C1FEDB4240067F913 /* Frameworks */,
 				B422968D1FEDB4240067F913 /* Resources */,
+				B42296C61FEDB4400067F913 /* Embed Frameworks */,
+				B42296C71FEDB4D10067F913 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -254,13 +270,34 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		B42296C71FEDB4D10067F913 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "bash \"${BUILT_PRODUCTS_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework/strip-frameworks.sh\"";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		B422968B1FEDB4240067F913 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B42296951FEDB4240067F913 /* ViewController.swift in Sources */,
+				B42296CB1FEDBFB10067F913 /* ViewController.swift in Sources */,
+				B42296CD1FEDCF240067F913 /* PeopleViewController.swift in Sources */,
 				B42296931FEDB4240067F913 /* AppDelegate.swift in Sources */,
+				B4858A401FEE663C0051A45E /* RealmHelper.swift in Sources */,
+				B42296CF1FEDD0CF0067F913 /* PersonDetailViewController.swift in Sources */,
+				B42296C91FEDBE5C0067F913 /* Models.swift in Sources */,
+				B4858A3E1FEE65AF0051A45E /* Constants.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,7 +305,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B42296A81FEDB4240067F913 /* DebtsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -276,7 +312,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B42296B31FEDB4240067F913 /* DebtsUITests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -428,7 +463,16 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5J7U5C6D83;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
+				"FRAMEWORK_SEARCH_PATHS[arch=*]" = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Debts/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dCubelic.Debts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -443,7 +487,12 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 5J7U5C6D83;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = Debts/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dCubelic.Debts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
