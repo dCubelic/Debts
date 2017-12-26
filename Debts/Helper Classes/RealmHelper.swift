@@ -1,6 +1,9 @@
 import Foundation
 import RealmSwift
 
+typealias PersonID = Int
+typealias DebtID = Int
+
 struct DebtByPerson {
     var debt: Debt
     var cost: Double
@@ -10,9 +13,6 @@ struct PersonByDebt {
     var person: Person
     var cost: Double
 }
-
-typealias PersonID = Int
-typealias DebtID = Int
 
 class RealmHelper {
 
@@ -60,6 +60,26 @@ class RealmHelper {
         return cost
     }
     
+    static func addPerson(name: String) -> Person {
+        let person = Person()
+        person.name = name
+        person.id = person.incrementID()
+        
+        try! realm.write {
+            realm.add(person, update: true)
+        }
+        
+        return person
+    }
+    
+    static func removePerson(person: Person) {
+        try! realm.write {
+            realm.delete(person)
+        }
+        // TODO: remove person's debts
+        // TODO: remove debts with no debtees
+    }
+ 
 }
 
 extension Results {

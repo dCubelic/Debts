@@ -5,13 +5,16 @@ class PersonDetailViewController: UIViewController {
 
     let realm = try! Realm()
     
-    var personId = 0
+    var person: Person?
     var debts: [DebtByPerson] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        debts = RealmHelper.getDebts(for: personId)
+        guard let person = person else { return }
+        
+        title = person.name
+        debts = RealmHelper.getDebts(for: person.id)
     }
 
 }
@@ -23,8 +26,11 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "DetailCell")
+        
+        cell.selectionStyle = .none
         cell.textLabel?.text = debts[indexPath.row].debt.name
         cell.detailTextLabel?.text = String(debts[indexPath.row].cost)
+        
         return cell
     }
 }

@@ -21,6 +21,7 @@
 		B42296CF1FEDD0CF0067F913 /* PersonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296CE1FEDD0CF0067F913 /* PersonDetailViewController.swift */; };
 		B4858A3E1FEE65AF0051A45E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A3D1FEE65AF0051A45E /* Constants.swift */; };
 		B4858A401FEE663C0051A45E /* RealmHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A3F1FEE663C0051A45E /* RealmHelper.swift */; };
+		B4AAD0241FEE74DE000519B5 /* AddPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AAD0231FEE74DE000519B5 /* AddPersonViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		B42296CE1FEDD0CF0067F913 /* PersonDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailViewController.swift; sourceTree = "<group>"; };
 		B4858A3D1FEE65AF0051A45E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B4858A3F1FEE663C0051A45E /* RealmHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHelper.swift; sourceTree = "<group>"; };
+		B4AAD0231FEE74DE000519B5 /* AddPersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPersonViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -124,19 +126,44 @@
 		B42296911FEDB4240067F913 /* Debts */ = {
 			isa = PBXGroup;
 			children = (
-				B42296921FEDB4240067F913 /* AppDelegate.swift */,
-				B42296C81FEDBE5C0067F913 /* Models.swift */,
-				B42296CA1FEDBFB10067F913 /* ViewController.swift */,
-				B42296CC1FEDCF240067F913 /* PeopleViewController.swift */,
-				B42296CE1FEDD0CF0067F913 /* PersonDetailViewController.swift */,
-				B4858A3D1FEE65AF0051A45E /* Constants.swift */,
-				B4858A3F1FEE663C0051A45E /* RealmHelper.swift */,
-				B42296961FEDB4240067F913 /* Main.storyboard */,
-				B422969B1FEDB4240067F913 /* LaunchScreen.storyboard */,
-				B42296991FEDB4240067F913 /* Assets.xcassets */,
 				B422969E1FEDB4240067F913 /* Info.plist */,
+				B42296921FEDB4240067F913 /* AppDelegate.swift */,
+				B42296CA1FEDBFB10067F913 /* ViewController.swift */,
+				B42296961FEDB4240067F913 /* Main.storyboard */,
+				B4AAD0211FEE6EB3000519B5 /* PeopleViewControllers */,
+				B4AAD0201FEE6E9F000519B5 /* Helper Classes */,
+				B4AAD0221FEE6EC5000519B5 /* SupportingFiles */,
 			);
 			path = Debts;
+			sourceTree = "<group>";
+		};
+		B4AAD0201FEE6E9F000519B5 /* Helper Classes */ = {
+			isa = PBXGroup;
+			children = (
+				B42296C81FEDBE5C0067F913 /* Models.swift */,
+				B4858A3D1FEE65AF0051A45E /* Constants.swift */,
+				B4858A3F1FEE663C0051A45E /* RealmHelper.swift */,
+			);
+			path = "Helper Classes";
+			sourceTree = "<group>";
+		};
+		B4AAD0211FEE6EB3000519B5 /* PeopleViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				B42296CC1FEDCF240067F913 /* PeopleViewController.swift */,
+				B42296CE1FEDD0CF0067F913 /* PersonDetailViewController.swift */,
+				B4AAD0231FEE74DE000519B5 /* AddPersonViewController.swift */,
+			);
+			path = PeopleViewControllers;
+			sourceTree = "<group>";
+		};
+		B4AAD0221FEE6EC5000519B5 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				B422969B1FEDB4240067F913 /* LaunchScreen.storyboard */,
+				B42296991FEDB4240067F913 /* Assets.xcassets */,
+			);
+			path = SupportingFiles;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +325,7 @@
 				B42296CF1FEDD0CF0067F913 /* PersonDetailViewController.swift in Sources */,
 				B42296C91FEDBE5C0067F913 /* Models.swift in Sources */,
 				B4858A3E1FEE65AF0051A45E /* Constants.swift in Sources */,
+				B4AAD0241FEE74DE000519B5 /* AddPersonViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

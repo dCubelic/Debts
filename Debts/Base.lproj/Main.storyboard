@@ -4,7 +4,6 @@
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -120,7 +119,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="lsu-NN-R36"/>
                     </view>
-                    <navigationItem key="navigationItem" title="People" id="UkW-pY-xke"/>
+                    <navigationItem key="navigationItem" title="People" id="UkW-pY-xke">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="DcQ-4C-v8N">
+                            <connections>
+                                <action selector="addPerson:" destination="HTI-Y1-hbw" id="xuV-Cc-qOb"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="9Ox-Tb-0El" id="jlR-xh-U6T"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JeT-JP-7Mq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -146,14 +154,14 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="72h-5Q-sPj">
-                                                    <rect key="frame" x="15" y="12" width="34" height="20"/>
+                                                    <rect key="frame" x="15" y="12" width="33.5" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" insetsLayoutMarginsFromSafeArea="NO" text="Detail" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" id="Ain-vY-adX">
-                                                    <rect key="frame" x="316" y="12" width="44" height="20"/>
+                                                    <rect key="frame" x="316" y="12" width="44" height="20.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
@@ -184,6 +192,41 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F3P-qr-sal" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4476" y="466"/>
+        </scene>
+        <!--Add Person View Controller-->
+        <scene sceneID="yLp-au-Xda">
+            <objects>
+                <viewController storyboardIdentifier="AddPersonViewController" id="jBH-4A-gaw" customClass="AddPersonViewController" customModule="Debts" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6rb-Ko-2je">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AHf-4E-k0R">
+                                <rect key="frame" x="16" y="40" width="343" height="30"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="AHf-4E-k0R" firstAttribute="top" secondItem="ygz-Z3-RbH" secondAttribute="top" constant="20" id="ENs-rh-R2q"/>
+                            <constraint firstItem="AHf-4E-k0R" firstAttribute="leading" secondItem="ygz-Z3-RbH" secondAttribute="leading" constant="16" id="FeS-z8-Sl1"/>
+                            <constraint firstItem="ygz-Z3-RbH" firstAttribute="trailing" secondItem="AHf-4E-k0R" secondAttribute="trailing" constant="16" id="QxU-UD-bW2"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ygz-Z3-RbH"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="jKh-ll-W7X">
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="cancel" id="mmY-cL-FdP"/>
+                        <barButtonItem key="rightBarButtonItem" style="plain" systemItem="done" id="taj-LJ-xYp"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="nameTextField" destination="AHf-4E-k0R" id="jdJ-ll-5tF"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="SaU-3e-sbz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5209" y="466"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="MwM-pN-Fth">
