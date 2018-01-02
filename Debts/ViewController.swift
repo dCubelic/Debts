@@ -12,16 +12,15 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
     }
 
     @IBAction func action(_ sender: Any) {
-        let person = realm.objects(Person.self).filter("name = %@", "dominik").first
-//        person.id = person.incrementID()
-//        person.name = textField.text ?? ""
+        let person = realm.objects(Person.self).filter("name = %@", textField.text ?? "").first
+        
         let debtCategory = DebtCategory()
-//        debt.id = debt.incrementID()
         debtCategory.name = debtNameTextField.text ?? ""
+        debtCategory.dateCreated = Date()
+        
         let pd = Debt()
         pd.person = person
         pd.debtCategory = debtCategory
@@ -31,6 +30,7 @@ class ViewController: UIViewController {
             realm.add(pd, update: true)
         }
         
+        NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
         view.endEditing(true)
     }

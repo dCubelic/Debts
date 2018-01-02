@@ -87,7 +87,14 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="d04-Zd-JtM"/>
                     </view>
-                    <navigationItem key="navigationItem" id="akc-hr-tyO"/>
+                    <navigationItem key="navigationItem" id="akc-hr-tyO">
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="lvC-TN-tQh">
+                            <connections>
+                                <action selector="editAction:" destination="0oW-6B-qQR" id="MT5-9x-Ei5"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="OVl-Cq-blw"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="cXM-jd-PPT" id="woZ-7e-pew"/>
                     </connections>

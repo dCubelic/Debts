@@ -8,15 +8,17 @@ class UniqueObject: Object {
     override static func primaryKey() -> String? {
         return "uuid"
     }
+    
 }
 
 class Person: UniqueObject {
     
     @objc dynamic var name = ""
-    let debts = List<Debt>()
+    let debts = LinkingObjects(fromType: Debt.self, property: "person")
     
     var totalDebt: Double {
-        return debts.sum(ofProperty: "cost")
+        let sum: Double = debts.sum(ofProperty: "cost")
+        return sum
     }
     
 }
@@ -24,10 +26,13 @@ class Person: UniqueObject {
 class DebtCategory: UniqueObject {
     
     @objc dynamic var name = ""
-    let debts = List<Debt>()
+    @objc dynamic var dateCreated = Date()
+    
+    let debts = LinkingObjects(fromType: Debt.self, property: "debtCategory")
     
     var totalDebt: Double {
-        return debts.sum(ofProperty: "cost")
+        let sum: Double = debts.sum(ofProperty: "cost")
+        return sum
     }
     
 }

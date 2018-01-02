@@ -21,6 +21,7 @@ class RealmHelper {
     
     static func getAllDebtCategories() -> [DebtCategory] {
         return realm.objects(DebtCategory.self).toArray()
+        
     }
     
     static func getDebtCategories(for person: Person) -> [DebtCategoryByPerson] {
@@ -55,10 +56,29 @@ class RealmHelper {
     
     static func removePerson(person: Person) {
         try! realm.write {
+            realm.delete(person.debts)
             realm.delete(person)
         }
-        // TODO: remove person's debts
-        // TODO: remove debts with no debtees
+        removeEmptyDebtCategories()
+    }
+    
+    static func removeDebtCategory(debtCategory: DebtCategory) {
+        try! realm.write {
+            realm.delete(debtCategory.debts)
+            realm.delete(debtCategory)
+        }
+    }
+    
+    private static func removeEmptyDebtCategories() {
+        let debtCategories = realm.objects(DebtCategory.self)
+        
+        for debtCategory in debtCategories {
+            if debtCategory.debts.count == 0 {
+                try! realm.write {
+                    realm.delete(debtCategory)
+                }
+            }
+        }
     }
  
 }

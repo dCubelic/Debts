@@ -8,6 +8,10 @@ class DebtsViewController: UIViewController {
     
     var debtCategories: [DebtCategory] = []
     var filteredDebtCategories: [DebtCategory] = []
+    var sortComparator: (DebtCategory, DebtCategory) -> Bool = nameComparator
+    
+    private static let nameComparator: (DebtCategory, DebtCategory) -> Bool = { $0.name < $1.name }
+    private static let dateComparator: (DebtCategory, DebtCategory) -> Bool = { $0.dateCreated > $1.dateCreated }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,11 +25,14 @@ class DebtsViewController: UIViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadDebtCategories), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        
         reloadDebtCategories()
     }
     
-    func reloadDebtCategories() {
+    @objc func reloadDebtCategories() {
         debtCategories = RealmHelper.getAllDebtCategories()
+        debtCategories.sort(by: sortComparator)
         tableView.reloadData()
     }
     
@@ -45,6 +52,24 @@ class DebtsViewController: UIViewController {
         tableView.reloadData()
     }
 
+    @IBAction func editAction(_ sender: Any) {
+        guard let barButton = sender as? UIBarButtonItem else { return }
+        
+        if tableView.isEditing {
+            navigationItem.rightBarButtonItem?.isEnabled = true
+            navigationItem.rightBarButtonItem?.tintColor = nil
+            barButton.style = .plain
+            barButton.title = "Edit"
+            tableView.setEditing(false, animated: true)
+        } else {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+            navigationItem.rightBarButtonItem?.tintColor = .clear
+            barButton.style = .done
+            barButton.title = "Cancel"
+            tableView.setEditing(true, animated: true)
+        }
+    }
+    
 }
 
 extension DebtsViewController: UITableViewDataSource, UITableViewDelegate {
@@ -71,6 +96,31 @@ extension DebtsViewController: UITableViewDataSource, UITableViewDelegate {
         cell.detailTextLabel?.text = String(RealmHelper.getCost(for: debtCategory))
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+        var debtCategory: DebtCategory
+        if isFiltering() {
+            debtCategory = filteredDebtCategories[indexPath.row]
+        } else {
+            debtCategory = debtCategories[indexPath.row]
+        }
+        
+        if editingStyle == .delete {
+            if isFiltering() {
+                if let index = debtCategories.index(of: filteredDebtCategories[indexPath.row]) {
+                    debtCategories.remove(at: index)
+                }
+                filteredDebtCategories.remove(at: indexPath.row)
+            } else {
+                debtCategories.remove(at: indexPath.row)
+            }
+            
+            tableView.deleteRows(at: [indexPath], with: .automatic)
+            RealmHelper.removeDebtCategory(debtCategory: debtCategory)
+            
+            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        }
     }
     
 }

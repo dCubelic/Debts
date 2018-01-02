@@ -21,7 +21,7 @@ class PeopleViewController: UIViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        tableView.keyboardDismissMode = .onDrag
+        NotificationCenter.default.addObserver(self, selector: #selector(reloadPeople), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
         reloadPeople()
     }
@@ -42,16 +42,17 @@ class PeopleViewController: UIViewController {
         tableView.reloadData()
     }
     
-    func reloadPeople() {
+    @objc func reloadPeople() {
         people = RealmHelper.getAllPersons()
-        sortPeople()
+        sortPeopleByName()
         tableView.reloadData()
     }
     
-    func sortPeople() {
-        people.sort { (firstPerson, secondPerson) -> Bool in
-            return firstPerson.name < secondPerson.name
-        }
+    func sortPeopleByName() {
+        people.sort(by: { $0.name < $1.name })
+//        people.sort { (firstPerson, secondPerson) -> Bool in
+//            return firstPerson.name < secondPerson.name
+//        }
     }
 
     @IBAction func addPerson(_ sender: Any) {
@@ -146,13 +147,15 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
             
             tableView.deleteRows(at: [indexPath], with: .automatic)
             RealmHelper.removePerson(person: person)
+            
+            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         }
     }
 }
 
 extension PeopleViewController: AddPersonViewControllerDelegate {
     func addPersonViewControllerDidAddPerson(_ vc: AddPersonViewController, person: Person) {
-        reloadPeople()
+        NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
     }
 }
 
