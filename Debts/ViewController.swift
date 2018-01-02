@@ -16,21 +16,21 @@ class ViewController: UIViewController {
     }
 
     @IBAction func action(_ sender: Any) {
-        let person = realm.objects(Person.self).filter("id = 1").first
+        let person = realm.objects(Person.self).filter("name = %@", "dominik").first
 //        person.id = person.incrementID()
 //        person.name = textField.text ?? ""
-        let debt = Debt()
-        debt.id = debt.incrementID()
-        debt.name = debtNameTextField.text ?? ""
-        let pd = PersonDebt()
-        pd.id = pd.incrementID()
+        let debtCategory = DebtCategory()
+//        debt.id = debt.incrementID()
+        debtCategory.name = debtNameTextField.text ?? ""
+        let pd = Debt()
         pd.person = person
-        pd.debt = debt
+        pd.debtCategory = debtCategory
         pd.cost = Double(costTextField.text ?? "") ?? 0
-        
+
         try! realm.write {
             realm.add(pd, update: true)
         }
+        
         
         view.endEditing(true)
     }

@@ -16,9 +16,10 @@
 		B42296C41FEDB43F0067F913 /* RealmSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B42296C11FEDB43F0067F913 /* RealmSwift.framework */; };
 		B42296C51FEDB43F0067F913 /* RealmSwift.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B42296C11FEDB43F0067F913 /* RealmSwift.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		B42296C91FEDBE5C0067F913 /* Models.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296C81FEDBE5C0067F913 /* Models.swift */; };
-		B42296CB1FEDBFB10067F913 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296CA1FEDBFB10067F913 /* ViewController.swift */; };
 		B42296CD1FEDCF240067F913 /* PeopleViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296CC1FEDCF240067F913 /* PeopleViewController.swift */; };
 		B42296CF1FEDD0CF0067F913 /* PersonDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296CE1FEDD0CF0067F913 /* PersonDetailViewController.swift */; };
+		B43F6AE11FFA9C2D009283F5 /* DebtsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43F6AE01FFA9C2D009283F5 /* DebtsViewController.swift */; };
+		B445F7501FFBAF340069595C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296CA1FEDBFB10067F913 /* ViewController.swift */; };
 		B4858A3E1FEE65AF0051A45E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A3D1FEE65AF0051A45E /* Constants.swift */; };
 		B4858A401FEE663C0051A45E /* RealmHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A3F1FEE663C0051A45E /* RealmHelper.swift */; };
 		B4AAD0241FEE74DE000519B5 /* AddPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AAD0231FEE74DE000519B5 /* AddPersonViewController.swift */; };
@@ -71,6 +72,7 @@
 		B42296CA1FEDBFB10067F913 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		B42296CC1FEDCF240067F913 /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		B42296CE1FEDD0CF0067F913 /* PersonDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailViewController.swift; sourceTree = "<group>"; };
+		B43F6AE01FFA9C2D009283F5 /* DebtsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtsViewController.swift; sourceTree = "<group>"; };
 		B4858A3D1FEE65AF0051A45E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B4858A3F1FEE663C0051A45E /* RealmHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHelper.swift; sourceTree = "<group>"; };
 		B4AAD0231FEE74DE000519B5 /* AddPersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPersonViewController.swift; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 				B422969E1FEDB4240067F913 /* Info.plist */,
 				B42296921FEDB4240067F913 /* AppDelegate.swift */,
 				B42296CA1FEDBFB10067F913 /* ViewController.swift */,
+				B43F6AE01FFA9C2D009283F5 /* DebtsViewController.swift */,
 				B42296961FEDB4240067F913 /* Main.storyboard */,
 				B4AAD0211FEE6EB3000519B5 /* PeopleViewControllers */,
 				B4AAD0201FEE6E9F000519B5 /* Helper Classes */,
@@ -318,10 +321,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B42296CB1FEDBFB10067F913 /* ViewController.swift in Sources */,
 				B42296CD1FEDCF240067F913 /* PeopleViewController.swift in Sources */,
 				B42296931FEDB4240067F913 /* AppDelegate.swift in Sources */,
 				B4858A401FEE663C0051A45E /* RealmHelper.swift in Sources */,
+				B445F7501FFBAF340069595C /* ViewController.swift in Sources */,
+				B43F6AE11FFA9C2D009283F5 /* DebtsViewController.swift in Sources */,
 				B42296CF1FEDD0CF0067F913 /* PersonDetailViewController.swift in Sources */,
 				B42296C91FEDBE5C0067F913 /* Models.swift in Sources */,
 				B4858A3E1FEE65AF0051A45E /* Constants.swift in Sources */,

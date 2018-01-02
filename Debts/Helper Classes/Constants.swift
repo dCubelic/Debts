@@ -6,4 +6,6 @@ struct Constants {
         static let personDetailViewController = "PersonDetailViewController"
         static let addPersonViewController = "AddPersonViewController"
     }
+    
+    static let detailCell = "DetailCell"
 }

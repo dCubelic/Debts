@@ -61,17 +61,36 @@
             </objects>
             <point key="canvasLocation" x="3567" y="-1784"/>
         </scene>
-        <!--View Controller-->
+        <!--Debts View Controller-->
         <scene sceneID="YQG-0Q-k0R">
             <objects>
-                <viewController id="0oW-6B-qQR" sceneMemberID="viewController">
+                <viewController id="0oW-6B-qQR" customClass="DebtsViewController" customModule="Debts" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qy2-Zp-kpQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="cXM-jd-PPT">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="0oW-6B-qQR" id="JrA-sa-Hv8"/>
+                                    <outlet property="delegate" destination="0oW-6B-qQR" id="ZdH-Z1-FwT"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="d04-Zd-JtM" firstAttribute="trailing" secondItem="cXM-jd-PPT" secondAttribute="trailing" id="Irl-dk-aek"/>
+                            <constraint firstItem="d04-Zd-JtM" firstAttribute="bottom" secondItem="cXM-jd-PPT" secondAttribute="bottom" id="Qc2-gU-Rcc"/>
+                            <constraint firstItem="cXM-jd-PPT" firstAttribute="leading" secondItem="d04-Zd-JtM" secondAttribute="leading" id="ZDW-My-9WO"/>
+                            <constraint firstItem="cXM-jd-PPT" firstAttribute="top" secondItem="d04-Zd-JtM" secondAttribute="top" id="s9I-Vc-0ZY"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="d04-Zd-JtM"/>
                     </view>
                     <navigationItem key="navigationItem" id="akc-hr-tyO"/>
+                    <connections>
+                        <outlet property="tableView" destination="cXM-jd-PPT" id="woZ-7e-pew"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="teD-Zd-6xL" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -120,6 +139,11 @@
                         <viewLayoutGuide key="safeArea" id="lsu-NN-R36"/>
                     </view>
                     <navigationItem key="navigationItem" title="People" id="UkW-pY-xke">
+                        <barButtonItem key="leftBarButtonItem" title="Edit" id="ycg-oi-ifU">
+                            <connections>
+                                <action selector="editAction:" destination="HTI-Y1-hbw" id="bGM-zG-uXR"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="DcQ-4C-v8N">
                             <connections>
                                 <action selector="addPerson:" destination="HTI-Y1-hbw" id="xuV-Cc-qOb"/>
@@ -211,7 +235,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="4476" y="466"/>
+            <point key="canvasLocation" x="4386" y="466"/>
         </scene>
         <!--Add Person View Controller-->
         <scene sceneID="yLp-au-Xda">

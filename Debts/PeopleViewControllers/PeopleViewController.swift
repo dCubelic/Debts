@@ -1,11 +1,9 @@
 import UIKit
-import RealmSwift
 
 class PeopleViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
-    let realm = try! Realm()
     let searchController = UISearchController(searchResultsController: nil)
     
     var people: [Person] = []
@@ -13,12 +11,17 @@ class PeopleViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        title = "People"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search People"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        
+        tableView.keyboardDismissMode = .onDrag
         
         reloadPeople()
     }
@@ -41,7 +44,14 @@ class PeopleViewController: UIViewController {
     
     func reloadPeople() {
         people = RealmHelper.getAllPersons()
+        sortPeople()
         tableView.reloadData()
+    }
+    
+    func sortPeople() {
+        people.sort { (firstPerson, secondPerson) -> Bool in
+            return firstPerson.name < secondPerson.name
+        }
     }
 
     @IBAction func addPerson(_ sender: Any) {
@@ -51,6 +61,26 @@ class PeopleViewController: UIViewController {
         
         present(navVC, animated: true, completion: nil)
     }
+    
+    @IBAction func editAction(_ sender: Any) {
+        guard let barButton = sender as? UIBarButtonItem else { return }
+        
+        if tableView.isEditing {
+            navigationItem.rightBarButtonItem?.isEnabled = true
+            navigationItem.rightBarButtonItem?.tintColor = nil
+            barButton.style = .plain
+            barButton.title = "Edit"
+            tableView.setEditing(false, animated: true)
+        } else {
+            navigationItem.rightBarButtonItem?.isEnabled = false
+            navigationItem.rightBarButtonItem?.tintColor = .clear
+            barButton.style = .done
+            barButton.title = "Cancel"
+            tableView.setEditing(true, animated: true)
+        }
+
+    }
+    
 }
 
 extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
@@ -63,7 +93,7 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: "DetailCell")
+        let cell = UITableViewCell(style: .value1, reuseIdentifier: Constants.detailCell)
         
         var person: Person
         if isFiltering() {
@@ -132,4 +162,5 @@ extension PeopleViewController: UISearchResultsUpdating {
             filterPeople(for: searchText)
         }
     }
+    
 }

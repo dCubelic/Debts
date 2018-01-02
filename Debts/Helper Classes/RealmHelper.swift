@@ -1,15 +1,12 @@
 import Foundation
 import RealmSwift
 
-typealias PersonID = Int
-typealias DebtID = Int
-
-struct DebtByPerson {
-    var debt: Debt
+struct DebtCategoryByPerson {
+    var debtCategory: DebtCategory
     var cost: Double
 }
 
-struct PersonByDebt {
+struct PersonByDebtCategory {
     var person: Person
     var cost: Double
 }
@@ -22,48 +19,32 @@ class RealmHelper {
         return realm.objects(Person.self).toArray()
     }
     
-    static func getAllDebts() -> [Debt] {
-        return realm.objects(Debt.self).toArray()
+    static func getAllDebtCategories() -> [DebtCategory] {
+        return realm.objects(DebtCategory.self).toArray()
     }
     
-    static func getDebts(for personID: PersonID) -> [DebtByPerson] {
-        let defaultDebt = Debt()
-        return realm.objects(PersonDebt.self).filter("person.id = %@", personID).map({ DebtByPerson(debt: $0.debt ?? defaultDebt, cost: $0.cost)
-        })
+    static func getDebtCategories(for person: Person) -> [DebtCategoryByPerson] {
+        let defaultDebt = DebtCategory()
+        return realm.objects(Debt.self).filter("person = %@", person).map({ DebtCategoryByPerson(debtCategory: $0.debtCategory ?? defaultDebt, cost: $0.cost) })
     }
     
-    static func getPersons(for debtID: DebtID) -> [PersonByDebt] {
+    static func getPersons(for debtCategory: DebtCategory) -> [PersonByDebtCategory] {
         let defaultPerson = Person()
-        return realm.objects(PersonDebt.self).filter("debt.id = %@", debtID).map({ PersonByDebt(person: $0.person ?? defaultPerson, cost: $0.cost)
+        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).map({ PersonByDebtCategory(person: $0.person ?? defaultPerson, cost: $0.cost)
         })
     }
     
     static func getCost(for person: Person) -> Double {
-        let personDebts = realm.objects(PersonDebt.self).filter("person.id = %@", person.id).toArray()
-        
-        var cost: Double = 0
-        for personDebt in personDebts {
-            cost += personDebt.cost
-        }
-        
-        return cost
+        return person.totalDebt
     }
     
-    static func getCost(for debt: Debt) -> Double {
-        let personDebts = realm.objects(PersonDebt.self).filter("debt.id = %@", debt.id).toArray()
-        
-        var cost: Double = 0
-        for personDebt in personDebts {
-            cost += personDebt.cost
-        }
-        
-        return cost
+    static func getCost(for debtCategory: DebtCategory) -> Double {
+        return debtCategory.totalDebt
     }
     
     static func addPerson(name: String) -> Person {
         let person = Person()
         person.name = name
-        person.id = person.incrementID()
         
         try! realm.write {
             realm.add(person, update: true)

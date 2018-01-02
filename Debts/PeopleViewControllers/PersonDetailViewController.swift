@@ -1,35 +1,35 @@
 import UIKit
-import RealmSwift
 
 class PersonDetailViewController: UIViewController {
 
-    let realm = try! Realm()
     
     var person: Person?
-    var debts: [DebtByPerson] = []
+    var debtCategories: [DebtCategoryByPerson] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.largeTitleDisplayMode = .never
+        
         guard let person = person else { return }
         
         title = person.name
-        debts = RealmHelper.getDebts(for: person.id)
+        debtCategories = RealmHelper.getDebtCategories(for: person)
     }
 
 }
 
 extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return debts.count
+        return debtCategories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .value1, reuseIdentifier: "DetailCell")
         
         cell.selectionStyle = .none
-        cell.textLabel?.text = debts[indexPath.row].debt.name
-        cell.detailTextLabel?.text = String(debts[indexPath.row].cost)
+        cell.textLabel?.text = debtCategories[indexPath.row].debtCategory.name
+        cell.detailTextLabel?.text = String(debtCategories[indexPath.row].cost)
         
         return cell
     }
