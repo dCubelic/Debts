@@ -10,7 +10,7 @@ class PeopleViewController: UIViewController {
     var filteredPeople: [Person] = []
     var sortComparator = nameComparator
     
-    private static let nameComparator: (Person, Person) -> Bool = { $0.name < $1.name }
+    private static let nameComparator: (Person, Person) -> Bool = { $0.name.lowercased() < $1.name.lowercased() }
     private static let totalDebtComparator: (Person, Person) -> Bool = { $0.totalDebt > $1.totalDebt }
     
     override func viewDidLoad() {

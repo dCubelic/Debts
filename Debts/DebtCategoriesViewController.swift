@@ -10,13 +10,21 @@ class DebtCategoriesViewController: UIViewController {
     var filteredDebtCategories: [DebtCategory] = []
     var sortComparator: (DebtCategory, DebtCategory) -> Bool = nameComparator
     
-    private static let nameComparator: (DebtCategory, DebtCategory) -> Bool = { $0.name < $1.name }
+    var colors: [UIColor] = [
+        .red, .blue, .yellow, .brown, .green, .gray, .purple, .orange, .magenta
+    ]
+    
+    private static let nameComparator: (DebtCategory, DebtCategory) -> Bool = { $0.name.lowercased() < $1.name.lowercased() }
     private static let totalDebtComparator: (DebtCategory, DebtCategory) -> Bool = { $0.totalDebt > $1.totalDebt }
     private static let dateComparator: (DebtCategory, DebtCategory) -> Bool = { $0.dateCreated > $1.dateCreated }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        colors.sort { (_, _) -> Bool in
+            arc4random_uniform(1) == 0
+        }
+        
         title = "Categories"
         navigationController?.navigationBar.prefersLargeTitles = true
         
@@ -27,6 +35,8 @@ class DebtCategoriesViewController: UIViewController {
         definesPresentationContext = true
         
         tableView.register(UINib(nibName: Constants.categoryCell, bundle: nil), forCellReuseIdentifier: Constants.categoryCell)
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
+        self.tableView.estimatedRowHeight = 75
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebtCategories), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
@@ -100,6 +110,11 @@ class DebtCategoriesViewController: UIViewController {
 
 extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     
+//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+////        return UITableViewAutomaticDimension
+//        return 75
+//    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
             return filteredDebtCategories.count
@@ -118,7 +133,7 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
             debtCategory = debtCategories[indexPath.row]
         }
         
-        cell.setup(with: debtCategory)
+        cell.setup(with: debtCategory, color: colors[indexPath.row % colors.count])
         
         return cell
     }

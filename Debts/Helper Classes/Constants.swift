@@ -12,6 +12,13 @@ struct Constants {
         static let updatedDatabase = "updatedDatabase"
     }
     
+    struct TableViewHeights {
+//        static let categoryCell: CGFloat = 80
+    }
+    
     static let detailCell = "DetailCell"
     static let categoryCell = "DebtCategoryTableViewCell"
+    
+    static var currency = "kn"
+    static var currencyBeforeValue = false
 }

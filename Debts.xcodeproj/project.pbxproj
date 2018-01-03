@@ -23,7 +23,7 @@
 		B4858A3E1FEE65AF0051A45E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A3D1FEE65AF0051A45E /* Constants.swift */; };
 		B4858A401FEE663C0051A45E /* RealmHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A3F1FEE663C0051A45E /* RealmHelper.swift */; };
 		B493220B1FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49322091FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift */; };
-		B493220C1FFCD8F700F597A3 /* DebtCategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B493220A1FFCD8F700F597A3 /* DebtCategoryTableViewCell.xib */; };
+		B49E426F1FFD139200FAE6F4 /* DebtCategoryTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B49E426E1FFD139200FAE6F4 /* DebtCategoryTableViewCell.xib */; };
 		B4AAD0241FEE74DE000519B5 /* AddPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AAD0231FEE74DE000519B5 /* AddPersonViewController.swift */; };
 /* End PBXBuildFile section */
 
@@ -78,7 +78,7 @@
 		B4858A3D1FEE65AF0051A45E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B4858A3F1FEE663C0051A45E /* RealmHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHelper.swift; sourceTree = "<group>"; };
 		B49322091FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtCategoryTableViewCell.swift; sourceTree = "<group>"; };
-		B493220A1FFCD8F700F597A3 /* DebtCategoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebtCategoryTableViewCell.xib; sourceTree = "<group>"; };
+		B49E426E1FFD139200FAE6F4 /* DebtCategoryTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DebtCategoryTableViewCell.xib; sourceTree = "<group>"; };
 		B4AAD0231FEE74DE000519B5 /* AddPersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPersonViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -149,7 +149,7 @@
 			isa = PBXGroup;
 			children = (
 				B49322091FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift */,
-				B493220A1FFCD8F700F597A3 /* DebtCategoryTableViewCell.xib */,
+				B49E426E1FFD139200FAE6F4 /* DebtCategoryTableViewCell.xib */,
 			);
 			path = Cells;
 			sourceTree = "<group>";
@@ -293,8 +293,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B422969D1FEDB4240067F913 /* LaunchScreen.storyboard in Resources */,
+				B49E426F1FFD139200FAE6F4 /* DebtCategoryTableViewCell.xib in Resources */,
 				B422969A1FEDB4240067F913 /* Assets.xcassets in Resources */,
-				B493220C1FFCD8F700F597A3 /* DebtCategoryTableViewCell.xib in Resources */,
 				B42296981FEDB4240067F913 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
