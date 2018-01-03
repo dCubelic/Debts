@@ -13,6 +13,7 @@ class DebtCategoriesViewController: UIViewController {
     var colors: [UIColor] = [
         .red, .blue, .yellow, .brown, .green, .gray, .purple, .orange, .magenta
     ]
+    var colorMap: [DebtCategory: UIColor] = [:]
     
     private static let nameComparator: (DebtCategory, DebtCategory) -> Bool = { $0.name.lowercased() < $1.name.lowercased() }
     private static let totalDebtComparator: (DebtCategory, DebtCategory) -> Bool = { $0.totalDebt > $1.totalDebt }
@@ -21,10 +22,6 @@ class DebtCategoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        colors.sort { (_, _) -> Bool in
-            arc4random_uniform(1) == 0
-        }
-        
         title = "Categories"
         navigationController?.navigationBar.prefersLargeTitles = true
         
@@ -41,6 +38,17 @@ class DebtCategoriesViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebtCategories), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
         reloadDebtCategories()
+        mapColors()
+    }
+    
+    func mapColors() {
+        colors.sort { (_, _) -> Bool in
+            arc4random_uniform(1) == 0
+        }
+        
+        for i in 0..<debtCategories.count {
+            colorMap[debtCategories[i]] = colors[i]
+        }
     }
     
     @objc func reloadDebtCategories() {
@@ -133,7 +141,8 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
             debtCategory = debtCategories[indexPath.row]
         }
         
-        cell.setup(with: debtCategory, color: colors[indexPath.row % colors.count])
+        guard let color = colorMap[debtCategory] else { return cell }
+        cell.setup(with: debtCategory, color: color)
         
         return cell
     }
