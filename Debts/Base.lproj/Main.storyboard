@@ -5,6 +5,7 @@
     </device>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Navigation items with more than one left or right bar item" minToolsVersion="7.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -61,10 +62,10 @@
             </objects>
             <point key="canvasLocation" x="3567" y="-1784"/>
         </scene>
-        <!--Debts View Controller-->
+        <!--Debt Categories View Controller-->
         <scene sceneID="YQG-0Q-k0R">
             <objects>
-                <viewController id="0oW-6B-qQR" customClass="DebtsViewController" customModule="Debts" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="0oW-6B-qQR" customClass="DebtCategoriesViewController" customModule="Debts" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qy2-Zp-kpQ">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -93,7 +94,14 @@
                                 <action selector="editAction:" destination="0oW-6B-qQR" id="MT5-9x-Ei5"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="OVl-Cq-blw"/>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="OVl-Cq-blw"/>
+                            <barButtonItem title="Sort" id="U1C-iN-W0J">
+                                <connections>
+                                    <action selector="sortAction:" destination="0oW-6B-qQR" id="caG-QA-57e"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="cXM-jd-PPT" id="woZ-7e-pew"/>
@@ -151,11 +159,18 @@
                                 <action selector="editAction:" destination="HTI-Y1-hbw" id="bGM-zG-uXR"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="DcQ-4C-v8N">
-                            <connections>
-                                <action selector="addPerson:" destination="HTI-Y1-hbw" id="xuV-Cc-qOb"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="add" id="DcQ-4C-v8N">
+                                <connections>
+                                    <action selector="addPerson:" destination="HTI-Y1-hbw" id="xuV-Cc-qOb"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Sort" id="5mv-J1-ikb">
+                                <connections>
+                                    <action selector="sortAction:" destination="HTI-Y1-hbw" id="I61-AJ-aRg"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <connections>
                         <outlet property="searchDisplayController" destination="bf3-eV-KMw" id="2nU-el-8U7"/>

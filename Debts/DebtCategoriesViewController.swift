@@ -1,6 +1,6 @@
 import UIKit
 
-class DebtsViewController: UIViewController {
+class DebtCategoriesViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     
@@ -11,19 +11,22 @@ class DebtsViewController: UIViewController {
     var sortComparator: (DebtCategory, DebtCategory) -> Bool = nameComparator
     
     private static let nameComparator: (DebtCategory, DebtCategory) -> Bool = { $0.name < $1.name }
+    private static let totalDebtComparator: (DebtCategory, DebtCategory) -> Bool = { $0.totalDebt > $1.totalDebt }
     private static let dateComparator: (DebtCategory, DebtCategory) -> Bool = { $0.dateCreated > $1.dateCreated }
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        title = "Debts"
+        title = "Categories"
         navigationController?.navigationBar.prefersLargeTitles = true
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Debts"
+        searchController.searchBar.placeholder = "Search Categories"
         navigationItem.searchController = searchController
         definesPresentationContext = true
+        
+        tableView.register(UINib(nibName: Constants.categoryCell, bundle: nil), forCellReuseIdentifier: Constants.categoryCell)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebtCategories), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
@@ -32,6 +35,10 @@ class DebtsViewController: UIViewController {
     
     @objc func reloadDebtCategories() {
         debtCategories = RealmHelper.getAllDebtCategories()
+        sortDebtCategories()
+    }
+    
+    func sortDebtCategories() {
         debtCategories.sort(by: sortComparator)
         tableView.reloadData()
     }
@@ -70,9 +77,28 @@ class DebtsViewController: UIViewController {
         }
     }
     
+    @IBAction func sortAction(_ sender: Any) {
+        let actionSheet = UIAlertController(title: "Sort by:", message: nil, preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (alertAction) in
+            self.sortComparator = DebtCategoriesViewController.nameComparator
+            self.sortDebtCategories()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (alertAction) in
+            self.sortComparator = DebtCategoriesViewController.totalDebtComparator
+            self.sortDebtCategories()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Date Created", style: .default, handler: { (alertAction) in
+            self.sortComparator = DebtCategoriesViewController.dateComparator
+            self.sortDebtCategories()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
 }
 
-extension DebtsViewController: UITableViewDataSource, UITableViewDelegate {
+extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
@@ -83,8 +109,8 @@ extension DebtsViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: Constants.detailCell)
-
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryCell, for: indexPath) as! DebtCategoryTableViewCell
+        
         var debtCategory: DebtCategory
         if isFiltering() {
             debtCategory = filteredDebtCategories[indexPath.row]
@@ -92,10 +118,14 @@ extension DebtsViewController: UITableViewDataSource, UITableViewDelegate {
             debtCategory = debtCategories[indexPath.row]
         }
         
-        cell.textLabel?.text = debtCategory.name
-        cell.detailTextLabel?.text = String(RealmHelper.getCost(for: debtCategory))
+        cell.setup(with: debtCategory)
         
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
@@ -125,7 +155,7 @@ extension DebtsViewController: UITableViewDataSource, UITableViewDelegate {
     
 }
 
-extension DebtsViewController: UISearchResultsUpdating {
+extension DebtCategoriesViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
             filterDebtCategories(for: searchText)

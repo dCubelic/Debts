@@ -13,4 +13,5 @@ struct Constants {
     }
     
     static let detailCell = "DetailCell"
+    static let categoryCell = "DebtCategoryTableViewCell"
 }

@@ -8,6 +8,10 @@ class PeopleViewController: UIViewController {
     
     var people: [Person] = []
     var filteredPeople: [Person] = []
+    var sortComparator = nameComparator
+    
+    private static let nameComparator: (Person, Person) -> Bool = { $0.name < $1.name }
+    private static let totalDebtComparator: (Person, Person) -> Bool = { $0.totalDebt > $1.totalDebt }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,15 +48,12 @@ class PeopleViewController: UIViewController {
     
     @objc func reloadPeople() {
         people = RealmHelper.getAllPersons()
-        sortPeopleByName()
-        tableView.reloadData()
+        sortPeople()
     }
     
-    func sortPeopleByName() {
-        people.sort(by: { $0.name < $1.name })
-//        people.sort { (firstPerson, secondPerson) -> Bool in
-//            return firstPerson.name < secondPerson.name
-//        }
+    func sortPeople() {
+        people.sort(by: sortComparator)
+        tableView.reloadData()
     }
 
     @IBAction func addPerson(_ sender: Any) {
@@ -82,6 +83,21 @@ class PeopleViewController: UIViewController {
 
     }
     
+    @IBAction func sortAction(_ sender: Any) {
+        let actionSheet = UIAlertController(title: "Sort by:", message: nil, preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (alertAction) in
+            self.sortComparator = PeopleViewController.nameComparator
+            self.sortPeople()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (alertAction) in
+            self.sortComparator = PeopleViewController.totalDebtComparator
+            self.sortPeople()
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
 }
 
 extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
@@ -110,8 +126,6 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        
         let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.personDetailViewController) as! PersonDetailViewController
         
         var person: Person
