@@ -18,6 +18,7 @@ struct Constants {
     
     static let detailCell = "DetailCell"
     static let categoryCell = "DebtCategoryTableViewCell"
+    static let personCell = "PersonTableViewCell"
     
     static var currency = "kn"
     static var currencyBeforeValue = false

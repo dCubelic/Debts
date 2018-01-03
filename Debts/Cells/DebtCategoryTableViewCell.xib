@@ -54,36 +54,35 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nsq-Gh-hcS">
-                                <rect key="frame" x="305" y="12.5" width="42" height="40"/>
+                                <rect key="frame" x="316" y="12.5" width="31" height="40"/>
                                 <subviews>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o1g-l3-X4t">
-                                        <rect key="frame" x="0.0" y="25.5" width="42" height="14.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
-                                        <color key="textColor" red="0.36470588240000001" green="0.38431372549999998" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZUZ-1D-zXA">
-                                        <rect key="frame" x="0.0" y="0.0" width="42" height="20.5"/>
+                                        <rect key="frame" x="-11" y="-0.5" width="42" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kfa-ej-uCw">
-                                        <rect key="frame" x="0.0" y="20.5" width="42" height="1"/>
+                                        <rect key="frame" x="-11" y="20.5" width="42" height="1"/>
                                         <color key="backgroundColor" red="0.1883185892" green="0.2362786586" blue="0.5" alpha="1" colorSpace="calibratedRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="1" id="zOR-VD-37c"/>
                                         </constraints>
                                     </view>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="o1g-l3-X4t">
+                                        <rect key="frame" x="0.0" y="25.5" width="31" height="14.5"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                                        <color key="textColor" red="0.36470588240000001" green="0.38431372549999998" blue="0.40784313729999999" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstItem="Kfa-ej-uCw" firstAttribute="top" secondItem="ZUZ-1D-zXA" secondAttribute="bottom" id="13E-Xv-9u6"/>
                                     <constraint firstAttribute="trailing" secondItem="o1g-l3-X4t" secondAttribute="trailing" id="3R0-E8-RzD"/>
-                                    <constraint firstItem="Kfa-ej-uCw" firstAttribute="leading" secondItem="nsq-Gh-hcS" secondAttribute="leading" id="6rd-1C-ekE"/>
                                     <constraint firstAttribute="trailing" secondItem="ZUZ-1D-zXA" secondAttribute="trailing" id="7Cj-el-HTe"/>
+                                    <constraint firstItem="Kfa-ej-uCw" firstAttribute="width" secondItem="ZUZ-1D-zXA" secondAttribute="width" id="JXr-sw-QgV"/>
                                     <constraint firstItem="o1g-l3-X4t" firstAttribute="top" secondItem="Kfa-ej-uCw" secondAttribute="bottom" constant="4" id="TFh-Um-aLz"/>
                                     <constraint firstAttribute="bottom" secondItem="o1g-l3-X4t" secondAttribute="bottom" id="bwD-Zb-ipD"/>
-                                    <constraint firstItem="ZUZ-1D-zXA" firstAttribute="leading" secondItem="nsq-Gh-hcS" secondAttribute="leading" id="eDY-MP-86h"/>
                                     <constraint firstItem="o1g-l3-X4t" firstAttribute="leading" secondItem="nsq-Gh-hcS" secondAttribute="leading" id="kBL-dj-HUV"/>
                                     <constraint firstAttribute="trailing" secondItem="Kfa-ej-uCw" secondAttribute="trailing" id="pmF-uq-ipR"/>
                                     <constraint firstItem="ZUZ-1D-zXA" firstAttribute="top" secondItem="nsq-Gh-hcS" secondAttribute="top" id="uBs-Jt-1mT"/>
@@ -96,12 +95,12 @@
                             <constraint firstAttribute="bottom" secondItem="4aD-S3-jow" secondAttribute="bottom" id="Hum-iS-dwT"/>
                             <constraint firstItem="YMR-05-VTJ" firstAttribute="centerY" secondItem="b9T-VS-5ap" secondAttribute="centerY" id="ThY-cd-wVV"/>
                             <constraint firstItem="YMR-05-VTJ" firstAttribute="leading" secondItem="4aD-S3-jow" secondAttribute="trailing" constant="8" id="dRN-ht-rBe"/>
+                            <constraint firstItem="ZUZ-1D-zXA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YMR-05-VTJ" secondAttribute="trailing" constant="15" id="e08-hC-bqQ"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="YMR-05-VTJ" secondAttribute="bottom" constant="8" id="fYR-BY-WAK"/>
                             <constraint firstItem="nsq-Gh-hcS" firstAttribute="centerY" secondItem="b9T-VS-5ap" secondAttribute="centerY" id="ieC-tA-TLq"/>
                             <constraint firstAttribute="trailing" secondItem="nsq-Gh-hcS" secondAttribute="trailing" constant="8" id="ooW-qL-y6B"/>
                             <constraint firstItem="YMR-05-VTJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="b9T-VS-5ap" secondAttribute="top" constant="8" id="yMx-n9-ZeC"/>
                             <constraint firstItem="4aD-S3-jow" firstAttribute="top" secondItem="b9T-VS-5ap" secondAttribute="top" id="ySQ-1s-WIt"/>
-                            <constraint firstItem="nsq-Gh-hcS" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YMR-05-VTJ" secondAttribute="trailing" constant="20" id="zD7-3e-ro5"/>
                         </constraints>
                     </view>
                 </subviews>
@@ -114,10 +113,10 @@
             </tableViewCellContentView>
             <connections>
                 <outlet property="categoryView" destination="b9T-VS-5ap" id="SiJ-hW-ypU"/>
-                <outlet property="dateLabel" destination="o1g-l3-X4t" id="RTn-Ko-Zws"/>
+                <outlet property="dateLabel" destination="yzx-IK-rvI" id="PKj-wQ-0TO"/>
                 <outlet property="detailLabel" destination="ZUZ-1D-zXA" id="SMD-B5-feO"/>
                 <outlet property="leftView" destination="4aD-S3-jow" id="EyM-lt-IvE"/>
-                <outlet property="subtitleLabel" destination="yzx-IK-rvI" id="OdR-xk-guC"/>
+                <outlet property="subtitleLabel" destination="o1g-l3-X4t" id="URN-PG-N6x"/>
                 <outlet property="titleLabel" destination="O6K-ul-IpY" id="381-JT-DyV"/>
                 <outlet property="underlineView" destination="Kfa-ej-uCw" id="rIu-yj-75d"/>
             </connections>

@@ -1,20 +1,13 @@
 import UIKit
 
-class DebtCategoryTableViewCell: UITableViewCell {
+class PersonTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
-    @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var categoryView: UIView!
     @IBOutlet weak var leftView: UIView!
     @IBOutlet weak var underlineView: UIView!
-    
-    let dateFormatter: DateFormatter = {
-        let df = DateFormatter()
-        df.dateFormat = "dd MMM yyyy"
-        return df
-    }()
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -28,34 +21,31 @@ class DebtCategoryTableViewCell: UITableViewCell {
         categoryView.backgroundColor = UIColor(white: 246/255, alpha: 1)
     }
     
-    func setup(with debtCategory: DebtCategory, color: UIColor) {
-        titleLabel.text = debtCategory.name
-        dateLabel.text = dateFormatter.string(from: debtCategory.dateCreated)
-        
+    func setup(with person: Person, color: UIColor) {
+        titleLabel.text = person.name
         detailLabel.text = String(
             format: "%@%.2f%@",
             Constants.currencyBeforeValue ? Constants.currency : "",
-            debtCategory.totalDebt,
+            person.totalDebt,
             Constants.currencyBeforeValue ? "" : Constants.currency
         )
         
         leftView.backgroundColor = color
         underlineView.backgroundColor = color
         
-        let people = RealmHelper.getPersons(for: debtCategory).map { $0.person }
+        let debtCategories = RealmHelper.getDebtCategories(for: person).map { $0.debtCategory }
         
-        if(people.count > 2) {
-            subtitleLabel.text = "\(people.count) people"
+        if(debtCategories.count > 2 || debtCategories.count == 0) {
+            subtitleLabel.text = "\(debtCategories.count) debts"
         } else {
-            var peopleString = ""
-            for person in people {
-                peopleString += person.name
-                peopleString += ", "
+            var debtsString = ""
+            for debtCategory in debtCategories {
+                debtsString += debtCategory.name
+                debtsString += ", "
             }
-            peopleString.removeLast()
-            peopleString.removeLast()
-            subtitleLabel.text = peopleString
+            debtsString.removeLast()
+            debtsString.removeLast()
+            subtitleLabel.text = debtsString
         }
     }
-
 }

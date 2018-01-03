@@ -25,6 +25,10 @@ class PeopleViewController: UIViewController {
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
+        self.tableView.rowHeight = UITableViewAutomaticDimension;
+        self.tableView.estimatedRowHeight = 65
+        tableView.register(UINib(nibName: Constants.personCell, bundle: nil), forCellReuseIdentifier: Constants.personCell)
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadPeople), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
         reloadPeople()
@@ -54,6 +58,14 @@ class PeopleViewController: UIViewController {
     func sortPeople() {
         people.sort(by: sortComparator)
         tableView.reloadData()
+    }
+    
+    func calculateColor(for person: Person) -> UIColor {
+        return UIColor(
+            red: (CGFloat(person.totalDebt.hashValue % 200) + 55) / 255,
+            green: CGFloat(person.name.hashValue % 255) / 255,
+            blue: CGFloat(person.hashValue % 255) / 255,
+            alpha: 1)
     }
 
     @IBAction func addPerson(_ sender: Any) {
@@ -101,6 +113,11 @@ class PeopleViewController: UIViewController {
 }
 
 extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
+    
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return UITableViewAutomaticDimension
+    }
+    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
             return filteredPeople.count
@@ -110,7 +127,8 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell(style: .value1, reuseIdentifier: Constants.detailCell)
+//        let cell = UITableViewCell(style: .value1, reuseIdentifier: Constants.detailCell)
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.personCell, for: indexPath) as! PersonTableViewCell
         
         var person: Person
         if isFiltering() {
@@ -119,8 +137,9 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
             person = people[indexPath.row]
         }
         
-        cell.textLabel?.text = person.name
-        cell.detailTextLabel?.text = String(RealmHelper.getCost(for: person))
+        cell.setup(with: person, color: calculateColor(for: person))
+//        cell.textLabel?.text = person.name
+//        cell.detailTextLabel?.text = String(RealmHelper.getCost(for: person))
         
         return cell
     }

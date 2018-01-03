@@ -38,17 +38,14 @@ class DebtCategoriesViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebtCategories), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
         reloadDebtCategories()
-        mapColors()
     }
     
-    func mapColors() {
-        colors.sort { (_, _) -> Bool in
-            arc4random_uniform(1) == 0
-        }
-        
-        for i in 0..<debtCategories.count {
-            colorMap[debtCategories[i]] = colors[i]
-        }
+    func calculateColor(for debtCategory: DebtCategory) -> UIColor {
+        return UIColor(
+            red: (CGFloat(debtCategory.totalDebt.hashValue % 200) + 55) / 255,
+            green: CGFloat(debtCategory.name.hashValue % 255) / 255,
+            blue: CGFloat(debtCategory.dateCreated.hashValue % 255) / 255,
+            alpha: 1)
     }
     
     @objc func reloadDebtCategories() {
@@ -141,8 +138,7 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
             debtCategory = debtCategories[indexPath.row]
         }
         
-        guard let color = colorMap[debtCategory] else { return cell }
-        cell.setup(with: debtCategory, color: color)
+        cell.setup(with: debtCategory, color: calculateColor(for: debtCategory))
         
         return cell
     }
