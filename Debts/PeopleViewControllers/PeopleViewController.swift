@@ -57,6 +57,9 @@ class PeopleViewController: UIViewController {
     @objc func reloadPeople() {
         people = RealmHelper.getAllPersons()
         sortPeople()
+        if let searchText = searchController.searchBar.text {
+            filterPeople(for: searchText)
+        }
     }
     
     func sortPeople() {
@@ -151,30 +154,55 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        var person: Person
-        if isFiltering() {
-            person = filteredPeople[indexPath.row]
-        } else {
-            person = people[indexPath.row]
-        }
-        
-        if editingStyle == .delete {
-            if isFiltering() {
-                if let index = people.index(of: filteredPeople[indexPath.row]) {
-                    people.remove(at: index)
-                }
-                filteredPeople.remove(at: indexPath.row)
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
+            
+            var person: Person
+            if self.isFiltering() {
+                person = self.filteredPeople[indexPath.row]
             } else {
-                people.remove(at: indexPath.row)
+                person = self.people[indexPath.row]
             }
             
-            tableView.deleteRows(at: [indexPath], with: .automatic)
             RealmHelper.removePerson(person: person)
             
             NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+            
+            completionHandler(true)
         }
+        
+        delete.backgroundColor = .red
+        
+        let config = UISwipeActionsConfiguration(actions: [delete])
+        config.performsFirstActionWithFullSwipe = false
+        
+        return config
     }
+    
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        var person: Person
+//        if isFiltering() {
+//            person = filteredPeople[indexPath.row]
+//        } else {
+//            person = people[indexPath.row]
+//        }
+//
+//        if editingStyle == .delete {
+//            if isFiltering() {
+//                if let index = people.index(of: filteredPeople[indexPath.row]) {
+//                    people.remove(at: index)
+//                }
+//                filteredPeople.remove(at: indexPath.row)
+//            } else {
+//                people.remove(at: indexPath.row)
+//            }
+//
+//            tableView.deleteRows(at: [indexPath], with: .automatic)
+//            RealmHelper.removePerson(person: person)
+//
+//            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+//        }
+//    }
 }
 
 extension PeopleViewController: AddPersonViewControllerDelegate {

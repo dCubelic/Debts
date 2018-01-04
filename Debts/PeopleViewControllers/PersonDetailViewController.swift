@@ -77,6 +77,8 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
             RealmHelper.removeDebt(self.debts[indexPath.row])
             
             NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+            
+            completionHandler(true)
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, completionHandler) in
@@ -90,7 +92,7 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
         edit.backgroundColor = .gray
         
         let config = UISwipeActionsConfiguration(actions: [edit, delete])
-        config.performsFirstActionWithFullSwipe = true
+        config.performsFirstActionWithFullSwipe = false
         
         return config
     }
