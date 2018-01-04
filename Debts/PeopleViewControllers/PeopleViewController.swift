@@ -24,9 +24,7 @@ class PeopleViewController: UIViewController {
         searchController.searchBar.placeholder = "Search People"
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-        self.tableView.estimatedRowHeight = 65
+
         tableView.register(UINib(nibName: Constants.personCell, bundle: nil), forCellReuseIdentifier: Constants.personCell)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadPeople), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)

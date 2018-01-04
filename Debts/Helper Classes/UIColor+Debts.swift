@@ -3,7 +3,7 @@ import UIKit
 extension UIColor {
     convenience init(for debtCategory: DebtCategory) {
         self.init(
-            red: (CGFloat(debtCategory.totalDebt.hashValue % 200) + 55) / 255,
+            red: (CGFloat(debtCategory.uuid.hashValue % 150) + 105) / 255,
             green: CGFloat(debtCategory.name.hashValue % 255) / 255,
             blue: CGFloat(debtCategory.dateCreated.hashValue % 255) / 255,
             alpha: 1
@@ -12,7 +12,7 @@ extension UIColor {
     
     convenience init(for person: Person) {
         self.init(
-            red: (CGFloat(person.uuid.hashValue % 200) + 55) / 255,
+            red: (CGFloat(person.uuid.hashValue % 150) + 105) / 255,
             green: CGFloat(person.name.hashValue % 255) / 255,
             blue: CGFloat(person.hashValue % 255) / 255,
             alpha: 1

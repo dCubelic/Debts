@@ -9,20 +9,20 @@ class PersonDetailViewController: UIViewController {
     @IBOutlet weak var numberOfDebtsLabel: UILabel!
     
     var person: Person?
-    var debtCategories: [DebtCategoryByPerson] = []
+    var debts: [Debt] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        view.addGestureRecognizer(tapGesture)
+        
         guard let person = person else { return }
         
-//        navigationItem.largeTitleDisplayMode = .never
         navigationController?.navigationBar.tintColor = UIColor(for: person)
         underlineView.backgroundColor = UIColor(for: person)
         title = person.name
-        
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-        self.tableView.estimatedRowHeight = 60
+
         tableView.register(UINib(nibName: Constants.personDetailCell, bundle: nil), forCellReuseIdentifier: Constants.personDetailCell)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebtCategories), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
@@ -30,10 +30,14 @@ class PersonDetailViewController: UIViewController {
         reloadDebtCategories()
     }
     
+    @objc func tapAction() {
+        view.endEditing(true)
+    }
+    
     @objc func reloadDebtCategories() {
         guard let person = person else { return }
         
-        debtCategories = RealmHelper.getDebtCategories(for: person)
+        debts = RealmHelper.getDebts(for: person)
         
         totalDebtLabel.text = String(
             format: "%@%.2f%@",
@@ -52,18 +56,51 @@ class PersonDetailViewController: UIViewController {
 extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return debtCategories.count
+        return debts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.personDetailCell, for: indexPath) as! PersonDetailTableViewCell
         
-        cell.setup(with: debtCategories[indexPath.row])
+        cell.delegate = self
+        cell.setup(with: debts[indexPath.row])
         
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         print(indexPath)
+    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
+            RealmHelper.removeDebt(self.debts[indexPath.row])
+            
+            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        }
+        
+        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, completionHandler) in
+            print("edit")
+            let cell = tableView.cellForRow(at: indexPath) as! PersonDetailTableViewCell
+            cell.editCost()
+            completionHandler(true)
+        }
+        
+        delete.backgroundColor = .red
+        edit.backgroundColor = .gray
+        
+        let config = UISwipeActionsConfiguration(actions: [edit, delete])
+        config.performsFirstActionWithFullSwipe = true
+        
+        return config
+    }
+}
+
+extension PersonDetailViewController: PersonDetailTableViewCellDelegate {
+    func personDetailTableViewCell(_ cell: PersonDetailTableViewCell, didUpdateCost cost: Double) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        RealmHelper.changeCost(for: debts[indexPath.row], cost: cost)
+        NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
     }
 }

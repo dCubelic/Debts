@@ -35,6 +35,10 @@ class RealmHelper {
         })
     }
     
+    static func getDebts(for person: Person) -> [Debt] {
+        return realm.objects(Debt.self).filter("person = %@", person).toArray()
+    }
+    
     static func getCost(for person: Person) -> Double {
         return person.totalDebt
     }
@@ -66,6 +70,22 @@ class RealmHelper {
         try! realm.write {
             realm.delete(debtCategory.debts)
             realm.delete(debtCategory)
+        }
+    }
+    
+    static func removeDebt(_ debt: Debt) {
+//        let debt = realm.objects(Debt.self).filter("debtCategory = %@ AND person = %@", debtCategory, person)
+        
+        try! realm.write {
+            realm.delete(debt)
+        }
+        
+        removeEmptyDebtCategories()
+    }
+    
+    static func changeCost(for debt: Debt, cost: Double) {
+        try! realm.write {
+            debt.cost = cost
         }
     }
     

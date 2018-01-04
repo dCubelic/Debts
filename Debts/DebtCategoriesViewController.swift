@@ -32,8 +32,6 @@ class DebtCategoriesViewController: UIViewController {
         definesPresentationContext = true
         
         tableView.register(UINib(nibName: Constants.categoryCell, bundle: nil), forCellReuseIdentifier: Constants.categoryCell)
-        self.tableView.rowHeight = UITableViewAutomaticDimension;
-        self.tableView.estimatedRowHeight = 75
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebtCategories), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
