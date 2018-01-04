@@ -27,6 +27,7 @@
 		B49E42721FFD202600FAE6F4 /* PersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49E42701FFD202600FAE6F4 /* PersonTableViewCell.swift */; };
 		B49E42731FFD202600FAE6F4 /* PersonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B49E42711FFD202600FAE6F4 /* PersonTableViewCell.xib */; };
 		B4AAD0241FEE74DE000519B5 /* AddPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AAD0231FEE74DE000519B5 /* AddPersonViewController.swift */; };
+		B4FE3EF61FFE1B03002129F8 /* UIColor+Debts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FE3EF51FFE1B03002129F8 /* UIColor+Debts.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -84,6 +85,7 @@
 		B49E42701FFD202600FAE6F4 /* PersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonTableViewCell.swift; sourceTree = "<group>"; };
 		B49E42711FFD202600FAE6F4 /* PersonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonTableViewCell.xib; sourceTree = "<group>"; };
 		B4AAD0231FEE74DE000519B5 /* AddPersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPersonViewController.swift; sourceTree = "<group>"; };
+		B4FE3EF51FFE1B03002129F8 /* UIColor+Debts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Debts.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -166,6 +168,7 @@
 				B42296C81FEDBE5C0067F913 /* Models.swift */,
 				B4858A3D1FEE65AF0051A45E /* Constants.swift */,
 				B4858A3F1FEE663C0051A45E /* RealmHelper.swift */,
+				B4FE3EF51FFE1B03002129F8 /* UIColor+Debts.swift */,
 			);
 			path = "Helper Classes";
 			sourceTree = "<group>";
@@ -343,6 +346,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B4FE3EF61FFE1B03002129F8 /* UIColor+Debts.swift in Sources */,
 				B42296CD1FEDCF240067F913 /* PeopleViewController.swift in Sources */,
 				B42296931FEDB4240067F913 /* AppDelegate.swift in Sources */,
 				B4858A401FEE663C0051A45E /* RealmHelper.swift in Sources */,

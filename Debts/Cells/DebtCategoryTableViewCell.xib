@@ -11,14 +11,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
         <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="Z77-GK-grQ" customClass="DebtCategoryTableViewCell" customModule="Debts" customModuleProvider="target">
-            <rect key="frame" x="0.0" y="0.0" width="375" height="75"/>
+            <rect key="frame" x="0.0" y="0.0" width="375" height="69"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Z77-GK-grQ" id="V5c-Ya-gDj">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="74.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="68.5"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b9T-VS-5ap">
-                        <rect key="frame" x="10" y="5" width="355" height="64.5"/>
+                        <rect key="frame" x="10" y="4" width="355" height="64.5"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4aD-S3-jow">
                                 <rect key="frame" x="0.0" y="0.0" width="4" height="64.5"/>
@@ -106,8 +106,8 @@
                 </subviews>
                 <constraints>
                     <constraint firstAttribute="trailing" secondItem="b9T-VS-5ap" secondAttribute="trailing" constant="10" id="VMy-Gg-Rmg"/>
-                    <constraint firstItem="b9T-VS-5ap" firstAttribute="top" secondItem="V5c-Ya-gDj" secondAttribute="top" constant="5" id="rA9-oA-SaI"/>
-                    <constraint firstAttribute="bottom" secondItem="b9T-VS-5ap" secondAttribute="bottom" constant="5" id="xIT-hG-6Zf"/>
+                    <constraint firstItem="b9T-VS-5ap" firstAttribute="top" secondItem="V5c-Ya-gDj" secondAttribute="top" constant="4" id="rA9-oA-SaI"/>
+                    <constraint firstAttribute="bottom" secondItem="b9T-VS-5ap" secondAttribute="bottom" id="xIT-hG-6Zf"/>
                     <constraint firstItem="b9T-VS-5ap" firstAttribute="leading" secondItem="V5c-Ya-gDj" secondAttribute="leading" constant="10" id="yxC-3u-laK"/>
                 </constraints>
             </tableViewCellContentView>

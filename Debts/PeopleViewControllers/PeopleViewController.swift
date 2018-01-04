@@ -59,14 +59,6 @@ class PeopleViewController: UIViewController {
         people.sort(by: sortComparator)
         tableView.reloadData()
     }
-    
-    func calculateColor(for person: Person) -> UIColor {
-        return UIColor(
-            red: (CGFloat(person.totalDebt.hashValue % 200) + 55) / 255,
-            green: CGFloat(person.name.hashValue % 255) / 255,
-            blue: CGFloat(person.hashValue % 255) / 255,
-            alpha: 1)
-    }
 
     @IBAction func addPerson(_ sender: Any) {
         let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.addPersonViewController) as! AddPersonViewController
@@ -137,7 +129,7 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
             person = people[indexPath.row]
         }
         
-        cell.setup(with: person, color: calculateColor(for: person))
+        cell.setup(with: person)
 //        cell.textLabel?.text = person.name
 //        cell.detailTextLabel?.text = String(RealmHelper.getCost(for: person))
         

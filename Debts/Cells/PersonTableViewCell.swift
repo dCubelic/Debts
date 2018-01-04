@@ -21,7 +21,15 @@ class PersonTableViewCell: UITableViewCell {
         categoryView.backgroundColor = UIColor(white: 246/255, alpha: 1)
     }
     
-    func setup(with person: Person, color: UIColor) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        if highlighted {
+            categoryView.backgroundColor = UIColor(white: 220/255, alpha: 1)
+        } else {
+            categoryView.backgroundColor = UIColor(white: 246/255, alpha: 1)
+        }
+    }
+    
+    func setup(with person: Person) {
         titleLabel.text = person.name
         detailLabel.text = String(
             format: "%@%.2f%@",
@@ -29,6 +37,8 @@ class PersonTableViewCell: UITableViewCell {
             person.totalDebt,
             Constants.currencyBeforeValue ? "" : Constants.currency
         )
+        
+        let color = UIColor(for: person)
         
         leftView.backgroundColor = color
         underlineView.backgroundColor = color

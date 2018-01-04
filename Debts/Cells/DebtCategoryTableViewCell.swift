@@ -28,7 +28,15 @@ class DebtCategoryTableViewCell: UITableViewCell {
         categoryView.backgroundColor = UIColor(white: 246/255, alpha: 1)
     }
     
-    func setup(with debtCategory: DebtCategory, color: UIColor) {
+    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
+        if highlighted {
+            categoryView.backgroundColor = UIColor(white: 220/255, alpha: 1)
+        } else {
+            categoryView.backgroundColor = UIColor(white: 246/255, alpha: 1)
+        }
+    }
+    
+    func setup(with debtCategory: DebtCategory) {
         titleLabel.text = debtCategory.name
         dateLabel.text = dateFormatter.string(from: debtCategory.dateCreated)
         
@@ -38,6 +46,8 @@ class DebtCategoryTableViewCell: UITableViewCell {
             debtCategory.totalDebt,
             Constants.currencyBeforeValue ? "" : Constants.currency
         )
+        
+        let color = UIColor(for: debtCategory)
         
         leftView.backgroundColor = color
         underlineView.backgroundColor = color

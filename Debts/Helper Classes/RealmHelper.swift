@@ -21,7 +21,6 @@ class RealmHelper {
     
     static func getAllDebtCategories() -> [DebtCategory] {
         return realm.objects(DebtCategory.self).toArray()
-        
     }
     
     static func getDebtCategories(for person: Person) -> [DebtCategoryByPerson] {
@@ -79,6 +78,7 @@ class RealmHelper {
                 }
             }
         }
+        
     }
  
 }

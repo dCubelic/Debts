@@ -40,14 +40,6 @@ class DebtCategoriesViewController: UIViewController {
         reloadDebtCategories()
     }
     
-    func calculateColor(for debtCategory: DebtCategory) -> UIColor {
-        return UIColor(
-            red: (CGFloat(debtCategory.totalDebt.hashValue % 200) + 55) / 255,
-            green: CGFloat(debtCategory.name.hashValue % 255) / 255,
-            blue: CGFloat(debtCategory.dateCreated.hashValue % 255) / 255,
-            alpha: 1)
-    }
-    
     @objc func reloadDebtCategories() {
         debtCategories = RealmHelper.getAllDebtCategories()
         sortDebtCategories()
@@ -115,11 +107,6 @@ class DebtCategoriesViewController: UIViewController {
 
 extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     
-//    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-////        return UITableViewAutomaticDimension
-//        return 75
-//    }
-    
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
             return filteredDebtCategories.count
@@ -138,7 +125,7 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
             debtCategory = debtCategories[indexPath.row]
         }
         
-        cell.setup(with: debtCategory, color: calculateColor(for: debtCategory))
+        cell.setup(with: debtCategory)
         
         return cell
     }
