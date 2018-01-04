@@ -4,6 +4,7 @@ import RealmSwift
 struct DebtCategoryByPerson {
     var debtCategory: DebtCategory
     var cost: Double
+    var dateAdded: Date
 }
 
 struct PersonByDebtCategory {
@@ -25,7 +26,7 @@ class RealmHelper {
     
     static func getDebtCategories(for person: Person) -> [DebtCategoryByPerson] {
         let defaultDebt = DebtCategory()
-        return realm.objects(Debt.self).filter("person = %@", person).map({ DebtCategoryByPerson(debtCategory: $0.debtCategory ?? defaultDebt, cost: $0.cost) })
+        return realm.objects(Debt.self).filter("person = %@", person).map({ DebtCategoryByPerson(debtCategory: $0.debtCategory ?? defaultDebt, cost: $0.cost, dateAdded: $0.dateAdded) })
     }
     
     static func getPersons(for debtCategory: DebtCategory) -> [PersonByDebtCategory] {

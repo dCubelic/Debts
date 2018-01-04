@@ -12,7 +12,7 @@ extension UIColor {
     
     convenience init(for person: Person) {
         self.init(
-            red: (CGFloat(person.totalDebt.hashValue % 200) + 55) / 255,
+            red: (CGFloat(person.uuid.hashValue % 200) + 55) / 255,
             green: CGFloat(person.name.hashValue % 255) / 255,
             blue: CGFloat(person.hashValue % 255) / 255,
             alpha: 1

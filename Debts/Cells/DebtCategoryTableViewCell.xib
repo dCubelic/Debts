@@ -21,14 +21,14 @@
                         <rect key="frame" x="10" y="4" width="355" height="64.5"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4aD-S3-jow">
-                                <rect key="frame" x="0.0" y="0.0" width="4" height="64.5"/>
+                                <rect key="frame" x="0.0" y="0.0" width="5" height="64.5"/>
                                 <color key="backgroundColor" red="0.31372549020000001" green="0.31372549020000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="4" id="Tac-XI-dWq"/>
+                                    <constraint firstAttribute="width" constant="5" id="Tac-XI-dWq"/>
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YMR-05-VTJ">
-                                <rect key="frame" x="12" y="12.5" width="42" height="39.5"/>
+                                <rect key="frame" x="13" y="12.5" width="42" height="39.5"/>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O6K-ul-IpY">
                                         <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>

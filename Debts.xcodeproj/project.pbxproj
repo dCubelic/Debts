@@ -28,6 +28,8 @@
 		B49E42731FFD202600FAE6F4 /* PersonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B49E42711FFD202600FAE6F4 /* PersonTableViewCell.xib */; };
 		B4AAD0241FEE74DE000519B5 /* AddPersonViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AAD0231FEE74DE000519B5 /* AddPersonViewController.swift */; };
 		B4FE3EF61FFE1B03002129F8 /* UIColor+Debts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FE3EF51FFE1B03002129F8 /* UIColor+Debts.swift */; };
+		B4FE3EFF1FFE3EC4002129F8 /* PersonDetailTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FE3EFD1FFE3EC4002129F8 /* PersonDetailTableViewCell.swift */; };
+		B4FE3F001FFE3EC4002129F8 /* PersonDetailTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4FE3EFE1FFE3EC4002129F8 /* PersonDetailTableViewCell.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -86,6 +88,8 @@
 		B49E42711FFD202600FAE6F4 /* PersonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonTableViewCell.xib; sourceTree = "<group>"; };
 		B4AAD0231FEE74DE000519B5 /* AddPersonViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddPersonViewController.swift; sourceTree = "<group>"; };
 		B4FE3EF51FFE1B03002129F8 /* UIColor+Debts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Debts.swift"; sourceTree = "<group>"; };
+		B4FE3EFD1FFE3EC4002129F8 /* PersonDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailTableViewCell.swift; sourceTree = "<group>"; };
+		B4FE3EFE1FFE3EC4002129F8 /* PersonDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonDetailTableViewCell.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +158,8 @@
 		B493220D1FFCE3A200F597A3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				B4FE3EFD1FFE3EC4002129F8 /* PersonDetailTableViewCell.swift */,
+				B4FE3EFE1FFE3EC4002129F8 /* PersonDetailTableViewCell.xib */,
 				B49322091FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift */,
 				B49E426E1FFD139200FAE6F4 /* DebtCategoryTableViewCell.xib */,
 				B49E42701FFD202600FAE6F4 /* PersonTableViewCell.swift */,
@@ -306,6 +312,7 @@
 				B422969A1FEDB4240067F913 /* Assets.xcassets in Resources */,
 				B42296981FEDB4240067F913 /* Main.storyboard in Resources */,
 				B49E42731FFD202600FAE6F4 /* PersonTableViewCell.xib in Resources */,
+				B4FE3F001FFE3EC4002129F8 /* PersonDetailTableViewCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +363,7 @@
 				B42296CF1FEDD0CF0067F913 /* PersonDetailViewController.swift in Sources */,
 				B493220B1FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift in Sources */,
 				B42296C91FEDBE5C0067F913 /* Models.swift in Sources */,
+				B4FE3EFF1FFE3EC4002129F8 /* PersonDetailTableViewCell.swift in Sources */,
 				B4858A3E1FEE65AF0051A45E /* Constants.swift in Sources */,
 				B4AAD0241FEE74DE000519B5 /* AddPersonViewController.swift in Sources */,
 			);

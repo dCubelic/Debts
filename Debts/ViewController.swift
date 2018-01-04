@@ -17,9 +17,13 @@ class ViewController: UIViewController {
     @IBAction func action(_ sender: Any) {
         let person = realm.objects(Person.self).filter("name = %@", textField.text ?? "").first
         
-        let debtCategory = DebtCategory()
-        debtCategory.name = debtNameTextField.text ?? ""
-        debtCategory.dateCreated = Date()
+        var debtCategory = DebtCategory()
+        if let s = realm.objects(DebtCategory.self).filter("name = %@", debtNameTextField.text).first {
+            debtCategory = s
+        } else {
+            debtCategory.name = debtNameTextField.text ?? ""
+//            debtCategory.dateCreated = Date()
+        }
         
         let pd = Debt()
         pd.person = person

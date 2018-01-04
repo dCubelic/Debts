@@ -5,6 +5,7 @@ struct Constants {
     struct Storyboard {
         static let main = "Main"
         static let personDetailViewController = "PersonDetailViewController"
+        static let personDetail2ViewController = "PersonDetail2ViewController"
         static let addPersonViewController = "AddPersonViewController"
     }
     
@@ -19,6 +20,7 @@ struct Constants {
     static let detailCell = "DetailCell"
     static let categoryCell = "DebtCategoryTableViewCell"
     static let personCell = "PersonTableViewCell"
+    static let personDetailCell = "PersonDetailTableViewCell"
     
     static var currency = "kn"
     static var currencyBeforeValue = false

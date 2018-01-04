@@ -8,7 +8,7 @@ class DebtCategoriesViewController: UIViewController {
     
     var debtCategories: [DebtCategory] = []
     var filteredDebtCategories: [DebtCategory] = []
-    var sortComparator: (DebtCategory, DebtCategory) -> Bool = nameComparator
+    var sortComparator: (DebtCategory, DebtCategory) -> Bool = dateComparator
     
     var colors: [UIColor] = [
         .red, .blue, .yellow, .brown, .green, .gray, .purple, .orange, .magenta

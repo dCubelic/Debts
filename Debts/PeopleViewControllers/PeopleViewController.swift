@@ -34,6 +34,12 @@ class PeopleViewController: UIViewController {
         reloadPeople()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.tintColor = nil
+    }
+    
     func searchBarIsEmpty() -> Bool {
         return searchController.searchBar.text?.isEmpty ?? true
     }
@@ -119,7 +125,6 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let cell = UITableViewCell(style: .value1, reuseIdentifier: Constants.detailCell)
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.personCell, for: indexPath) as! PersonTableViewCell
         
         var person: Person
@@ -130,8 +135,6 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         cell.setup(with: person)
-//        cell.textLabel?.text = person.name
-//        cell.detailTextLabel?.text = String(RealmHelper.getCost(for: person))
         
         return cell
     }
@@ -147,8 +150,6 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
         }
         
         vc.person = person
-        vc.hidesBottomBarWhenPushed = true
-        
         navigationController?.pushViewController(vc, animated: true)
     }
     
