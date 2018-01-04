@@ -89,6 +89,12 @@ class RealmHelper {
         }
     }
     
+    static func changeName(for person: Person, name: String) {
+        try! realm.write {
+            person.name = name
+        }
+    }
+    
     private static func removeEmptyDebtCategories() {
         let debtCategories = realm.objects(DebtCategory.self)
         

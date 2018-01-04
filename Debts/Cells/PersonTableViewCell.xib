@@ -67,6 +67,12 @@
                                     <constraint firstItem="yNq-Az-xVz" firstAttribute="top" secondItem="YqX-yw-eb4" secondAttribute="top" id="rPx-db-Fu7"/>
                                 </constraints>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BZI-TN-OH5">
+                                <rect key="frame" x="12" y="19.5" width="9" height="21"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -74,6 +80,8 @@
                             <constraint firstItem="AeP-vY-6Ha" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ktz-1u-Bfv" secondAttribute="trailing" constant="5" id="3G1-iE-72i"/>
                             <constraint firstItem="YqX-yw-eb4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Q0-QT-bUr" secondAttribute="top" constant="8" id="6nC-9u-KYi"/>
                             <constraint firstItem="ktz-1u-Bfv" firstAttribute="centerY" secondItem="6Q0-QT-bUr" secondAttribute="centerY" id="TxV-u5-9V7"/>
+                            <constraint firstItem="BZI-TN-OH5" firstAttribute="centerY" secondItem="ktz-1u-Bfv" secondAttribute="centerY" id="Zpt-8r-zQx"/>
+                            <constraint firstItem="BZI-TN-OH5" firstAttribute="leading" secondItem="qxj-87-VGi" secondAttribute="trailing" constant="8" id="an0-pK-BVA"/>
                             <constraint firstItem="qxj-87-VGi" firstAttribute="leading" secondItem="6Q0-QT-bUr" secondAttribute="leading" id="h9F-Sm-Pt3"/>
                             <constraint firstAttribute="bottom" secondItem="qxj-87-VGi" secondAttribute="bottom" id="nCa-Vu-q7s"/>
                             <constraint firstItem="YqX-yw-eb4" firstAttribute="centerY" secondItem="6Q0-QT-bUr" secondAttribute="centerY" id="nKo-cx-vSw"/>
@@ -94,6 +102,7 @@
             <connections>
                 <outlet property="detailLabel" destination="yNq-Az-xVz" id="Dk9-Qj-H1k"/>
                 <outlet property="leftView" destination="qxj-87-VGi" id="MX2-hg-rK0"/>
+                <outlet property="nameTextField" destination="BZI-TN-OH5" id="2cd-Q9-XEw"/>
                 <outlet property="personView" destination="6Q0-QT-bUr" id="7N4-vj-Mkw"/>
                 <outlet property="subtitleLabel" destination="AeP-vY-6Ha" id="2sC-jH-gdP"/>
                 <outlet property="titleLabel" destination="ktz-1u-Bfv" id="EXd-Hm-d2W"/>

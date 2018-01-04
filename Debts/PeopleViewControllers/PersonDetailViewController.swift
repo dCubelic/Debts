@@ -15,6 +15,7 @@ class PersonDetailViewController: UIViewController {
         super.viewDidLoad()
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
         guard let person = person else { return }
@@ -82,8 +83,9 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, completionHandler) in
-            print("edit")
             let cell = tableView.cellForRow(at: indexPath) as! PersonDetailTableViewCell
+            tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
+
             cell.editCost()
             completionHandler(true)
         }

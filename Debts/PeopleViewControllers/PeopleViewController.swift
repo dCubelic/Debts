@@ -16,6 +16,10 @@ class PeopleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+        
         title = "People"
         navigationController?.navigationBar.prefersLargeTitles = true
         
@@ -30,6 +34,10 @@ class PeopleViewController: UIViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadPeople), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
         reloadPeople()
+    }
+    
+    @objc func tapAction() {
+        view.endEditing(true)
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -135,6 +143,7 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
             person = people[indexPath.row]
         }
         
+        cell.delegate = self
         cell.setup(with: person)
         
         return cell
@@ -171,38 +180,25 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
             completionHandler(true)
         }
         
-        delete.backgroundColor = .red
+        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, completionHandler) in
+            let cell = tableView.cellForRow(at: indexPath) as! PersonTableViewCell
+            tableView.scrollToNearestSelectedRow(at: .top, animated: true)
+//            tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
+
+            cell.editName()
+            
+            completionHandler(true)
+        }
         
-        let config = UISwipeActionsConfiguration(actions: [delete])
+        delete.backgroundColor = .red
+        edit.backgroundColor = .gray
+        
+        let config = UISwipeActionsConfiguration(actions: [edit, delete])
         config.performsFirstActionWithFullSwipe = false
         
         return config
     }
-    
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        var person: Person
-//        if isFiltering() {
-//            person = filteredPeople[indexPath.row]
-//        } else {
-//            person = people[indexPath.row]
-//        }
-//
-//        if editingStyle == .delete {
-//            if isFiltering() {
-//                if let index = people.index(of: filteredPeople[indexPath.row]) {
-//                    people.remove(at: index)
-//                }
-//                filteredPeople.remove(at: indexPath.row)
-//            } else {
-//                people.remove(at: indexPath.row)
-//            }
-//
-//            tableView.deleteRows(at: [indexPath], with: .automatic)
-//            RealmHelper.removePerson(person: person)
-//
-//            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
-//        }
-//    }
+
 }
 
 extension PeopleViewController: AddPersonViewControllerDelegate {
@@ -217,5 +213,21 @@ extension PeopleViewController: UISearchResultsUpdating {
             filterPeople(for: searchText)
         }
     }
-    
+}
+
+extension PeopleViewController: PersonTableViewCellDelegate {
+    func personTableViewCell(_ cell: PersonTableViewCell, didChangeNameTo name: String) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        var person: Person
+        if self.isFiltering() {
+            person = self.filteredPeople[indexPath.row]
+        } else {
+            person = self.people[indexPath.row]
+        }
+        
+        RealmHelper.changeName(for: person, name: name)
+        
+        NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+    }
 }
