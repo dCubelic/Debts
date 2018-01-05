@@ -113,6 +113,30 @@ class RealmHelper {
         }
     }
     
+    static func getTotalOfAllDebts() -> Double {
+        return realm.objects(Debt.self).sum(ofProperty: "cost")
+    }
+    
+    static func getTotalOfMyDebts() -> Double {
+        return realm.objects(Debt.self).filter("cost < 0").sum(ofProperty: "cost")
+    }
+    
+    static func getTotalOfDebts() -> Double {
+        return realm.objects(Debt.self).filter("cost >= 0").sum(ofProperty: "cost")
+    }
+    
+    static func getNumberOfDebtCategories() -> Int {
+        return realm.objects(DebtCategory.self).count
+    }
+    
+    static func getNumberOfPeople() -> Int {
+        return realm.objects(Person.self).count
+    }
+    
+    static func getNumberOfDebts() -> Int {
+        return realm.objects(Debt.self).count
+    }
+    
     private static func removeEmptyDebtCategories() {
         let debtCategories = realm.objects(DebtCategory.self)
         

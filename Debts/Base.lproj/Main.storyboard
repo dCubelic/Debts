@@ -125,19 +125,19 @@
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="d0n-0A-yyD">
-                                                <rect key="frame" x="65.5" y="133" width="224.5" height="1"/>
+                                                <rect key="frame" x="65.5" y="97" width="224.5" height="4"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                 <constraints>
-                                                    <constraint firstAttribute="height" constant="1" id="Bvf-qt-Ip6"/>
+                                                    <constraint firstAttribute="height" constant="4" id="Bvf-qt-Ip6"/>
                                                 </constraints>
                                             </view>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         <constraints>
                                             <constraint firstItem="GWl-J7-Xjk" firstAttribute="centerY" secondItem="LRc-Km-kdw" secondAttribute="centerY" id="BYu-LJ-W1V"/>
-                                            <constraint firstAttribute="bottom" secondItem="d0n-0A-yyD" secondAttribute="bottom" id="Jdw-FR-KHQ"/>
                                             <constraint firstItem="d0n-0A-yyD" firstAttribute="width" secondItem="GWl-J7-Xjk" secondAttribute="width" id="Sh0-tH-wfZ"/>
                                             <constraint firstItem="d0n-0A-yyD" firstAttribute="centerX" secondItem="LRc-Km-kdw" secondAttribute="centerX" id="UdZ-Qh-yBb"/>
+                                            <constraint firstItem="d0n-0A-yyD" firstAttribute="top" secondItem="GWl-J7-Xjk" secondAttribute="bottom" id="bQY-y6-cOd"/>
                                             <constraint firstItem="GWl-J7-Xjk" firstAttribute="centerX" secondItem="LRc-Km-kdw" secondAttribute="centerX" id="ycc-nK-0Dp"/>
                                         </constraints>
                                     </view>
@@ -153,8 +153,8 @@
                                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="xeN-45-pBb">
                                                                 <rect key="frame" x="54" y="31.5" width="70" height="38.5"/>
                                                                 <subviews>
-                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Other debts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EhX-Gz-8fp">
-                                                                        <rect key="frame" x="0.0" y="24" width="70" height="14.5"/>
+                                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Debts" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="EhX-Gz-8fp">
+                                                                        <rect key="frame" x="0.0" y="24" width="70" height="15"/>
                                                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
                                                                         <nil key="textColor"/>
                                                                         <nil key="highlightedColor"/>
@@ -222,10 +222,10 @@
                                                         </constraints>
                                                     </view>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="frV-hA-RrX">
-                                                        <rect key="frame" x="65" y="99" width="224.5" height="1"/>
+                                                        <rect key="frame" x="15" y="98" width="325" height="2"/>
                                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                         <constraints>
-                                                            <constraint firstAttribute="height" constant="1" id="UEc-uP-7JH"/>
+                                                            <constraint firstAttribute="height" constant="2" id="UEc-uP-7JH"/>
                                                         </constraints>
                                                     </view>
                                                 </subviews>
@@ -234,7 +234,9 @@
                                                     <constraint firstItem="jlD-bI-Hye" firstAttribute="top" secondItem="NN6-XK-zNq" secondAttribute="top" id="0Aw-pz-Cs0"/>
                                                     <constraint firstItem="p5E-Oy-sBa" firstAttribute="leading" secondItem="jlD-bI-Hye" secondAttribute="trailing" id="5HI-4u-99f"/>
                                                     <constraint firstItem="p5E-Oy-sBa" firstAttribute="width" secondItem="jlD-bI-Hye" secondAttribute="width" id="5dY-DC-ERv"/>
+                                                    <constraint firstItem="frV-hA-RrX" firstAttribute="leading" secondItem="NN6-XK-zNq" secondAttribute="leading" constant="15" id="KTJ-7a-j4m"/>
                                                     <constraint firstItem="p5E-Oy-sBa" firstAttribute="top" secondItem="NN6-XK-zNq" secondAttribute="top" id="PeF-LK-xFF"/>
+                                                    <constraint firstAttribute="trailing" secondItem="frV-hA-RrX" secondAttribute="trailing" constant="15" id="TBq-RU-x3p"/>
                                                     <constraint firstAttribute="bottom" secondItem="frV-hA-RrX" secondAttribute="bottom" id="exY-z5-yrP"/>
                                                     <constraint firstAttribute="bottom" secondItem="jlD-bI-Hye" secondAttribute="bottom" id="l6I-n2-UFQ"/>
                                                     <constraint firstAttribute="trailing" secondItem="p5E-Oy-sBa" secondAttribute="trailing" id="luA-cQ-JSm"/>
@@ -449,7 +451,6 @@
                                     <constraint firstItem="ufc-vB-SJq" firstAttribute="leading" secondItem="LBx-hg-62L" secondAttribute="leading" id="ZMq-Zk-9FE"/>
                                     <constraint firstAttribute="trailing" secondItem="eS5-f8-jcy" secondAttribute="trailing" id="Zkr-rD-PIl"/>
                                     <constraint firstItem="ufc-vB-SJq" firstAttribute="height" secondItem="LRc-Km-kdw" secondAttribute="height" multiplier="1.5" id="ebC-7Y-IkM"/>
-                                    <constraint firstItem="frV-hA-RrX" firstAttribute="width" secondItem="d0n-0A-yyD" secondAttribute="width" id="hnw-HP-uGf"/>
                                     <constraint firstAttribute="bottom" secondItem="ufc-vB-SJq" secondAttribute="bottom" id="lJm-2F-kia"/>
                                     <constraint firstItem="eS5-f8-jcy" firstAttribute="top" secondItem="LRc-Km-kdw" secondAttribute="bottom" id="qhf-gf-h40"/>
                                     <constraint firstAttribute="trailing" secondItem="LRc-Km-kdw" secondAttribute="trailing" id="wDd-wE-Eib"/>
@@ -466,11 +467,19 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="qSZ-vg-KLy"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Debts" id="UWj-2g-USF"/>
+                    <navigationItem key="navigationItem" title="Debts" id="UWj-2g-USF">
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="Settings" id="W1a-1c-Rzv"/>
+                    </navigationItem>
                     <connections>
+                        <outlet property="categoriesLabel" destination="Av4-yT-Fi2" id="gc1-wW-JKH"/>
+                        <outlet property="debtsLabel" destination="jLD-Mm-QwC" id="7XA-Ou-0pR"/>
                         <outlet property="homeView" destination="LBx-hg-62L" id="HRr-CG-wj3"/>
+                        <outlet property="myDebtsLabel" destination="EPd-hS-KQ3" id="43s-uM-F1L"/>
                         <outlet property="newDebt" destination="I7V-bY-Ff5" id="ZqA-Tq-z08"/>
                         <outlet property="newMyDebt" destination="lKA-d9-Y8n" id="e6Z-Cs-L4F"/>
+                        <outlet property="numberOfDebtsLabel" destination="C64-Sj-Gev" id="gaH-xK-N2C"/>
+                        <outlet property="personsLabel" destination="HSA-da-hD3" id="EVf-rb-6Tx"/>
+                        <outlet property="totalDebtLabel" destination="GWl-J7-Xjk" id="yld-06-EIX"/>
                         <outlet property="underlineView" destination="d0n-0A-yyD" id="2H7-XE-xW0"/>
                         <outlet property="underlineView2" destination="frV-hA-RrX" id="hgH-be-Xx6"/>
                     </connections>
@@ -862,6 +871,7 @@
         <image name="Home" width="25" height="25"/>
         <image name="My Debts" width="25" height="25"/>
         <image name="People" width="25" height="25"/>
+        <image name="Settings" width="25" height="25"/>
         <image name="Sort" width="25" height="25"/>
     </resources>
 </document>
