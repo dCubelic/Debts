@@ -7,6 +7,7 @@ struct Constants {
         static let personDetailViewController = "PersonDetailViewController"
         static let personDetail2ViewController = "PersonDetail2ViewController"
         static let addPersonViewController = "AddPersonViewController"
+        static let debtCategoryDetailViewController = "DebtCategoryDetailViewController"
     }
     
     struct Notifications {
@@ -19,6 +20,7 @@ struct Constants {
     
     static let detailCell = "DetailCell"
     static let categoryCell = "DebtCategoryTableViewCell"
+    static let categoryDetailCell = "DebtCategoryDetailTableViewCell"
     static let personCell = "PersonTableViewCell"
     static let personDetailCell = "PersonDetailTableViewCell"
     

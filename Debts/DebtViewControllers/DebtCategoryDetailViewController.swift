@@ -1,18 +1,17 @@
 import UIKit
 
-class PersonDetailViewController: UIViewController {
+class DebtCategoryDetailViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var underlineView: UIView!
-    
     @IBOutlet weak var totalDebtLabel: UILabel!
     @IBOutlet weak var numberOfDebtsLabel: UILabel!
-    
-    var person: Person?
+
+    var debtCategory: DebtCategory?
     var debts: [Debt] = []
     
-    var keyboardObserver: NSObjectProtocol? = nil
+    var keyboardObserver: NSObjectProtocol?
     deinit {
         if let keyboardObserver = keyboardObserver {
             NotificationCenter.default.removeObserver(keyboardObserver)
@@ -42,16 +41,16 @@ class PersonDetailViewController: UIViewController {
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
-        guard let person = person else { return }
+        tableView.register(UINib(nibName: Constants.categoryDetailCell, bundle: nil), forCellReuseIdentifier: Constants.categoryDetailCell)
         
-        navigationController?.navigationBar.tintColor = UIColor(for: person)
-        underlineView.backgroundColor = UIColor(for: person)
-        title = person.name
-
-        tableView.register(UINib(nibName: Constants.personDetailCell, bundle: nil), forCellReuseIdentifier: Constants.personDetailCell)
+        guard let debtCategory = debtCategory else { return }
+        
+        navigationController?.navigationBar.tintColor = UIColor(for: debtCategory)
+        underlineView.backgroundColor = UIColor(for: debtCategory)
+        title = debtCategory.name
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebts), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
-        
+
         reloadDebts()
     }
     
@@ -59,58 +58,36 @@ class PersonDetailViewController: UIViewController {
         view.endEditing(true)
     }
     
-    
-    @IBAction func deleteAction(_ sender: Any) {
-        guard let person = person else { return }
-        
-        let alert = UIAlertController(title: "Delete all debts", message: "Are you sure you wish to remove all \(person.name)'s debts?", preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
-            RealmHelper.removeDebts(for: person)
-            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
-        }))
-        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
-        
-        present(alert, animated: true, completion: nil)
-        
-    }
-    
     @objc func reloadDebts() {
-        guard let person = person else { return }
+        guard let debtCategory = debtCategory else { return }
         
-        debts = RealmHelper.getDebts(for: person)
+        debts = RealmHelper.getDebts(for: debtCategory)
         
         totalDebtLabel.text = String(
             format: "%@%.2f%@",
             Constants.currencyBeforeValue ? Constants.currency : "",
-            person.totalDebt,
+            debtCategory.totalDebt,
             Constants.currencyBeforeValue ? "" : Constants.currency
         )
-        numberOfDebtsLabel.text = "\(person.debts.count) debt\(person.debts.count == 1 ? "" : "s")"
+        numberOfDebtsLabel.text = "\(debtCategory.debts.count) debt\(debtCategory.debts.count == 1 ? "" : "s")"
         
         tableView.reloadData()
     }
-    
-    
+
 }
 
-extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate {
-    
+extension DebtCategoryDetailViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return debts.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.personDetailCell, for: indexPath) as! PersonDetailTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryDetailCell, for: indexPath) as! DebtCategoryDetailTableViewCell
         
         cell.delegate = self
         cell.setup(with: debts[indexPath.row])
         
         return cell
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath)
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
@@ -123,8 +100,8 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit\nCost") { (action, view, completionHandler) in
-            let cell = tableView.cellForRow(at: indexPath) as! PersonDetailTableViewCell
-
+            let cell = tableView.cellForRow(at: indexPath) as! DebtCategoryDetailTableViewCell
+            
             cell.editCost()
             completionHandler(true)
         }
@@ -139,8 +116,8 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
     }
 }
 
-extension PersonDetailViewController: PersonDetailTableViewCellDelegate {
-    func personDetailTableViewCell(_ cell: PersonDetailTableViewCell, didUpdateCost cost: Double) {
+extension DebtCategoryDetailViewController: DebtCategoryDetailTableViewCellDelegate {
+    func debtCategoryDetailTableViewCell(_ cell: DebtCategoryDetailTableViewCell, didUpdateCost cost: Double) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
         RealmHelper.changeCost(for: debts[indexPath.row], cost: cost)

@@ -42,6 +42,12 @@ class DebtCategoriesViewController: UIViewController {
         reloadDebtCategories()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.tintColor = nil
+    }
+    
     @objc func tapAction() {
         view.endEditing(true)
     }
@@ -141,8 +147,18 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.debtCategoryDetailViewController) as! DebtCategoryDetailViewController
         
+        var debtCategory: DebtCategory
+        if isFiltering() {
+            debtCategory = filteredDebtCategories[indexPath.row]
+        } else {
+            debtCategory = debtCategories[indexPath.row]
+        }
         
+        vc.debtCategory = debtCategory
+        
+        navigationController?.pushViewController(vc, animated: true)
     }
     
 //    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {

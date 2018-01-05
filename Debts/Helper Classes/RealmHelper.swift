@@ -39,6 +39,10 @@ class RealmHelper {
         return realm.objects(Debt.self).filter("person = %@", person).toArray()
     }
     
+    static func getDebts(for debtCategory: DebtCategory) -> [Debt] {
+        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).toArray()
+    }
+    
     static func getCost(for person: Person) -> Double {
         return person.totalDebt
     }
