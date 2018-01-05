@@ -83,6 +83,14 @@ class RealmHelper {
         removeEmptyDebtCategories()
     }
     
+    static func removeDebts(for person: Person) {
+        try! realm.write {
+            realm.delete(person.debts)
+        }
+        
+        removeEmptyDebtCategories()
+    }
+    
     static func changeCost(for debt: Debt, cost: Double) {
         try! realm.write {
             debt.cost = cost
@@ -92,6 +100,12 @@ class RealmHelper {
     static func changeName(for person: Person, name: String) {
         try! realm.write {
             person.name = name
+        }
+    }
+    
+    static func changeTitle(for debtCategory: DebtCategory, title: String) {
+        try! realm.write {
+            debtCategory.name = title
         }
     }
     

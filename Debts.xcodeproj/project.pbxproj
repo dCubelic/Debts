@@ -145,10 +145,10 @@
 				B422969E1FEDB4240067F913 /* Info.plist */,
 				B42296921FEDB4240067F913 /* AppDelegate.swift */,
 				B42296CA1FEDBFB10067F913 /* ViewController.swift */,
-				B43F6AE01FFA9C2D009283F5 /* DebtCategoriesViewController.swift */,
 				B42296961FEDB4240067F913 /* Main.storyboard */,
 				B493220D1FFCE3A200F597A3 /* Cells */,
 				B4AAD0211FEE6EB3000519B5 /* PeopleViewControllers */,
+				B4A9EF361FFF79D5006CDDB6 /* DebtViewControllers */,
 				B4AAD0201FEE6E9F000519B5 /* Helper Classes */,
 				B4AAD0221FEE6EC5000519B5 /* SupportingFiles */,
 			);
@@ -158,14 +158,22 @@
 		B493220D1FFCE3A200F597A3 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				B49E42701FFD202600FAE6F4 /* PersonTableViewCell.swift */,
+				B49E42711FFD202600FAE6F4 /* PersonTableViewCell.xib */,
 				B4FE3EFD1FFE3EC4002129F8 /* PersonDetailTableViewCell.swift */,
 				B4FE3EFE1FFE3EC4002129F8 /* PersonDetailTableViewCell.xib */,
 				B49322091FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift */,
 				B49E426E1FFD139200FAE6F4 /* DebtCategoryTableViewCell.xib */,
-				B49E42701FFD202600FAE6F4 /* PersonTableViewCell.swift */,
-				B49E42711FFD202600FAE6F4 /* PersonTableViewCell.xib */,
 			);
 			path = Cells;
+			sourceTree = "<group>";
+		};
+		B4A9EF361FFF79D5006CDDB6 /* DebtViewControllers */ = {
+			isa = PBXGroup;
+			children = (
+				B43F6AE01FFA9C2D009283F5 /* DebtCategoriesViewController.swift */,
+			);
+			path = DebtViewControllers;
 			sourceTree = "<group>";
 		};
 		B4AAD0201FEE6E9F000519B5 /* Helper Classes */ = {

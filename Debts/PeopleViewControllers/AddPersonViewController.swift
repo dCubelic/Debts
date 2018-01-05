@@ -1,7 +1,7 @@
 import UIKit
 
 protocol AddPersonViewControllerDelegate {
-    func addPersonViewControllerDidAddPerson(_ vc: AddPersonViewController, person: Person)
+    func addPersonViewController(_ vc: AddPersonViewController, didAdd person: Person)
 }
 
 class AddPersonViewController: UIViewController {
@@ -24,7 +24,7 @@ class AddPersonViewController: UIViewController {
     @objc func doneAction() {
         if let name = nameTextField.text, name.count > 0 {
             let person = RealmHelper.addPerson(name: name)
-            delegate?.addPersonViewControllerDidAddPerson(self, person: person)
+            delegate?.addPersonViewController(self, didAdd: person)
         }
         dismiss(animated: true, completion: nil)
     }

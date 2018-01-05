@@ -3,6 +3,7 @@ import UIKit
 class PeopleViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -13,8 +14,32 @@ class PeopleViewController: UIViewController {
     private static let nameComparator: (Person, Person) -> Bool = { $0.name.lowercased() < $1.name.lowercased() }
     private static let totalDebtComparator: (Person, Person) -> Bool = { $0.totalDebt > $1.totalDebt }
     
+    var keyboardObserver: NSObjectProtocol? = nil
+    deinit {
+        if let keyboardObserver = keyboardObserver {
+            NotificationCenter.default.removeObserver(keyboardObserver)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        keyboardObserver = NotificationCenter.default.addObserver(forName: .UIKeyboardWillChangeFrame, object: nil, queue: nil, using: { (notification) in
+            if let userInfo = notification.userInfo,
+                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
+                let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
+                let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
+                
+                
+                if let tabBarHeight = self.tabBarController?.tabBar.frame.height {
+                    self.tableViewBottomConstraint.constant = UIScreen.main.bounds.height - endFrameValue.cgRectValue.minY - tabBarHeight
+                }
+                
+                UIView.animate(withDuration: durationValue.doubleValue, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
+                    self.view.layoutIfNeeded()
+                }, completion: nil)
+            }
+        })
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
         tapGesture.cancelsTouchesInView = false
@@ -83,24 +108,24 @@ class PeopleViewController: UIViewController {
         present(navVC, animated: true, completion: nil)
     }
     
-    @IBAction func editAction(_ sender: Any) {
-        guard let barButton = sender as? UIBarButtonItem else { return }
-        
-        if tableView.isEditing {
-            navigationItem.rightBarButtonItem?.isEnabled = true
-            navigationItem.rightBarButtonItem?.tintColor = nil
-            barButton.style = .plain
-            barButton.title = "Edit"
-            tableView.setEditing(false, animated: true)
-        } else {
-            navigationItem.rightBarButtonItem?.isEnabled = false
-            navigationItem.rightBarButtonItem?.tintColor = .clear
-            barButton.style = .done
-            barButton.title = "Cancel"
-            tableView.setEditing(true, animated: true)
-        }
-
-    }
+//    @IBAction func editAction(_ sender: Any) {
+//        guard let barButton = sender as? UIBarButtonItem else { return }
+//        
+//        if tableView.isEditing {
+//            navigationItem.rightBarButtonItem?.isEnabled = true
+//            navigationItem.rightBarButtonItem?.tintColor = nil
+//            barButton.style = .plain
+//            barButton.title = "Edit"
+//            tableView.setEditing(false, animated: true)
+//        } else {
+//            navigationItem.rightBarButtonItem?.isEnabled = false
+//            navigationItem.rightBarButtonItem?.tintColor = .clear
+//            barButton.style = .done
+//            barButton.title = "Cancel"
+//            tableView.setEditing(true, animated: true)
+//        }
+//
+//    }
     
     @IBAction func sortAction(_ sender: Any) {
         let actionSheet = UIAlertController(title: "Sort by:", message: nil, preferredStyle: .actionSheet)
@@ -180,10 +205,8 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
             completionHandler(true)
         }
         
-        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, completionHandler) in
+        let edit = UIContextualAction(style: .normal, title: "Edit\nName") { (action, view, completionHandler) in
             let cell = tableView.cellForRow(at: indexPath) as! PersonTableViewCell
-            tableView.scrollToNearestSelectedRow(at: .top, animated: true)
-//            tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
 
             cell.editName()
             
@@ -193,7 +216,7 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
         delete.backgroundColor = .red
         edit.backgroundColor = .gray
         
-        let config = UISwipeActionsConfiguration(actions: [edit, delete])
+        let config = UISwipeActionsConfiguration(actions: [delete, edit])
         config.performsFirstActionWithFullSwipe = false
         
         return config
@@ -202,7 +225,7 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
 }
 
 extension PeopleViewController: AddPersonViewControllerDelegate {
-    func addPersonViewControllerDidAddPerson(_ vc: AddPersonViewController, person: Person) {
+    func addPersonViewController(_ vc: AddPersonViewController, didAdd person: Person) {
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
     }
 }

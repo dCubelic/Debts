@@ -1,14 +1,21 @@
 import UIKit
 
+protocol DebtCategoryTableViewCellDelegate: class {
+    func debtCategoryTableViewCell(_ cell: DebtCategoryTableViewCell, didChangeTitleTo title: String)
+}
+
 class DebtCategoryTableViewCell: UITableViewCell {
 
     @IBOutlet weak var titleLabel: UILabel!
+    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var subtitleLabel: UILabel!
     @IBOutlet weak var detailLabel: UILabel!
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var categoryView: UIView!
     @IBOutlet weak var leftView: UIView!
     @IBOutlet weak var underlineView: UIView!
+    
+    weak var delegate: DebtCategoryTableViewCellDelegate?
     
     let dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -26,6 +33,9 @@ class DebtCategoryTableViewCell: UITableViewCell {
         categoryView.layer.cornerRadius = 8
         categoryView.clipsToBounds = true
         categoryView.backgroundColor = UIColor(white: 246/255, alpha: 1)
+        
+        titleTextField.isHidden = true
+        titleTextField.delegate = self
     }
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
@@ -68,4 +78,38 @@ class DebtCategoryTableViewCell: UITableViewCell {
         }
     }
 
+    func editTitle() {
+        titleTextField.isHidden = false
+        titleLabel.isHidden = true
+        titleTextField.text = titleLabel.text
+        titleTextField.becomeFirstResponder()
+    }
+    
+}
+
+extension DebtCategoryTableViewCell: UITextFieldDelegate {
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        guard let text = textField.text else { return }
+        titleLabel.text = textField.text
+        
+        titleTextField.isHidden = true
+        titleLabel.isHidden = false
+        
+        delegate?.debtCategoryTableViewCell(self, didChangeTitleTo: text)
+    }
+    
+    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+        guard let text = textField.text else { return false }
+        
+        if text.count == 0 {
+            return false
+        }
+        
+        return true
+    }
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        return true
+    }
 }

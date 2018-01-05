@@ -14,7 +14,7 @@
             <rect key="frame" x="0.0" y="0.0" width="375" height="69"/>
             <autoresizingMask key="autoresizingMask"/>
             <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Z77-GK-grQ" id="V5c-Ya-gDj">
-                <rect key="frame" x="0.0" y="0.0" width="375" height="68.5"/>
+                <rect key="frame" x="0.0" y="0.0" width="375" height="69"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b9T-VS-5ap">
@@ -35,6 +35,12 @@
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="highlightedColor"/>
                                     </label>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Wxd-Z0-h9W">
+                                        <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <textInputTraits key="textInputTraits"/>
+                                    </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yzx-IK-rvI">
                                         <rect key="frame" x="0.0" y="25" width="42" height="14.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="12"/>
@@ -44,10 +50,13 @@
                                 </subviews>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
+                                    <constraint firstItem="Wxd-Z0-h9W" firstAttribute="centerX" secondItem="O6K-ul-IpY" secondAttribute="centerX" id="8ld-5e-NmB"/>
                                     <constraint firstAttribute="trailing" secondItem="O6K-ul-IpY" secondAttribute="trailing" id="J9b-DJ-Ivv"/>
                                     <constraint firstItem="O6K-ul-IpY" firstAttribute="leading" secondItem="YMR-05-VTJ" secondAttribute="leading" id="RD4-gA-auH"/>
                                     <constraint firstAttribute="trailing" secondItem="yzx-IK-rvI" secondAttribute="trailing" id="fDJ-Zf-k7O"/>
                                     <constraint firstItem="yzx-IK-rvI" firstAttribute="leading" secondItem="YMR-05-VTJ" secondAttribute="leading" id="luq-Wj-yxo"/>
+                                    <constraint firstItem="Wxd-Z0-h9W" firstAttribute="centerY" secondItem="O6K-ul-IpY" secondAttribute="centerY" id="pkD-Dd-H7U"/>
+                                    <constraint firstItem="Wxd-Z0-h9W" firstAttribute="width" secondItem="O6K-ul-IpY" secondAttribute="width" id="sJL-qL-qWj"/>
                                     <constraint firstItem="yzx-IK-rvI" firstAttribute="top" secondItem="O6K-ul-IpY" secondAttribute="bottom" constant="4" id="t1h-N9-cDb"/>
                                     <constraint firstAttribute="bottom" secondItem="yzx-IK-rvI" secondAttribute="bottom" id="wfG-9c-SKg"/>
                                     <constraint firstItem="O6K-ul-IpY" firstAttribute="top" secondItem="YMR-05-VTJ" secondAttribute="top" id="xSj-gm-URY"/>
@@ -118,6 +127,7 @@
                 <outlet property="leftView" destination="4aD-S3-jow" id="EyM-lt-IvE"/>
                 <outlet property="subtitleLabel" destination="o1g-l3-X4t" id="URN-PG-N6x"/>
                 <outlet property="titleLabel" destination="O6K-ul-IpY" id="381-JT-DyV"/>
+                <outlet property="titleTextField" destination="Wxd-Z0-h9W" id="mqf-Pe-NI2"/>
                 <outlet property="underlineView" destination="Kfa-ej-uCw" id="rIu-yj-75d"/>
             </connections>
             <point key="canvasLocation" x="47.5" y="-209.5"/>

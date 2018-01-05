@@ -3,6 +3,7 @@ import UIKit
 class PersonDetailViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var underlineView: UIView!
     
     @IBOutlet weak var totalDebtLabel: UILabel!
@@ -11,8 +12,32 @@ class PersonDetailViewController: UIViewController {
     var person: Person?
     var debts: [Debt] = []
     
+    var keyboardObserver: NSObjectProtocol? = nil
+    deinit {
+        if let keyboardObserver = keyboardObserver {
+            NotificationCenter.default.removeObserver(keyboardObserver)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        keyboardObserver = NotificationCenter.default.addObserver(forName: .UIKeyboardWillChangeFrame, object: nil, queue: nil, using: { (notification) in
+            if let userInfo = notification.userInfo,
+//                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
+                let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
+                let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
+                
+                
+                if let tabBarHeight = self.tabBarController?.tabBar.frame.height {
+                    self.tableViewBottomConstraint.constant = UIScreen.main.bounds.height - endFrameValue.cgRectValue.minY - tabBarHeight
+                }
+                
+                UIView.animate(withDuration: 0, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
+                    self.view.layoutIfNeeded()
+                }, completion: nil)
+            }
+        })
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
         tapGesture.cancelsTouchesInView = false
@@ -33,6 +58,22 @@ class PersonDetailViewController: UIViewController {
     
     @objc func tapAction() {
         view.endEditing(true)
+    }
+    
+    
+    @IBAction func deleteAction(_ sender: Any) {
+        guard let person = person else { return }
+        
+        let alert = UIAlertController(title: "Delete all debts", message: "Are you sure you wish to remove all \(person.name)'s debts?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+            RealmHelper.removeDebts(for: person)
+            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
+        
     }
     
     @objc func reloadDebtCategories() {
@@ -82,7 +123,7 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
             completionHandler(true)
         }
         
-        let edit = UIContextualAction(style: .normal, title: "Edit") { (action, view, completionHandler) in
+        let edit = UIContextualAction(style: .normal, title: "Edit\nCost") { (action, view, completionHandler) in
             let cell = tableView.cellForRow(at: indexPath) as! PersonDetailTableViewCell
             tableView.scrollToRow(at: indexPath, at: UITableViewScrollPosition.top, animated: true)
 
@@ -93,7 +134,7 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
         delete.backgroundColor = .red
         edit.backgroundColor = .gray
         
-        let config = UISwipeActionsConfiguration(actions: [edit, delete])
+        let config = UISwipeActionsConfiguration(actions: [delete, edit])
         config.performsFirstActionWithFullSwipe = false
         
         return config

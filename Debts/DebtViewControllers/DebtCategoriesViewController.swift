@@ -22,6 +22,10 @@ class DebtCategoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        tapGesture.cancelsTouchesInView = false
+        view.addGestureRecognizer(tapGesture)
+        
         title = "Categories"
         navigationController?.navigationBar.prefersLargeTitles = true
         
@@ -38,9 +42,16 @@ class DebtCategoriesViewController: UIViewController {
         reloadDebtCategories()
     }
     
+    @objc func tapAction() {
+        view.endEditing(true)
+    }
+    
     @objc func reloadDebtCategories() {
         debtCategories = RealmHelper.getAllDebtCategories()
         sortDebtCategories()
+        if let searchText = searchController.searchBar.text {
+            filterDebtCategories(for: searchText)
+        }
     }
     
     func sortDebtCategories() {
@@ -64,23 +75,23 @@ class DebtCategoriesViewController: UIViewController {
         tableView.reloadData()
     }
 
-    @IBAction func editAction(_ sender: Any) {
-        guard let barButton = sender as? UIBarButtonItem else { return }
-        
-        if tableView.isEditing {
-            navigationItem.rightBarButtonItem?.isEnabled = true
-            navigationItem.rightBarButtonItem?.tintColor = nil
-            barButton.style = .plain
-            barButton.title = "Edit"
-            tableView.setEditing(false, animated: true)
-        } else {
-            navigationItem.rightBarButtonItem?.isEnabled = false
-            navigationItem.rightBarButtonItem?.tintColor = .clear
-            barButton.style = .done
-            barButton.title = "Cancel"
-            tableView.setEditing(true, animated: true)
-        }
-    }
+//    @IBAction func editAction(_ sender: Any) {
+//        guard let barButton = sender as? UIBarButtonItem else { return }
+//        
+//        if tableView.isEditing {
+//            navigationItem.rightBarButtonItem?.isEnabled = true
+//            navigationItem.rightBarButtonItem?.tintColor = nil
+//            barButton.style = .plain
+//            barButton.title = "Edit"
+//            tableView.setEditing(false, animated: true)
+//        } else {
+//            navigationItem.rightBarButtonItem?.isEnabled = false
+//            navigationItem.rightBarButtonItem?.tintColor = .clear
+//            barButton.style = .done
+//            barButton.title = "Cancel"
+//            tableView.setEditing(true, animated: true)
+//        }
+//    }
     
     @IBAction func sortAction(_ sender: Any) {
         let actionSheet = UIAlertController(title: "Sort by:", message: nil, preferredStyle: .actionSheet)
@@ -123,6 +134,7 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
             debtCategory = debtCategories[indexPath.row]
         }
         
+        cell.delegate = self
         cell.setup(with: debtCategory)
         
         return cell
@@ -133,29 +145,63 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
         
     }
     
-    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-        var debtCategory: DebtCategory
-        if isFiltering() {
-            debtCategory = filteredDebtCategories[indexPath.row]
-        } else {
-            debtCategory = debtCategories[indexPath.row]
-        }
-        
-        if editingStyle == .delete {
-            if isFiltering() {
-                if let index = debtCategories.index(of: filteredDebtCategories[indexPath.row]) {
-                    debtCategories.remove(at: index)
-                }
-                filteredDebtCategories.remove(at: indexPath.row)
+//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+//        var debtCategory: DebtCategory
+//        if isFiltering() {
+//            debtCategory = filteredDebtCategories[indexPath.row]
+//        } else {
+//            debtCategory = debtCategories[indexPath.row]
+//        }
+//
+//        if editingStyle == .delete {
+//            if isFiltering() {
+//                if let index = debtCategories.index(of: filteredDebtCategories[indexPath.row]) {
+//                    debtCategories.remove(at: index)
+//                }
+//                filteredDebtCategories.remove(at: indexPath.row)
+//            } else {
+//                debtCategories.remove(at: indexPath.row)
+//            }
+//
+//            tableView.deleteRows(at: [indexPath], with: .automatic)
+//            RealmHelper.removeDebtCategory(debtCategory: debtCategory)
+//
+//            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+//        }
+//    }
+    
+    func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
+            
+            var debtCategory: DebtCategory
+            if self.isFiltering() {
+                debtCategory = self.filteredDebtCategories[indexPath.row]
             } else {
-                debtCategories.remove(at: indexPath.row)
+                debtCategory = self.debtCategories[indexPath.row]
             }
             
-            tableView.deleteRows(at: [indexPath], with: .automatic)
             RealmHelper.removeDebtCategory(debtCategory: debtCategory)
             
             NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+            
+            completionHandler(true)
         }
+        
+        let edit = UIContextualAction(style: .normal, title: "Edit\nName") { (action, view, completionHandler) in
+            let cell = tableView.cellForRow(at: indexPath) as! DebtCategoryTableViewCell
+            
+            cell.editTitle()
+            
+            completionHandler(true)
+        }
+        
+        delete.backgroundColor = .red
+        edit.backgroundColor = .gray
+        
+        let config = UISwipeActionsConfiguration(actions: [delete, edit])
+        config.performsFirstActionWithFullSwipe = false
+        
+        return config
     }
     
 }
@@ -165,5 +211,22 @@ extension DebtCategoriesViewController: UISearchResultsUpdating {
         if let searchText = searchController.searchBar.text {
             filterDebtCategories(for: searchText)
         }
+    }
+}
+
+extension DebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
+    func debtCategoryTableViewCell(_ cell: DebtCategoryTableViewCell, didChangeTitleTo title: String) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        var debtCategory: DebtCategory
+        if self.isFiltering() {
+            debtCategory = self.filteredDebtCategories[indexPath.row]
+        } else {
+            debtCategory = self.debtCategories[indexPath.row]
+        }
+        
+        RealmHelper.changeTitle(for: debtCategory, title: title)
+        
+        NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
     }
 }
