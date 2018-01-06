@@ -35,6 +35,14 @@ class PersonDetailTableViewCell: UITableViewCell {
         costTextField.isHidden = true
         costTextField.delegate = self
         costTextField.keyboardType = .decimalPad
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.2
+        layer.shadowOffset = CGSize.zero
+        layer.shadowRadius = 3
+        
+        let holdGesture = UILongPressGestureRecognizer(target: self, action: #selector(editCost))
+        addGestureRecognizer(holdGesture)
     }
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
@@ -61,7 +69,7 @@ class PersonDetailTableViewCell: UITableViewCell {
        
     }
     
-    func editCost() {
+    @objc func editCost() {
         detailLabel.isHidden = true
         costTextField.isHidden = false
         costTextField.becomeFirstResponder()

@@ -7,6 +7,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var debtNameTextField: UITextField!
     @IBOutlet weak var costTextField: UITextField!
     
+    @IBOutlet weak var `switch`: UISwitch!
+    
     let realm = try! Realm()
     
     override func viewDidLoad() {
@@ -29,6 +31,7 @@ class ViewController: UIViewController {
         pd.person = person
         pd.debtCategory = debtCategory
         pd.cost = Double(costTextField.text ?? "") ?? 0
+        pd.isMyDebt = `switch`.isOn
 
         try! realm.write {
             realm.add(pd, update: true)

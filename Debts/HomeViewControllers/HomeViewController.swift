@@ -22,7 +22,7 @@ class HomeViewController: UIViewController {
         homeView.layer.cornerRadius = 25
         homeView.backgroundColor = UIColor(white: 246 / 255, alpha: 1)
         
-        underlineView.backgroundColor = UIColor.red
+        underlineView.backgroundColor = UIColor(for: RealmHelper.getTotalOfDebts())
         underlineView.layer.cornerRadius = 2
         underlineView2.backgroundColor = UIColor(white: 230 / 255, alpha: 1)
         
@@ -33,7 +33,16 @@ class HomeViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
+        initializeShadow()
+        
         reloadData()
+    }
+    
+    func initializeShadow() {
+        homeView.layer.shadowColor = UIColor.black.cgColor
+        homeView.layer.shadowOpacity = 0.2
+        homeView.layer.shadowOffset = CGSize.zero
+        homeView.layer.shadowRadius = 3
     }
     
     @objc func reloadData() {

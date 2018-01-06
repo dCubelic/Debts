@@ -36,11 +36,19 @@ class RealmHelper {
     }
     
     static func getDebts(for person: Person) -> [Debt] {
-        return realm.objects(Debt.self).filter("person = %@", person).toArray()
+        return realm.objects(Debt.self).filter("person = %@ AND isMyDebt = false", person).toArray()
+    }
+    
+    static func getMyDebts(for person: Person) -> [Debt] {
+        return realm.objects(Debt.self).filter("person = %@ AND isMyDebt = true", person).toArray()
     }
     
     static func getDebts(for debtCategory: DebtCategory) -> [Debt] {
-        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).toArray()
+        return realm.objects(Debt.self).filter("debtCategory = %@ AND isMyDebt = false", debtCategory).toArray()
+    }
+    
+    static func getMyDebts(for debtCategory: DebtCategory) -> [Debt] {
+        return realm.objects(Debt.self).filter("debtCategory = %@ AND isMyDebt = false", debtCategory).toArray()
     }
     
     static func getCost(for person: Person) -> Double {
@@ -78,8 +86,6 @@ class RealmHelper {
     }
     
     static func removeDebt(_ debt: Debt) {
-//        let debt = realm.objects(Debt.self).filter("debtCategory = %@ AND person = %@", debtCategory, person)
-        
         try! realm.write {
             realm.delete(debt)
         }
@@ -114,15 +120,15 @@ class RealmHelper {
     }
     
     static func getTotalOfAllDebts() -> Double {
-        return realm.objects(Debt.self).sum(ofProperty: "cost")
+        return getTotalOfDebts() - getTotalOfMyDebts()
     }
     
     static func getTotalOfMyDebts() -> Double {
-        return realm.objects(Debt.self).filter("cost < 0").sum(ofProperty: "cost")
+        return realm.objects(Debt.self).filter("isMyDebt = true").sum(ofProperty: "cost")
     }
     
     static func getTotalOfDebts() -> Double {
-        return realm.objects(Debt.self).filter("cost >= 0").sum(ofProperty: "cost")
+        return realm.objects(Debt.self).filter("isMyDebt = false").sum(ofProperty: "cost")
     }
     
     static func getNumberOfDebtCategories() -> Int {

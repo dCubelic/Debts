@@ -36,6 +36,11 @@ class DebtCategoryTableViewCell: UITableViewCell {
         
         titleTextField.isHidden = true
         titleTextField.delegate = self
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOpacity = 0.2
+        layer.shadowOffset = CGSize.zero
+        layer.shadowRadius = 3
     }
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {

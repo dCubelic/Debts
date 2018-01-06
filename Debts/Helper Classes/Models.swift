@@ -43,5 +43,6 @@ class Debt: UniqueObject {
     @objc dynamic var debtCategory: DebtCategory? = nil
     @objc dynamic var cost: Double = 0
     @objc dynamic var dateAdded: Date = Date()
+    @objc dynamic var isMyDebt: Bool = false
     
 }
