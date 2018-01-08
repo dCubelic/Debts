@@ -67,14 +67,14 @@ class DebtCategoryTableViewCell: UITableViewCell {
         leftView.backgroundColor = color
         underlineView.backgroundColor = color
         
-        let people = RealmHelper.getPersons(for: debtCategory).map { $0.person }
+        let debts = RealmHelper.getDebts(for: debtCategory)
         
-        if(people.count > 2) {
-            subtitleLabel.text = "\(people.count) people"
+        if(debts.count > 2) {
+            subtitleLabel.text = "\(debts.count) people"
         } else {
             var peopleString = ""
-            for person in people {
-                peopleString += person.name
+            for debt in debts {
+                peopleString += debt.person?.name ?? ""
                 peopleString += ", "
             }
             peopleString.removeLast()

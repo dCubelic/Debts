@@ -1,16 +1,16 @@
 import Foundation
 import RealmSwift
 
-struct DebtCategoryByPerson {
-    var debtCategory: DebtCategory
-    var cost: Double
-    var dateAdded: Date
-}
-
-struct PersonByDebtCategory {
-    var person: Person
-    var cost: Double
-}
+//struct DebtCategoryByPerson {
+//    var debtCategory: DebtCategory
+//    var cost: Double
+//    var dateAdded: Date
+//}
+//
+//struct PersonByDebtCategory {
+//    var person: Person
+//    var cost: Double
+//}
 
 class RealmHelper {
 
@@ -21,34 +21,35 @@ class RealmHelper {
     }
     
     static func getAllDebtCategories() -> [DebtCategory] {
-        return realm.objects(DebtCategory.self).toArray()
+        return realm.objects(DebtCategory.self).filter("isMyDebt = false").toArray()
     }
     
-    static func getDebtCategories(for person: Person) -> [DebtCategoryByPerson] {
-        let defaultDebt = DebtCategory()
-        return realm.objects(Debt.self).filter("person = %@", person).map({ DebtCategoryByPerson(debtCategory: $0.debtCategory ?? defaultDebt, cost: $0.cost, dateAdded: $0.dateAdded) })
-    }
-    
-    static func getPersons(for debtCategory: DebtCategory) -> [PersonByDebtCategory] {
-        let defaultPerson = Person()
-        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).map({ PersonByDebtCategory(person: $0.person ?? defaultPerson, cost: $0.cost)
-        })
+    static func getAllMyDebtCategories() -> [DebtCategory] {
+        return realm.objects(DebtCategory.self).filter("isMyDebt = true").toArray()
     }
     
     static func getDebts(for person: Person) -> [Debt] {
-        return realm.objects(Debt.self).filter("person = %@ AND isMyDebt = false", person).toArray()
+//        let defaultDebt = DebtCategory()
+        return realm.objects(Debt.self).filter("person = %@", person).toArray()
+//        return realm.objects(Debt.self).filter("person = %@", person).map({ DebtCategoryByPerson(debtCategory: $0.debtCategory ?? defaultDebt, cost: $0.cost, dateAdded: $0.dateAdded) })
     }
     
-    static func getMyDebts(for person: Person) -> [Debt] {
-        return realm.objects(Debt.self).filter("person = %@ AND isMyDebt = true", person).toArray()
-    }
+//    static func getPersons(for debtCategory: DebtCategory) -> [Debt] {
+////        let defaultPerson = Person()
+//        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).toArray()
+////        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).map({ PersonByDebtCategory(person: $0.person ?? defaultPerson, cost: $0.cost)})
+//    }
+    
+//    static func getDebts(for person: Person) -> [Debt] {
+//        return realm.objects(Debt.self).filter("person = %@ AND debtCategory.isMyDebt = false", person).toArray()
+//    }
+//
+//    static func getMyDebts(for person: Person) -> [Debt] {
+//        return realm.objects(Debt.self).filter("person = %@ AND debtCategory.isMyDebt = true", person).toArray()
+//    }
     
     static func getDebts(for debtCategory: DebtCategory) -> [Debt] {
-        return realm.objects(Debt.self).filter("debtCategory = %@ AND isMyDebt = false", debtCategory).toArray()
-    }
-    
-    static func getMyDebts(for debtCategory: DebtCategory) -> [Debt] {
-        return realm.objects(Debt.self).filter("debtCategory = %@ AND isMyDebt = false", debtCategory).toArray()
+        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).toArray()
     }
     
     static func getCost(for person: Person) -> Double {
@@ -110,6 +111,9 @@ class RealmHelper {
     static func changeName(for person: Person, name: String) {
         try! realm.write {
             person.name = name
+            if !(realm.objects(Person.self).filter("uuid = %@", person.uuid).count == 1) {
+                realm.add(person)
+            }
         }
     }
     
@@ -124,11 +128,11 @@ class RealmHelper {
     }
     
     static func getTotalOfMyDebts() -> Double {
-        return realm.objects(Debt.self).filter("isMyDebt = true").sum(ofProperty: "cost")
+        return realm.objects(Debt.self).filter("debtCategory.isMyDebt = true").sum(ofProperty: "cost")
     }
     
     static func getTotalOfDebts() -> Double {
-        return realm.objects(Debt.self).filter("isMyDebt = false").sum(ofProperty: "cost")
+        return realm.objects(Debt.self).filter("debtCategory.isMyDebt = false").sum(ofProperty: "cost")
     }
     
     static func getNumberOfDebtCategories() -> Int {

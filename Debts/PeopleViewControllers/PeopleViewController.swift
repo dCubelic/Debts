@@ -1,15 +1,34 @@
 import UIKit
 
+enum ControllerState {
+    case defaultState, addingState
+}
+
 class PeopleViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
+    @IBOutlet weak var rightBarButtonItem: UIBarButtonItem!
+    @IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
     let searchController = UISearchController(searchResultsController: nil)
     
     var people: [Person] = []
     var filteredPeople: [Person] = []
     var sortComparator = nameComparator
+    var state: ControllerState = .defaultState {
+        didSet {
+            if state == .defaultState {
+                rightBarButtonItem.isEnabled = true
+                leftBarButtonItem.image = #imageLiteral(resourceName: "Sort")
+            } else if state == .addingState {
+                rightBarButtonItem.isEnabled = false
+                leftBarButtonItem.image = nil
+                
+                leftBarButtonItem.title = "Cancel"
+            }
+        }
+    }
     
     private static let nameComparator: (Person, Person) -> Bool = { $0.name.lowercased() < $1.name.lowercased() }
     private static let totalDebtComparator: (Person, Person) -> Bool = { $0.totalDebt > $1.totalDebt }
@@ -101,10 +120,26 @@ class PeopleViewController: UIViewController {
     }
 
     @IBAction func addPerson(_ sender: Any) {
+////        let newPerson = RealmHelper.addPerson(name: "")
+//        let newPerson = Person()
+//        let indexPath = IndexPath(row: 0, section: 0)
+////
+//        people.insert(newPerson, at: 0)
+//        tableView.insertRows(at: [indexPath], with: .automatic)
+//
+////
+//////        let cell = tableView.dataSource?.tableView(tableView, cellForRowAt: indexPath) as! PersonTableViewCell
+//        let cell = tableView.cellForRow(at: indexPath) as! PersonTableViewCell
+//        cell.editName()
+//        tableView.isUserInteractionEnabled = false
+//
+//        state = .addingState
+
+        
         let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.addPersonViewController) as! AddPersonViewController
         vc.delegate = self
         let navVC = UINavigationController(rootViewController: vc)
-        
+
         present(navVC, animated: true, completion: nil)
     }
     
@@ -127,20 +162,26 @@ class PeopleViewController: UIViewController {
 //
 //    }
     
-    @IBAction func sortAction(_ sender: Any) {
-        let actionSheet = UIAlertController(title: "Sort by:", message: nil, preferredStyle: .actionSheet)
-        
-        actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (alertAction) in
-            self.sortComparator = PeopleViewController.nameComparator
-            self.sortPeople()
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (alertAction) in
-            self.sortComparator = PeopleViewController.totalDebtComparator
-            self.sortPeople()
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(actionSheet, animated: true, completion: nil)
+    @IBAction func leftBarButtonAction(_ sender: Any) {
+        if state == .defaultState {
+            let actionSheet = UIAlertController(title: "Sort by:", message: nil, preferredStyle: .actionSheet)
+            
+            actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (alertAction) in
+                self.sortComparator = PeopleViewController.nameComparator
+                self.sortPeople()
+            }))
+            actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (alertAction) in
+                self.sortComparator = PeopleViewController.totalDebtComparator
+                self.sortPeople()
+            }))
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            present(actionSheet, animated: true, completion: nil)
+        } else {
+            reloadPeople()
+            tableView.isUserInteractionEnabled = true
+            state = .defaultState
+        }
     }
 }
 
@@ -252,5 +293,14 @@ extension PeopleViewController: PersonTableViewCellDelegate {
         RealmHelper.changeName(for: person, name: name)
         
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        
+        tableView.isUserInteractionEnabled = true
+        state = .defaultState
+    }
+    
+    func personTableViewCellDidCancel(_ cell: PersonTableViewCell) {
+        tableView.isUserInteractionEnabled = true
+        state = .defaultState
+        reloadPeople()
     }
 }

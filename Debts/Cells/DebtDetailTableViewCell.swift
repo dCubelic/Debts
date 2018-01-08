@@ -1,10 +1,10 @@
 import UIKit
 
-protocol DebtCategoryDetailTableViewCellDelegate: class {
-    func debtCategoryDetailTableViewCell(_ cell: DebtCategoryDetailTableViewCell, didUpdateCost cost: Double)
+protocol DebtDetailTableViewCellDelegate: class {
+    func debtDetailTableViewCell(_ cell: DebtDetailTableViewCell, didUpdateCost cost: Double)
 }
 
-class DebtCategoryDetailTableViewCell: UITableViewCell {
+class DebtDetailTableViewCell: UITableViewCell {
     
     @IBOutlet weak var personView: UIView!
     @IBOutlet weak var leftView: UIView!
@@ -14,7 +14,7 @@ class DebtCategoryDetailTableViewCell: UITableViewCell {
     @IBOutlet weak var dateLabel: UILabel!
     @IBOutlet weak var underlineView: UIView!
     
-    weak var delegate: DebtCategoryDetailTableViewCellDelegate?
+    weak var delegate: DebtDetailTableViewCellDelegate?
     
     let dateFormatter: DateFormatter = {
         let df = DateFormatter()
@@ -51,7 +51,7 @@ class DebtCategoryDetailTableViewCell: UITableViewCell {
         }
     }
     
-    func setup(with debt: Debt) {
+    func setupForDebtCategoryDetails(with debt: Debt) {
         guard let person = debt.person else { return }
         
         leftView.backgroundColor = UIColor(for: person)
@@ -65,7 +65,21 @@ class DebtCategoryDetailTableViewCell: UITableViewCell {
             debt.cost,
             Constants.currencyBeforeValue ? "" : Constants.currency
         )
+    }
+    
+    func setupForPersonDetails(with debt: Debt) {
+        guard let debtCategory = debt.debtCategory else { return }
         
+        nameLabel.text = debtCategory.name
+        leftView.backgroundColor = UIColor(for: debtCategory)
+        dateLabel.text = dateFormatter.string(from: debt.dateAdded)
+        
+        costLabel.text = String(
+            format: "%@%.2f%@",
+            Constants.currencyBeforeValue ? Constants.currency : "",
+            debt.cost,
+            Constants.currencyBeforeValue ? "" : Constants.currency
+        )
     }
     
     func editCost() {
@@ -76,7 +90,7 @@ class DebtCategoryDetailTableViewCell: UITableViewCell {
     
 }
 
-extension DebtCategoryDetailTableViewCell: UITextFieldDelegate {
+extension DebtDetailTableViewCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.text = costLabel.text?.replacingOccurrences(of: Constants.currency, with: "")
     }
@@ -95,7 +109,7 @@ extension DebtCategoryDetailTableViewCell: UITextFieldDelegate {
         costLabel.isHidden = false
         costTextField.isHidden = true
         
-        delegate?.debtCategoryDetailTableViewCell(self, didUpdateCost: cost)
+        delegate?.debtDetailTableViewCell(self, didUpdateCost: cost)
     }
     
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {

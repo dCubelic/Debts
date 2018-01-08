@@ -41,17 +41,24 @@ class DebtCategoryDetailViewController: UIViewController {
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
-        tableView.register(UINib(nibName: Constants.categoryDetailCell, bundle: nil), forCellReuseIdentifier: Constants.categoryDetailCell)
+        tableView.register(UINib(nibName: Constants.debtDetailCell, bundle: nil), forCellReuseIdentifier: Constants.debtDetailCell)
         
         guard let debtCategory = debtCategory else { return }
         
-        navigationController?.navigationBar.tintColor = UIColor(for: debtCategory)
         underlineView.backgroundColor = UIColor(for: debtCategory)
         title = debtCategory.name
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebts), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
 
         reloadDebts()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let debtCategory = debtCategory else { return }
+        
+        navigationController?.navigationBar.tintColor = UIColor(for: debtCategory)
     }
     
     @objc func tapAction() {
@@ -82,10 +89,10 @@ extension DebtCategoryDetailViewController: UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryDetailCell, for: indexPath) as! DebtCategoryDetailTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.debtDetailCell, for: indexPath) as! DebtDetailTableViewCell
         
         cell.delegate = self
-        cell.setup(with: debts[indexPath.row])
+        cell.setupForDebtCategoryDetails(with: debts[indexPath.row])
         
         return cell
     }
@@ -100,7 +107,7 @@ extension DebtCategoryDetailViewController: UITableViewDelegate, UITableViewData
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit\nCost") { (action, view, completionHandler) in
-            let cell = tableView.cellForRow(at: indexPath) as! DebtCategoryDetailTableViewCell
+            let cell = tableView.cellForRow(at: indexPath) as! DebtDetailTableViewCell
             
             cell.editCost()
             completionHandler(true)
@@ -116,8 +123,8 @@ extension DebtCategoryDetailViewController: UITableViewDelegate, UITableViewData
     }
 }
 
-extension DebtCategoryDetailViewController: DebtCategoryDetailTableViewCellDelegate {
-    func debtCategoryDetailTableViewCell(_ cell: DebtCategoryDetailTableViewCell, didUpdateCost cost: Double) {
+extension DebtCategoryDetailViewController: DebtDetailTableViewCellDelegate {
+    func debtDetailTableViewCell(_ cell: DebtDetailTableViewCell, didUpdateCost cost: Double) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
         RealmHelper.changeCost(for: debts[indexPath.row], cost: cost)

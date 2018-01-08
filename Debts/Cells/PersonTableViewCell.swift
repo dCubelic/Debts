@@ -2,6 +2,7 @@ import UIKit
 
 protocol PersonTableViewCellDelegate: class {
     func personTableViewCell(_ cell: PersonTableViewCell, didChangeNameTo name: String)
+    func personTableViewCellDidCancel(_ cell: PersonTableViewCell)
 }
 
 class PersonTableViewCell: UITableViewCell {
@@ -58,12 +59,12 @@ class PersonTableViewCell: UITableViewCell {
         leftView.backgroundColor = color
         underlineView.backgroundColor = color
         
-        let debtCategories = RealmHelper.getDebtCategories(for: person).map { $0.debtCategory }
+        let debts = RealmHelper.getDebts(for: person)
         
-        if debtCategories.count == 1 {
-            subtitleLabel.text = debtCategories.first?.name
+        if debts.count == 1 {
+            subtitleLabel.text = debts.first?.debtCategory?.name
         } else {
-            subtitleLabel.text = "\(debtCategories.count) debts"
+            subtitleLabel.text = "\(debts.count) debts"
         }
         
     }
@@ -85,18 +86,22 @@ extension PersonTableViewCell: UITextFieldDelegate {
         titleLabel.isHidden = false
         nameTextField.isHidden = true
         
-        delegate?.personTableViewCell(self, didChangeNameTo: text)
+        if text.count == 0 {
+            delegate?.personTableViewCellDidCancel(self)
+        } else {
+            delegate?.personTableViewCell(self, didChangeNameTo: text)
+        }
     }
     
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        guard let text = textField.text else { return false }
-        
-        if text.count == 0 {
-            return false
-        }
-        
-        return true
-    }
+//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+//        guard let text = textField.text else { return false }
+//        
+//        if text.count == 0 {
+//            return false
+//        }
+//        
+//        return true
+//    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

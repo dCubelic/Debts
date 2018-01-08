@@ -44,15 +44,23 @@ class PersonDetailViewController: UIViewController {
         
         guard let person = person else { return }
         
-        navigationController?.navigationBar.tintColor = UIColor(for: person)
+//        navigationController?.navigationBar.tintColor = UIColor(for: person)
         underlineView.backgroundColor = UIColor(for: person)
         title = person.name
 
-        tableView.register(UINib(nibName: Constants.personDetailCell, bundle: nil), forCellReuseIdentifier: Constants.personDetailCell)
+        tableView.register(UINib(nibName: Constants.debtDetailCell, bundle: nil), forCellReuseIdentifier: Constants.debtDetailCell)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebts), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
         reloadDebts()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        guard let person = person else { return }
+
+        navigationController?.navigationBar.tintColor = UIColor(for: person)
     }
     
     @objc func tapAction() {
@@ -101,10 +109,10 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.personDetailCell, for: indexPath) as! PersonDetailTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.debtDetailCell, for: indexPath) as! DebtDetailTableViewCell
         
         cell.delegate = self
-        cell.setup(with: debts[indexPath.row])
+        cell.setupForPersonDetails(with: debts[indexPath.row])
         
         return cell
     }
@@ -123,7 +131,7 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit\nCost") { (action, view, completionHandler) in
-            let cell = tableView.cellForRow(at: indexPath) as! PersonDetailTableViewCell
+            let cell = tableView.cellForRow(at: indexPath) as! DebtDetailTableViewCell
 
             cell.editCost()
             completionHandler(true)
@@ -139,8 +147,8 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
     }
 }
 
-extension PersonDetailViewController: PersonDetailTableViewCellDelegate {
-    func personDetailTableViewCell(_ cell: PersonDetailTableViewCell, didUpdateCost cost: Double) {
+extension PersonDetailViewController: DebtDetailTableViewCellDelegate {
+    func debtDetailTableViewCell(_ cell: DebtDetailTableViewCell, didUpdateCost cost: Double) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
         RealmHelper.changeCost(for: debts[indexPath.row], cost: cost)

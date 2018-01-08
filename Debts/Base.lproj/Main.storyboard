@@ -47,7 +47,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad"/>
                             </textField>
-                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Nm-xQ-e2r">
+                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="3Nm-xQ-e2r">
                                 <rect key="frame" x="262" y="121" width="49" height="31"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             </switch>
@@ -527,7 +527,7 @@
                     <navigationItem key="navigationItem" title="People" id="UkW-pY-xke">
                         <barButtonItem key="leftBarButtonItem" title="Sort" image="Sort" id="5mv-J1-ikb">
                             <connections>
-                                <action selector="sortAction:" destination="HTI-Y1-hbw" id="I61-AJ-aRg"/>
+                                <action selector="leftBarButtonAction:" destination="HTI-Y1-hbw" id="I61-AJ-aRg"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="DcQ-4C-v8N">
@@ -537,9 +537,11 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="leftBarButtonItem" destination="5mv-J1-ikb" id="XFm-fM-TUz"/>
+                        <outlet property="rightBarButtonItem" destination="DcQ-4C-v8N" id="fdF-xL-Yal"/>
                         <outlet property="searchDisplayController" destination="bf3-eV-KMw" id="2nU-el-8U7"/>
                         <outlet property="tableView" destination="9Ox-Tb-0El" id="jlR-xh-U6T"/>
-                        <outlet property="tableViewBottomConstraint" destination="hKn-vv-zNk" id="iA3-ge-l2H"/>
+                        <outlet property="tableViewBottomConstraint" destination="hKn-vv-zNk" id="Em8-hK-cYm"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JeT-JP-7Mq" userLabel="First Responder" sceneMemberID="firstResponder"/>

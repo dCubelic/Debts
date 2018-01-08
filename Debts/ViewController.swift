@@ -24,6 +24,7 @@ class ViewController: UIViewController {
             debtCategory = s
         } else {
             debtCategory.name = debtNameTextField.text ?? ""
+            debtCategory.isMyDebt = `switch`.isOn
 //            debtCategory.dateCreated = Date()
         }
         
@@ -31,7 +32,6 @@ class ViewController: UIViewController {
         pd.person = person
         pd.debtCategory = debtCategory
         pd.cost = Double(costTextField.text ?? "") ?? 0
-        pd.isMyDebt = `switch`.isOn
 
         try! realm.write {
             realm.add(pd, update: true)

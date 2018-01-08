@@ -18,11 +18,11 @@ struct Constants {
 //        static let categoryCell: CGFloat = 80
     }
     
-    static let detailCell = "DetailCell"
+//    static let detailCell = "DetailCell"
     static let categoryCell = "DebtCategoryTableViewCell"
-    static let categoryDetailCell = "DebtCategoryDetailTableViewCell"
+    static let debtDetailCell = "DebtDetailTableViewCell"
     static let personCell = "PersonTableViewCell"
-    static let personDetailCell = "PersonDetailTableViewCell"
+//    static let personDetailCell = "PersonDetailTableViewCell"
     
     static var currency = "kn"
     static var currencyBeforeValue = false
