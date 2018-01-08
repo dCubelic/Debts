@@ -65,7 +65,108 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3566" y="-307"/>
+            <point key="canvasLocation" x="668" y="65"/>
+        </scene>
+        <!--New Debt-->
+        <scene sceneID="tAn-30-3EC">
+            <objects>
+                <viewController id="WwS-a3-gI5" customClass="NewDebtViewController" customModule="Debts" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="hYC-Ia-Rqg">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" allowsMultipleSelection="YES" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U6g-iy-74f">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <view key="tableHeaderView" contentMode="scaleToFill" id="Thb-AJ-pyi">
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="80"/>
+                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                    <subviews>
+                                        <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HUJ-aY-bpm">
+                                            <rect key="frame" x="310" y="46" width="51" height="31"/>
+                                            <connections>
+                                                <action selector="switchValueChanged:" destination="WwS-a3-gI5" eventType="valueChanged" id="3kC-jh-bJg"/>
+                                            </connections>
+                                        </switch>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="New Debt" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xbj-gO-S8p">
+                                            <rect key="frame" x="16" y="8" width="116" height="35"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="26"/>
+                                            <textInputTraits key="textInputTraits"/>
+                                        </textField>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Split amount:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xXh-VB-8Uk">
+                                            <rect key="frame" x="16" y="51" width="101" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fJs-sE-e66">
+                                            <rect key="frame" x="125" y="53" width="8" height="17"/>
+                                            <nil key="textColor"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
+                                        </textField>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <constraints>
+                                        <constraint firstAttribute="bottom" secondItem="xXh-VB-8Uk" secondAttribute="bottom" constant="8" id="1Yh-KK-DdG"/>
+                                        <constraint firstItem="HUJ-aY-bpm" firstAttribute="centerY" secondItem="xXh-VB-8Uk" secondAttribute="centerY" id="3wE-Lv-BMl"/>
+                                        <constraint firstItem="Xbj-gO-S8p" firstAttribute="top" secondItem="Thb-AJ-pyi" secondAttribute="top" constant="8" id="FtA-9L-bT4"/>
+                                        <constraint firstItem="Xbj-gO-S8p" firstAttribute="leading" secondItem="Thb-AJ-pyi" secondAttribute="leading" constant="16" id="PBI-WM-skC"/>
+                                        <constraint firstAttribute="trailing" secondItem="HUJ-aY-bpm" secondAttribute="trailing" constant="16" id="YMb-H0-aNk"/>
+                                        <constraint firstItem="fJs-sE-e66" firstAttribute="centerY" secondItem="xXh-VB-8Uk" secondAttribute="centerY" id="Yx4-Vb-QrB"/>
+                                        <constraint firstItem="xXh-VB-8Uk" firstAttribute="top" secondItem="Xbj-gO-S8p" secondAttribute="bottom" constant="8" id="bNT-nA-7fn"/>
+                                        <constraint firstItem="fJs-sE-e66" firstAttribute="leading" secondItem="xXh-VB-8Uk" secondAttribute="trailing" constant="8" id="fbf-sR-hy8"/>
+                                        <constraint firstItem="xXh-VB-8Uk" firstAttribute="leading" secondItem="Thb-AJ-pyi" secondAttribute="leading" constant="16" id="uYe-XM-n9P"/>
+                                    </constraints>
+                                </view>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="b9x-T5-FlQ">
+                                        <rect key="frame" x="0.0" y="108" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="b9x-T5-FlQ" id="Q4U-HP-lUQ">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="WwS-a3-gI5" id="iQg-dg-hnd"/>
+                                    <outlet property="delegate" destination="WwS-a3-gI5" id="Vqk-2U-Zsc"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="mKM-ph-Naj" firstAttribute="trailing" secondItem="U6g-iy-74f" secondAttribute="trailing" id="5F1-ld-RpR"/>
+                            <constraint firstItem="U6g-iy-74f" firstAttribute="top" secondItem="mKM-ph-Naj" secondAttribute="top" id="Jvg-02-LxQ"/>
+                            <constraint firstItem="U6g-iy-74f" firstAttribute="leading" secondItem="mKM-ph-Naj" secondAttribute="leading" id="KmY-Rf-kH2"/>
+                            <constraint firstItem="mKM-ph-Naj" firstAttribute="bottom" secondItem="U6g-iy-74f" secondAttribute="bottom" id="M1G-Rk-vwY"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="mKM-ph-Naj"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="New Debt" id="x0e-Pc-tE7">
+                        <barButtonItem key="leftBarButtonItem" title="Cancel" id="KpO-P5-Y0J">
+                            <connections>
+                                <action selector="cancelAction:" destination="WwS-a3-gI5" id="AxQ-WX-iVW"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Done" style="done" id="jiK-F3-mbW">
+                            <connections>
+                                <action selector="doneAction:" destination="WwS-a3-gI5" id="LJb-GH-Z6B"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="splitAmountTextField" destination="fJs-sE-e66" id="gLY-Al-687"/>
+                        <outlet property="splitSwitch" destination="HUJ-aY-bpm" id="39B-JC-nAz"/>
+                        <outlet property="tableView" destination="U6g-iy-74f" id="A39-X5-zJn"/>
+                        <outlet property="titleTextField" destination="Xbj-gO-S8p" id="urm-4e-VsY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="k9P-5x-eBY" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2045.5999999999999" y="312.59370314842579"/>
         </scene>
         <!--Debt Categories View Controller-->
         <scene sceneID="YQG-0Q-k0R">
@@ -112,7 +213,7 @@
         <!--Debts-->
         <scene sceneID="tmO-yr-9I3">
             <objects>
-                <viewController id="5U8-0H-ato" customClass="HomeViewController" customModule="Debts" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="HomeViewController" id="5U8-0H-ato" customClass="HomeViewController" customModule="Debts" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="FOT-s1-uD9">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -554,7 +655,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="3566" y="467"/>
+            <point key="canvasLocation" x="4244" y="466.41679160419795"/>
         </scene>
         <!--Add Person View Controller-->
         <scene sceneID="yLp-au-Xda">
@@ -589,7 +690,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SaU-3e-sbz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5209" y="466"/>
+            <point key="canvasLocation" x="5887.1999999999998" y="465.51724137931041"/>
         </scene>
         <!--Title-->
         <scene sceneID="CNN-IY-0hJ">
@@ -687,7 +788,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oTd-ha-tgn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4376.8000000000002" y="465.51724137931041"/>
+            <point key="canvasLocation" x="5055.1999999999998" y="465.51724137931041"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="MwM-pN-Fth">
@@ -700,20 +801,21 @@
                     </tabBar>
                     <connections>
                         <segue destination="DaN-WT-QNq" kind="relationship" relationship="viewControllers" id="IN5-Xw-rl0"/>
-                        <segue destination="Yn6-4z-bb6" kind="relationship" relationship="viewControllers" id="5xo-kf-bYr"/>
-                        <segue destination="xRO-oW-li8" kind="relationship" relationship="viewControllers" id="0tl-9u-aEc"/>
+                        <segue destination="Yn6-4z-bb6" kind="relationship" relationship="viewControllers" id="jsh-sE-3zG"/>
+                        <segue destination="hQ1-1K-gJp" kind="relationship" relationship="viewControllers" id="ba2-Us-fbN"/>
                         <segue destination="qL0-MS-kum" kind="relationship" relationship="viewControllers" id="ba2-aD-Mo3"/>
+                        <segue destination="imx-HX-z56" kind="relationship" relationship="viewControllers" id="Cpt-gx-Nvq"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Iw-3c-bpo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1751" y="-732"/>
         </scene>
-        <!--My Debts-->
+        <!--Add-->
         <scene sceneID="UT1-ZO-MjO">
             <objects>
                 <navigationController automaticallyAdjustsScrollViewInsets="NO" id="xRO-oW-li8" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="My Debts" image="My Debts" id="UIW-Ou-hJo"/>
+                    <tabBarItem key="tabBarItem" title="Add" id="UIW-Ou-hJo"/>
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="bzs-SN-41w">
                         <rect key="frame" x="0.0" y="20" width="375" height="44"/>
@@ -726,7 +828,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="EHK-CZ-clF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2700" y="-307"/>
+            <point key="canvasLocation" x="-63" y="65"/>
         </scene>
         <!--Debts-->
         <scene sceneID="jq2-SZ-cWT">
@@ -783,7 +885,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i5c-vY-4dK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2700.8000000000002" y="467.76611694152928"/>
+            <point key="canvasLocation" x="3378.4000000000001" y="467.3163418290855"/>
         </scene>
         <!--Title-->
         <scene sceneID="coo-08-MnL">
@@ -876,6 +978,86 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LtU-CZ-VdD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4377" y="-1043"/>
+        </scene>
+        <!--My Debt Categories View Controller-->
+        <scene sceneID="L1Z-FT-ztz">
+            <objects>
+                <viewController id="oF6-oA-cQf" customClass="MyDebtCategoriesViewController" customModule="Debts" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="WMM-G7-zTJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="gZj-HL-dGs">
+                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <connections>
+                                    <outlet property="dataSource" destination="oF6-oA-cQf" id="S3b-Et-oVg"/>
+                                    <outlet property="delegate" destination="oF6-oA-cQf" id="TlH-Xz-Q3U"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="EYk-gn-AAh" firstAttribute="trailing" secondItem="gZj-HL-dGs" secondAttribute="trailing" id="6Qv-D9-Jk5"/>
+                            <constraint firstItem="gZj-HL-dGs" firstAttribute="top" secondItem="EYk-gn-AAh" secondAttribute="top" id="8gY-ui-ojG"/>
+                            <constraint firstItem="EYk-gn-AAh" firstAttribute="bottom" secondItem="gZj-HL-dGs" secondAttribute="bottom" id="Akt-Ql-ubC"/>
+                            <constraint firstItem="gZj-HL-dGs" firstAttribute="leading" secondItem="EYk-gn-AAh" secondAttribute="leading" id="a1D-xo-REf"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="EYk-gn-AAh"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="4ny-ZX-I4d">
+                        <barButtonItem key="leftBarButtonItem" title="Sort" image="Sort" id="ZpX-Gx-EzI">
+                            <connections>
+                                <action selector="sortAction:" destination="oF6-oA-cQf" id="sba-CJ-SNY"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Imr-kE-dV2"/>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="gZj-HL-dGs" id="x5U-FH-8Tt"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="bw1-wz-EAl" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3904.8000000000002" y="-308.09595202398805"/>
+        </scene>
+        <!--My Debts-->
+        <scene sceneID="Vfg-op-0X7">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="hQ1-1K-gJp" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="My Debts" image="My Debts" id="ksF-Ye-yG9"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="LHj-3Y-BEp">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="oF6-oA-cQf" kind="relationship" relationship="rootViewController" id="R2K-qD-2ej"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dVg-a6-ciZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3039.1999999999998" y="-308.09595202398805"/>
+        </scene>
+        <!--Item-->
+        <scene sceneID="2zF-nW-bjm">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="imx-HX-z56" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" id="kSH-ZU-gmh"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="QXW-pP-O8X">
+                        <rect key="frame" x="0.0" y="20" width="375" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="WwS-a3-gI5" kind="relationship" relationship="rootViewController" id="KeI-nb-B6T"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dfj-Ne-NjP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1337" y="313"/>
         </scene>
     </scenes>
     <resources>

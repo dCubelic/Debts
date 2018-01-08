@@ -8,6 +8,7 @@ struct Constants {
         static let personDetail2ViewController = "PersonDetail2ViewController"
         static let addPersonViewController = "AddPersonViewController"
         static let debtCategoryDetailViewController = "DebtCategoryDetailViewController"
+        static let homeViewController = "HomeViewController"
     }
     
     struct Notifications {

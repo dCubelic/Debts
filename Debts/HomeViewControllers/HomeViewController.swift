@@ -17,6 +17,8 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "Home"
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         
         homeView.layer.cornerRadius = 25
@@ -30,6 +32,8 @@ class HomeViewController: UIViewController {
         newMyDebt.backgroundColor = UIColor(white: 230 / 255, alpha : 1)
         newDebt.layer.cornerRadius = 8
         newDebt.backgroundColor = UIColor(white: 230 / 255, alpha : 1)
+        
+        myDebtsLabel.textColor = .red
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         

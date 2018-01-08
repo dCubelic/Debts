@@ -35,13 +35,13 @@ class DebtCategory: UniqueObject {
     let debts = LinkingObjects(fromType: Debt.self, property: "debtCategory")
     
     var totalDebt: Double {
-        let td: Double = debts.filter("debtCategory.isMyDebt = false").sum(ofProperty: "cost")
-        let tmd: Double = debts.filter("debtCategory.isMyDebt = true").sum(ofProperty: "cost")
-        //        let sum: Double = debts.sum(ofProperty: "cost")
-        
-        return td - tmd
-//        let sum: Double = debts.sum(ofProperty: "cost")
-//        return sum
+//        let td: Double = debts.filter("debtCategory.isMyDebt = false").sum(ofProperty: "cost")
+//        let tmd: Double = debts.filter("debtCategory.isMyDebt = true").sum(ofProperty: "cost")
+//        //        let sum: Double = debts.sum(ofProperty: "cost")
+//        
+//        return td - tmd
+        let sum: Double = debts.sum(ofProperty: "cost")
+        return sum
     }
     
 }

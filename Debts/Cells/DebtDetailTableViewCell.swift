@@ -41,6 +41,9 @@ class DebtDetailTableViewCell: UITableViewCell {
         layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSize.zero
         layer.shadowRadius = 3
+        
+        let holdGesture = UILongPressGestureRecognizer(target: self, action: #selector(editCost))
+        addGestureRecognizer(holdGesture)
     }
     
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
@@ -52,26 +55,35 @@ class DebtDetailTableViewCell: UITableViewCell {
     }
     
     func setupForDebtCategoryDetails(with debt: Debt) {
-        guard let person = debt.person else { return }
+        guard let person = debt.person, let debtCategory = debt.debtCategory else { return }
         
         leftView.backgroundColor = UIColor(for: person)
         underlineView.backgroundColor = UIColor(for: person)
         
         nameLabel.text = debt.person?.name
         dateLabel.text = dateFormatter.string(from: debt.dateAdded)
+        
         costLabel.text = String(
             format: "%@%.2f%@",
             Constants.currencyBeforeValue ? Constants.currency : "",
             debt.cost,
             Constants.currencyBeforeValue ? "" : Constants.currency
         )
+        
+        if debtCategory.isMyDebt {
+            costLabel.textColor = .red
+        } else {
+            costLabel.textColor = .black
+        }
     }
     
     func setupForPersonDetails(with debt: Debt) {
         guard let debtCategory = debt.debtCategory else { return }
         
-        nameLabel.text = debtCategory.name
         leftView.backgroundColor = UIColor(for: debtCategory)
+        underlineView.backgroundColor = UIColor(for: debtCategory)
+        
+        nameLabel.text = debtCategory.name
         dateLabel.text = dateFormatter.string(from: debt.dateAdded)
         
         costLabel.text = String(
@@ -80,9 +92,15 @@ class DebtDetailTableViewCell: UITableViewCell {
             debt.cost,
             Constants.currencyBeforeValue ? "" : Constants.currency
         )
+        
+        if debtCategory.isMyDebt {
+            costLabel.textColor = .red
+        } else {
+            costLabel.textColor = .black
+        }
     }
     
-    func editCost() {
+    @objc func editCost() {
         costLabel.isHidden = true
         costTextField.isHidden = false
         costTextField.becomeFirstResponder()

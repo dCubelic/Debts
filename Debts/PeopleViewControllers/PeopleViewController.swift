@@ -24,7 +24,6 @@ class PeopleViewController: UIViewController {
             } else if state == .addingState {
                 rightBarButtonItem.isEnabled = false
                 leftBarButtonItem.image = nil
-                
                 leftBarButtonItem.title = "Cancel"
             }
         }
@@ -48,7 +47,6 @@ class PeopleViewController: UIViewController {
                 let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
                 let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
                 let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
-                
                 
                 if let tabBarHeight = self.tabBarController?.tabBar.frame.height {
                     self.tableViewBottomConstraint.constant = UIScreen.main.bounds.height - endFrameValue.cgRectValue.minY - tabBarHeight
@@ -106,6 +104,17 @@ class PeopleViewController: UIViewController {
         tableView.reloadData()
     }
     
+    func getPerson(for indexPath: IndexPath) -> Person {
+        var person: Person
+        if isFiltering() {
+            person = filteredPeople[indexPath.row]
+        } else {
+            person = people[indexPath.row]
+        }
+        
+        return person
+    }
+    
     @objc func reloadPeople() {
         people = RealmHelper.getAllPersons()
         sortPeople()
@@ -142,25 +151,6 @@ class PeopleViewController: UIViewController {
 
         present(navVC, animated: true, completion: nil)
     }
-    
-//    @IBAction func editAction(_ sender: Any) {
-//        guard let barButton = sender as? UIBarButtonItem else { return }
-//        
-//        if tableView.isEditing {
-//            navigationItem.rightBarButtonItem?.isEnabled = true
-//            navigationItem.rightBarButtonItem?.tintColor = nil
-//            barButton.style = .plain
-//            barButton.title = "Edit"
-//            tableView.setEditing(false, animated: true)
-//        } else {
-//            navigationItem.rightBarButtonItem?.isEnabled = false
-//            navigationItem.rightBarButtonItem?.tintColor = .clear
-//            barButton.style = .done
-//            barButton.title = "Cancel"
-//            tableView.setEditing(true, animated: true)
-//        }
-//
-//    }
     
     @IBAction func leftBarButtonAction(_ sender: Any) {
         if state == .defaultState {
@@ -202,12 +192,7 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.personCell, for: indexPath) as! PersonTableViewCell
         
-        var person: Person
-        if isFiltering() {
-            person = filteredPeople[indexPath.row]
-        } else {
-            person = people[indexPath.row]
-        }
+        let person = getPerson(for: indexPath)
         
         cell.delegate = self
         cell.setup(with: person)
@@ -218,12 +203,7 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.personDetailViewController) as! PersonDetailViewController
         
-        var person: Person
-        if isFiltering() {
-            person = filteredPeople[indexPath.row]
-        } else {
-            person = people[indexPath.row]
-        }
+        let person = getPerson(for: indexPath)
         
         vc.person = person
         navigationController?.pushViewController(vc, animated: true)
@@ -232,12 +212,7 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
             
-            var person: Person
-            if self.isFiltering() {
-                person = self.filteredPeople[indexPath.row]
-            } else {
-                person = self.people[indexPath.row]
-            }
+            let person = self.getPerson(for: indexPath)
             
             RealmHelper.removePerson(person: person)
             
@@ -283,12 +258,7 @@ extension PeopleViewController: PersonTableViewCellDelegate {
     func personTableViewCell(_ cell: PersonTableViewCell, didChangeNameTo name: String) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
-        var person: Person
-        if self.isFiltering() {
-            person = self.filteredPeople[indexPath.row]
-        } else {
-            person = self.people[indexPath.row]
-        }
+        let person = getPerson(for: indexPath)
         
         RealmHelper.changeName(for: person, name: name)
         

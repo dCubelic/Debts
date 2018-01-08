@@ -1,7 +1,7 @@
 import UIKit
 
-class DebtCategoriesViewController: UIViewController {
-
+class MyDebtCategoriesViewController: UIViewController {
+    
     @IBOutlet weak var tableView: UITableView!
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -21,12 +21,12 @@ class DebtCategoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
-        title = "Debts"
+        title = "My Debts"
         navigationController?.navigationBar.prefersLargeTitles = true
         
         searchController.searchResultsUpdater = self
@@ -53,7 +53,7 @@ class DebtCategoriesViewController: UIViewController {
     }
     
     @objc func reloadDebtCategories() {
-        debtCategories = RealmHelper.getAllDebtCategories()
+        debtCategories = RealmHelper.getAllMyDebtCategories()
         sortDebtCategories()
         if let searchText = searchController.searchBar.text {
             filterDebtCategories(for: searchText)
@@ -80,38 +80,38 @@ class DebtCategoriesViewController: UIViewController {
         
         tableView.reloadData()
     }
-
-//    @IBAction func editAction(_ sender: Any) {
-//        guard let barButton = sender as? UIBarButtonItem else { return }
-//        
-//        if tableView.isEditing {
-//            navigationItem.rightBarButtonItem?.isEnabled = true
-//            navigationItem.rightBarButtonItem?.tintColor = nil
-//            barButton.style = .plain
-//            barButton.title = "Edit"
-//            tableView.setEditing(false, animated: true)
-//        } else {
-//            navigationItem.rightBarButtonItem?.isEnabled = false
-//            navigationItem.rightBarButtonItem?.tintColor = .clear
-//            barButton.style = .done
-//            barButton.title = "Cancel"
-//            tableView.setEditing(true, animated: true)
-//        }
-//    }
+    
+    //    @IBAction func editAction(_ sender: Any) {
+    //        guard let barButton = sender as? UIBarButtonItem else { return }
+    //
+    //        if tableView.isEditing {
+    //            navigationItem.rightBarButtonItem?.isEnabled = true
+    //            navigationItem.rightBarButtonItem?.tintColor = nil
+    //            barButton.style = .plain
+    //            barButton.title = "Edit"
+    //            tableView.setEditing(false, animated: true)
+    //        } else {
+    //            navigationItem.rightBarButtonItem?.isEnabled = false
+    //            navigationItem.rightBarButtonItem?.tintColor = .clear
+    //            barButton.style = .done
+    //            barButton.title = "Cancel"
+    //            tableView.setEditing(true, animated: true)
+    //        }
+    //    }
     
     @IBAction func sortAction(_ sender: Any) {
         let actionSheet = UIAlertController(title: "Sort by:", message: nil, preferredStyle: .actionSheet)
         
         actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (alertAction) in
-            self.sortComparator = DebtCategoriesViewController.nameComparator
+            self.sortComparator = MyDebtCategoriesViewController.nameComparator
             self.sortDebtCategories()
         }))
         actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (alertAction) in
-            self.sortComparator = DebtCategoriesViewController.totalDebtComparator
+            self.sortComparator = MyDebtCategoriesViewController.totalDebtComparator
             self.sortDebtCategories()
         }))
         actionSheet.addAction(UIAlertAction(title: "Date Created", style: .default, handler: { (alertAction) in
-            self.sortComparator = DebtCategoriesViewController.dateComparator
+            self.sortComparator = MyDebtCategoriesViewController.dateComparator
             self.sortDebtCategories()
         }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
@@ -120,7 +120,7 @@ class DebtCategoriesViewController: UIViewController {
     }
 }
 
-extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelegate {
+extension MyDebtCategoriesViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if isFiltering() {
@@ -161,30 +161,30 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
         navigationController?.pushViewController(vc, animated: true)
     }
     
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        var debtCategory: DebtCategory
-//        if isFiltering() {
-//            debtCategory = filteredDebtCategories[indexPath.row]
-//        } else {
-//            debtCategory = debtCategories[indexPath.row]
-//        }
-//
-//        if editingStyle == .delete {
-//            if isFiltering() {
-//                if let index = debtCategories.index(of: filteredDebtCategories[indexPath.row]) {
-//                    debtCategories.remove(at: index)
-//                }
-//                filteredDebtCategories.remove(at: indexPath.row)
-//            } else {
-//                debtCategories.remove(at: indexPath.row)
-//            }
-//
-//            tableView.deleteRows(at: [indexPath], with: .automatic)
-//            RealmHelper.removeDebtCategory(debtCategory: debtCategory)
-//
-//            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
-//        }
-//    }
+    //    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
+    //        var debtCategory: DebtCategory
+    //        if isFiltering() {
+    //            debtCategory = filteredDebtCategories[indexPath.row]
+    //        } else {
+    //            debtCategory = debtCategories[indexPath.row]
+    //        }
+    //
+    //        if editingStyle == .delete {
+    //            if isFiltering() {
+    //                if let index = debtCategories.index(of: filteredDebtCategories[indexPath.row]) {
+    //                    debtCategories.remove(at: index)
+    //                }
+    //                filteredDebtCategories.remove(at: indexPath.row)
+    //            } else {
+    //                debtCategories.remove(at: indexPath.row)
+    //            }
+    //
+    //            tableView.deleteRows(at: [indexPath], with: .automatic)
+    //            RealmHelper.removeDebtCategory(debtCategory: debtCategory)
+    //
+    //            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+    //        }
+    //    }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
@@ -222,7 +222,7 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
     
 }
 
-extension DebtCategoriesViewController: UISearchResultsUpdating {
+extension MyDebtCategoriesViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
             filterDebtCategories(for: searchText)
@@ -230,7 +230,7 @@ extension DebtCategoriesViewController: UISearchResultsUpdating {
     }
 }
 
-extension DebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
+extension MyDebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
     func debtCategoryTableViewCell(_ cell: DebtCategoryTableViewCell, didChangeTitleTo title: String) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
@@ -246,3 +246,4 @@ extension DebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
     }
 }
+
