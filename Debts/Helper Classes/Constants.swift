@@ -9,6 +9,7 @@ struct Constants {
         static let addPersonViewController = "AddPersonViewController"
         static let debtCategoryDetailViewController = "DebtCategoryDetailViewController"
         static let homeViewController = "HomeViewController"
+        static let newDebtViewController = "NewDebtViewController"
     }
     
     struct Notifications {
@@ -19,11 +20,10 @@ struct Constants {
 //        static let categoryCell: CGFloat = 80
     }
     
-//    static let detailCell = "DetailCell"
     static let categoryCell = "DebtCategoryTableViewCell"
     static let debtDetailCell = "DebtDetailTableViewCell"
     static let personCell = "PersonTableViewCell"
-//    static let personDetailCell = "PersonDetailTableViewCell"
+    static let newDebtPersonCell = "NewDebtPersonTableViewCell"
     
     static var currency = "kn"
     static var currencyBeforeValue = false

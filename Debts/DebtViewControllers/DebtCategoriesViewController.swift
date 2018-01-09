@@ -80,25 +80,13 @@ class DebtCategoriesViewController: UIViewController {
         
         tableView.reloadData()
     }
-
-//    @IBAction func editAction(_ sender: Any) {
-//        guard let barButton = sender as? UIBarButtonItem else { return }
-//        
-//        if tableView.isEditing {
-//            navigationItem.rightBarButtonItem?.isEnabled = true
-//            navigationItem.rightBarButtonItem?.tintColor = nil
-//            barButton.style = .plain
-//            barButton.title = "Edit"
-//            tableView.setEditing(false, animated: true)
-//        } else {
-//            navigationItem.rightBarButtonItem?.isEnabled = false
-//            navigationItem.rightBarButtonItem?.tintColor = .clear
-//            barButton.style = .done
-//            barButton.title = "Cancel"
-//            tableView.setEditing(true, animated: true)
-//        }
-//    }
     
+    @IBAction func addAction(_ sender: Any) {
+        let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.newDebtViewController)
+        
+        let navVC = UINavigationController(rootViewController: vc)
+        present(navVC, animated: true, completion: nil)
+    }
     @IBAction func sortAction(_ sender: Any) {
         let actionSheet = UIAlertController(title: "Sort by:", message: nil, preferredStyle: .actionSheet)
         
