@@ -8,7 +8,17 @@ class NewDebtPersonTableViewCell: UITableViewCell {
     @IBOutlet weak var costTextField: UITextField!
     
     var personColor: UIColor?
-    var s: Bool = true
+    var isCellSelected: Bool = true {
+        didSet {
+            if isCellSelected {
+                leftView.backgroundColor = personColor
+                contentView.alpha = 1
+            } else {
+                contentView.alpha = 0.3
+                leftView.backgroundColor = UIColor.gray
+            }
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -30,18 +40,7 @@ class NewDebtPersonTableViewCell: UITableViewCell {
     }
     
     func switchSelection() {
-
-        s = !s
-        
-        if s {
-            leftView.backgroundColor = personColor
-            contentView.alpha = 1
-        } else {
-            contentView.alpha = 0.3
-            leftView.backgroundColor = UIColor.gray
-        }
-        
-        
+        isCellSelected = !isCellSelected
     }
     
 //    override func setHighlighted(_ highlighted: Bool, animated: Bool) {
@@ -52,10 +51,14 @@ class NewDebtPersonTableViewCell: UITableViewCell {
 //        }
 //    }
     
-    func setup(with person: Person) {
-//        leftView.backgroundColor = UIColor(for: person)
+    func setup(with person: Person, selected: Bool) {
         personColor = UIColor(for: person)
-        
         nameLabel.text = person.name
+        
+        if selected {
+            isCellSelected = true
+        } else {
+            isCellSelected = false
+        }
     }
 }

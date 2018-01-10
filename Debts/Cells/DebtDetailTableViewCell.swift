@@ -69,12 +69,7 @@ class DebtDetailTableViewCell: UITableViewCell {
             debt.cost,
             Constants.currencyBeforeValue ? "" : Constants.currency
         )
-        
-        if debtCategory.isMyDebt {
-            costLabel.textColor = .red
-        } else {
-            costLabel.textColor = .black
-        }
+
     }
     
     func setupForPersonDetails(with debt: Debt) {

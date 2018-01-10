@@ -149,31 +149,6 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
         navigationController?.pushViewController(vc, animated: true)
     }
     
-//    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCellEditingStyle, forRowAt indexPath: IndexPath) {
-//        var debtCategory: DebtCategory
-//        if isFiltering() {
-//            debtCategory = filteredDebtCategories[indexPath.row]
-//        } else {
-//            debtCategory = debtCategories[indexPath.row]
-//        }
-//
-//        if editingStyle == .delete {
-//            if isFiltering() {
-//                if let index = debtCategories.index(of: filteredDebtCategories[indexPath.row]) {
-//                    debtCategories.remove(at: index)
-//                }
-//                filteredDebtCategories.remove(at: indexPath.row)
-//            } else {
-//                debtCategories.remove(at: indexPath.row)
-//            }
-//
-//            tableView.deleteRows(at: [indexPath], with: .automatic)
-//            RealmHelper.removeDebtCategory(debtCategory: debtCategory)
-//
-//            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
-//        }
-//    }
-    
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
             

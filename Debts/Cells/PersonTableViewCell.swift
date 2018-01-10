@@ -50,7 +50,7 @@ class PersonTableViewCell: UITableViewCell {
         detailLabel.text = String(
             format: "%@%.2f%@",
             Constants.currencyBeforeValue ? Constants.currency : "",
-            person.totalDebt,
+            abs(person.totalDebt),
             Constants.currencyBeforeValue ? "" : Constants.currency
         )
         
@@ -58,6 +58,12 @@ class PersonTableViewCell: UITableViewCell {
         
         leftView.backgroundColor = color
         underlineView.backgroundColor = color
+        
+        if person.totalDebt < 0 {
+            detailLabel.textColor = UIColor.red
+        } else {
+            detailLabel.textColor = UIColor.black
+        }
         
         let debts = RealmHelper.getDebts(for: person)
         

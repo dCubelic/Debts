@@ -30,7 +30,14 @@ class PeopleViewController: UIViewController {
     }
     
     private static let nameComparator: (Person, Person) -> Bool = { $0.name.lowercased() < $1.name.lowercased() }
-    private static let totalDebtComparator: (Person, Person) -> Bool = { $0.totalDebt > $1.totalDebt }
+    private static let totalDebtComparator: (Person, Person) -> Bool = {
+        if $0.totalDebt >= 0 && $1.totalDebt >= 0 {
+            return $0.totalDebt > $1.totalDebt
+        } else {
+            return $0.totalDebt < $1.totalDebt
+        }
+//        $0.totalDebt > $1.totalDebt
+    }
     
     var keyboardObserver: NSObjectProtocol? = nil
     deinit {

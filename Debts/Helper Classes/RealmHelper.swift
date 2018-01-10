@@ -71,6 +71,18 @@ class RealmHelper {
         return person
     }
     
+    static func add(debtCategory: DebtCategory, with people: [Person]) {
+        try! realm.write {
+            for person in people {
+                let debt = Debt()
+                debt.debtCategory = debtCategory
+                debt.person = person
+                debt.cost = 0
+                realm.add(debt)
+            }
+        }
+    }
+    
     static func removePerson(person: Person) {
         try! realm.write {
             realm.delete(person.debts)

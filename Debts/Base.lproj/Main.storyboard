@@ -67,7 +67,7 @@
             </objects>
             <point key="canvasLocation" x="668" y="65"/>
         </scene>
-        <!--New Debt-->
+        <!--New Debt View Controller-->
         <scene sceneID="tAn-30-3EC">
             <objects>
                 <viewController storyboardIdentifier="NewDebtViewController" id="WwS-a3-gI5" customClass="NewDebtViewController" customModule="Debts" customModuleProvider="target" sceneMemberID="viewController">
@@ -76,7 +76,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="U6g-iy-74f">
-                                <rect key="frame" x="0.0" y="64" width="375" height="554"/>
+                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="Thb-AJ-pyi">
                                     <rect key="frame" x="0.0" y="0.0" width="375" height="87"/>
@@ -155,7 +155,8 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="mKM-ph-Naj"/>
                     </view>
-                    <navigationItem key="navigationItem" title="New Debt" id="x0e-Pc-tE7">
+                    <navigationItem key="navigationItem" id="x0e-Pc-tE7">
+                        <nil key="title"/>
                         <barButtonItem key="leftBarButtonItem" title="Cancel" id="KpO-P5-Y0J">
                             <connections>
                                 <action selector="cancelAction:" destination="WwS-a3-gI5" id="AxQ-WX-iVW"/>
@@ -172,11 +173,12 @@
                         <outlet property="splitSwitch" destination="HUJ-aY-bpm" id="39B-JC-nAz"/>
                         <outlet property="tableView" destination="U6g-iy-74f" id="A39-X5-zJn"/>
                         <outlet property="titleTextField" destination="Xbj-gO-S8p" id="urm-4e-VsY"/>
+                        <outlet property="underlineView" destination="GUO-ip-jD4" id="GcD-c6-sDH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k9P-5x-eBY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2045.5999999999999" y="312.59370314842579"/>
+            <point key="canvasLocation" x="6209" y="-576"/>
         </scene>
         <!--Debt Categories View Controller-->
         <scene sceneID="YQG-0Q-k0R">
@@ -532,6 +534,9 @@
                                                         <state key="normal" title="New My Debt">
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="newMyDebtAction:" destination="5U8-0H-ato" eventType="touchUpInside" id="81O-hA-2J3"/>
+                                                        </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I7V-bY-Ff5">
                                                         <rect key="frame" x="0.0" y="60" width="295" height="45"/>
@@ -542,6 +547,9 @@
                                                         <state key="normal" title="New Debt">
                                                             <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                                         </state>
+                                                        <connections>
+                                                            <action selector="newDebtAction:" destination="5U8-0H-ato" eventType="touchUpInside" id="QtC-v3-XUH"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -669,7 +677,7 @@
                     </connections>
                 </searchDisplayController>
             </objects>
-            <point key="canvasLocation" x="4244" y="466.41679160419795"/>
+            <point key="canvasLocation" x="3564" y="466"/>
         </scene>
         <!--Add Person View Controller-->
         <scene sceneID="yLp-au-Xda">
@@ -704,7 +712,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SaU-3e-sbz" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5887.1999999999998" y="465.51724137931041"/>
+            <point key="canvasLocation" x="5207" y="466"/>
         </scene>
         <!--Title-->
         <scene sceneID="CNN-IY-0hJ">
@@ -802,7 +810,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="oTd-ha-tgn" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5055.1999999999998" y="465.51724137931041"/>
+            <point key="canvasLocation" x="4377" y="466"/>
         </scene>
         <!--Tab Bar Controller-->
         <scene sceneID="MwM-pN-Fth">
@@ -818,7 +826,6 @@
                         <segue destination="Yn6-4z-bb6" kind="relationship" relationship="viewControllers" id="jsh-sE-3zG"/>
                         <segue destination="hQ1-1K-gJp" kind="relationship" relationship="viewControllers" id="ba2-Us-fbN"/>
                         <segue destination="qL0-MS-kum" kind="relationship" relationship="viewControllers" id="ba2-aD-Mo3"/>
-                        <segue destination="imx-HX-z56" kind="relationship" relationship="viewControllers" id="Cpt-gx-Nvq"/>
                     </connections>
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1Iw-3c-bpo" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -899,7 +906,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="i5c-vY-4dK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3378.4000000000001" y="467.3163418290855"/>
+            <point key="canvasLocation" x="2700" y="466"/>
         </scene>
         <!--Title-->
         <scene sceneID="coo-08-MnL">
@@ -991,7 +998,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LtU-CZ-VdD" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4377" y="-1043"/>
+            <point key="canvasLocation" x="4423" y="-576"/>
         </scene>
         <!--My Debt Categories View Controller-->
         <scene sceneID="L1Z-FT-ztz">
@@ -1025,7 +1032,11 @@
                                 <action selector="sortAction:" destination="oF6-oA-cQf" id="sba-CJ-SNY"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Imr-kE-dV2"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="Imr-kE-dV2">
+                            <connections>
+                                <action selector="addAction:" destination="oF6-oA-cQf" id="Ttj-ct-y17"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="gZj-HL-dGs" id="x5U-FH-8Tt"/>
@@ -1033,7 +1044,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bw1-wz-EAl" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3904.8000000000002" y="-308.09595202398805"/>
+            <point key="canvasLocation" x="3566" y="-308"/>
         </scene>
         <!--My Debts-->
         <scene sceneID="Vfg-op-0X7">
@@ -1052,7 +1063,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dVg-a6-ciZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3039.1999999999998" y="-308.09595202398805"/>
+            <point key="canvasLocation" x="2700" y="-308"/>
         </scene>
         <!--Item-->
         <scene sceneID="2zF-nW-bjm">
@@ -1071,7 +1082,7 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dfj-Ne-NjP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1337" y="313"/>
+            <point key="canvasLocation" x="5377" y="-576"/>
         </scene>
     </scenes>
     <resources>

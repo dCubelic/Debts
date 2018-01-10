@@ -49,6 +49,15 @@ class HomeViewController: UIViewController {
         homeView.layer.shadowRadius = 3
     }
     
+    
+    @IBAction func newMyDebtAction(_ sender: Any) {
+        
+    }
+    
+    @IBAction func newDebtAction(_ sender: Any) {
+        
+    }
+    
     @objc func reloadData() {
         let totalAllDebt = RealmHelper.getTotalOfAllDebts()
         totalDebtLabel.text = formatWithCurrency(number: totalAllDebt)
