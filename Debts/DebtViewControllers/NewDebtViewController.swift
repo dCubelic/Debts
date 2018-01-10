@@ -34,6 +34,7 @@ class NewDebtViewController: UIViewController {
 //        navigationController?.navigationBar.prefersLargeTitles = true
         
         people = RealmHelper.getAllPersons()
+        sortPeople()
         
         titleTextField.delegate = self
         
@@ -46,6 +47,10 @@ class NewDebtViewController: UIViewController {
         titleTextField.becomeFirstResponder()
         
         underlineView.backgroundColor = UIColor(for: debtCategory)
+    }
+    
+    func sortPeople() {
+        people.sort { $0.name < $1.name }
     }
     
     func searchBarIsEmpty() -> Bool {
