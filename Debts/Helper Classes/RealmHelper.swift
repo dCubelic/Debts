@@ -71,13 +71,17 @@ class RealmHelper {
         return person
     }
     
-    static func add(debtCategory: DebtCategory, with people: [Person]) {
+    static func add(debtCategory: DebtCategory, with people: [Person], and costDictionary: [Person: Double]) {
         try! realm.write {
             for person in people {
                 let debt = Debt()
                 debt.debtCategory = debtCategory
                 debt.person = person
-                debt.cost = 0
+                if let cost = costDictionary[person] {
+                    debt.cost = cost
+                } else {
+                    continue
+                }
                 realm.add(debt)
             }
         }
@@ -132,6 +136,9 @@ class RealmHelper {
     static func changeTitle(for debtCategory: DebtCategory, title: String) {
         try! realm.write {
             debtCategory.name = title
+            if !(realm.objects(DebtCategory.self).filter("uuid = %@", debtCategory.uuid).count == 1) {
+                realm.add(debtCategory)
+            }
         }
     }
     
@@ -159,7 +166,7 @@ class RealmHelper {
         return realm.objects(Debt.self).count
     }
     
-    private static func removeEmptyDebtCategories() {
+    static func removeEmptyDebtCategories() {
         let debtCategories = realm.objects(DebtCategory.self)
         
         for debtCategory in debtCategories {

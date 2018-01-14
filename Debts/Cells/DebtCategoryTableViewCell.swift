@@ -2,6 +2,7 @@ import UIKit
 
 protocol DebtCategoryTableViewCellDelegate: class {
     func debtCategoryTableViewCell(_ cell: DebtCategoryTableViewCell, didChangeTitleTo title: String)
+    func debtCategoryTableViewCellDidCancel(_ cell: DebtCategoryTableViewCell)
 }
 
 class DebtCategoryTableViewCell: UITableViewCell {
@@ -71,7 +72,7 @@ class DebtCategoryTableViewCell: UITableViewCell {
         
         if(debts.count > 2) {
             subtitleLabel.text = "\(debts.count) people"
-        } else {
+        } else if debts.count > 0 {
             var peopleString = ""
             for debt in debts {
                 peopleString += debt.person?.name ?? ""
@@ -80,6 +81,8 @@ class DebtCategoryTableViewCell: UITableViewCell {
             peopleString.removeLast()
             peopleString.removeLast()
             subtitleLabel.text = peopleString
+        } else {
+            subtitleLabel.text = "0 people"
         }
     }
 
@@ -100,18 +103,22 @@ extension DebtCategoryTableViewCell: UITextFieldDelegate {
         titleTextField.isHidden = true
         titleLabel.isHidden = false
         
-        delegate?.debtCategoryTableViewCell(self, didChangeTitleTo: text)
+        if text.count == 0 {
+            delegate?.debtCategoryTableViewCellDidCancel(self)
+        } else {
+            delegate?.debtCategoryTableViewCell(self, didChangeTitleTo: text)
+        }
     }
     
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        guard let text = textField.text else { return false }
-        
-        if text.count == 0 {
-            return false
-        }
-        
-        return true
-    }
+//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+//        guard let text = textField.text else { return false }
+//        
+//        if text.count == 0 {
+//            return false
+//        }
+//        
+//        return true
+//    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

@@ -40,14 +40,22 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                             </textField>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u4i-yF-DiG">
+                                <rect key="frame" x="284" y="10.5" width="8" height="17"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="o0j-kb-jxf" secondAttribute="trailing" constant="8" id="44X-LF-K4a"/>
+                            <constraint firstItem="u4i-yF-DiG" firstAttribute="height" secondItem="o0j-kb-jxf" secondAttribute="height" id="A30-gU-TaY"/>
+                            <constraint firstAttribute="trailing" secondItem="u4i-yF-DiG" secondAttribute="trailing" constant="8" id="DLj-w4-RZZ"/>
                             <constraint firstItem="QKc-vo-pCn" firstAttribute="centerY" secondItem="bJQ-vf-is0" secondAttribute="centerY" id="H7b-JE-FQ4"/>
                             <constraint firstAttribute="bottom" secondItem="KPL-2W-1rZ" secondAttribute="bottom" id="I9e-ya-nee"/>
                             <constraint firstItem="KPL-2W-1rZ" firstAttribute="leading" secondItem="bJQ-vf-is0" secondAttribute="leading" id="NiW-Pd-AIs"/>
+                            <constraint firstItem="u4i-yF-DiG" firstAttribute="width" secondItem="o0j-kb-jxf" secondAttribute="width" id="fWZ-zQ-des"/>
                             <constraint firstItem="QKc-vo-pCn" firstAttribute="top" relation="greaterThanOrEqual" secondItem="bJQ-vf-is0" secondAttribute="top" constant="8" id="kq9-Dx-te9"/>
+                            <constraint firstItem="u4i-yF-DiG" firstAttribute="centerY" secondItem="bJQ-vf-is0" secondAttribute="centerY" id="mgp-la-zNZ"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="QKc-vo-pCn" secondAttribute="bottom" constant="8" id="nIv-Fh-nyH"/>
                             <constraint firstItem="o0j-kb-jxf" firstAttribute="centerY" secondItem="bJQ-vf-is0" secondAttribute="centerY" id="qTr-lM-7ga"/>
                             <constraint firstItem="KPL-2W-1rZ" firstAttribute="top" secondItem="bJQ-vf-is0" secondAttribute="top" id="sFh-8D-lgS"/>

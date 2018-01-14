@@ -79,35 +79,29 @@
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <view key="tableHeaderView" contentMode="scaleToFill" id="Thb-AJ-pyi">
-                                    <rect key="frame" x="0.0" y="0.0" width="375" height="87"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="375" height="0.0"/>
                                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                     <subviews>
                                         <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HUJ-aY-bpm">
-                                            <rect key="frame" x="310" y="43" width="51" height="31"/>
+                                            <rect key="frame" x="310" y="-44" width="51" height="31"/>
                                             <connections>
                                                 <action selector="switchValueChanged:" destination="WwS-a3-gI5" eventType="valueChanged" id="3kC-jh-bJg"/>
                                             </connections>
                                         </switch>
-                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="New Debt" adjustsFontSizeToFit="NO" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Xbj-gO-S8p">
-                                            <rect key="frame" x="16" y="8" width="116" height="32"/>
-                                            <nil key="textColor"/>
-                                            <fontDescription key="fontDescription" type="system" pointSize="26"/>
-                                            <textInputTraits key="textInputTraits"/>
-                                        </textField>
                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Split amount:" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="xXh-VB-8Uk">
-                                            <rect key="frame" x="16" y="48" width="101" height="21"/>
+                                            <rect key="frame" x="16" y="-39" width="101" height="21"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                             <nil key="textColor"/>
                                             <nil key="highlightedColor"/>
                                         </label>
                                         <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fJs-sE-e66">
-                                            <rect key="frame" x="125" y="50" width="8" height="17"/>
+                                            <rect key="frame" x="125" y="-37" width="8" height="17"/>
                                             <nil key="textColor"/>
                                             <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                             <textInputTraits key="textInputTraits" keyboardType="decimalPad"/>
                                         </textField>
                                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GUO-ip-jD4">
-                                            <rect key="frame" x="0.0" y="85" width="375" height="2"/>
+                                            <rect key="frame" x="0.0" y="-2" width="375" height="2"/>
                                             <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <constraints>
                                                 <constraint firstAttribute="height" constant="2" id="4gi-ed-JmC"/>
@@ -117,12 +111,9 @@
                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                     <constraints>
                                         <constraint firstItem="HUJ-aY-bpm" firstAttribute="centerY" secondItem="xXh-VB-8Uk" secondAttribute="centerY" id="3wE-Lv-BMl"/>
-                                        <constraint firstItem="Xbj-gO-S8p" firstAttribute="top" secondItem="Thb-AJ-pyi" secondAttribute="top" constant="8" id="FtA-9L-bT4"/>
-                                        <constraint firstItem="Xbj-gO-S8p" firstAttribute="leading" secondItem="Thb-AJ-pyi" secondAttribute="leading" constant="16" id="PBI-WM-skC"/>
                                         <constraint firstItem="GUO-ip-jD4" firstAttribute="leading" secondItem="Thb-AJ-pyi" secondAttribute="leading" id="U3T-V6-9qb"/>
                                         <constraint firstAttribute="trailing" secondItem="HUJ-aY-bpm" secondAttribute="trailing" constant="16" id="YMb-H0-aNk"/>
                                         <constraint firstItem="fJs-sE-e66" firstAttribute="centerY" secondItem="xXh-VB-8Uk" secondAttribute="centerY" id="Yx4-Vb-QrB"/>
-                                        <constraint firstItem="xXh-VB-8Uk" firstAttribute="top" secondItem="Xbj-gO-S8p" secondAttribute="bottom" constant="8" id="bNT-nA-7fn"/>
                                         <constraint firstItem="fJs-sE-e66" firstAttribute="leading" secondItem="xXh-VB-8Uk" secondAttribute="trailing" constant="8" id="fbf-sR-hy8"/>
                                         <constraint firstAttribute="bottom" secondItem="GUO-ip-jD4" secondAttribute="bottom" id="kbL-em-s3W"/>
                                         <constraint firstAttribute="trailing" secondItem="GUO-ip-jD4" secondAttribute="trailing" id="u5u-VP-CjW"/>
@@ -132,7 +123,7 @@
                                 </view>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" id="b9x-T5-FlQ">
-                                        <rect key="frame" x="0.0" y="115" width="375" height="44"/>
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="b9x-T5-FlQ" id="Q4U-HP-lUQ">
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
@@ -172,13 +163,12 @@
                         <outlet property="splitAmountTextField" destination="fJs-sE-e66" id="gLY-Al-687"/>
                         <outlet property="splitSwitch" destination="HUJ-aY-bpm" id="39B-JC-nAz"/>
                         <outlet property="tableView" destination="U6g-iy-74f" id="A39-X5-zJn"/>
-                        <outlet property="titleTextField" destination="Xbj-gO-S8p" id="urm-4e-VsY"/>
                         <outlet property="underlineView" destination="GUO-ip-jD4" id="GcD-c6-sDH"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="k9P-5x-eBY" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6209" y="-576"/>
+            <point key="canvasLocation" x="6208.5" y="-576.5"/>
         </scene>
         <!--Debt Categories View Controller-->
         <scene sceneID="YQG-0Q-k0R">

@@ -3,7 +3,6 @@ import UIKit
 class NewDebtViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var titleTextField: UITextField!
     @IBOutlet weak var splitAmountTextField: UITextField!
     @IBOutlet weak var splitSwitch: UISwitch!
     @IBOutlet weak var underlineView: UIView!
@@ -15,36 +14,35 @@ class NewDebtViewController: UIViewController {
     var people: [Person] = []
     var filteredPeople: [Person] = []
     var selectedPeople: [Person] = []
+    var costDict: [Person: Double] = [:]
     var debtCategory = DebtCategory()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        debtCategory.isMyDebt = isMyDebt
+//        debtCategory.isMyDebt = isMyDebt
+        
+        title = debtCategory.name
         
         splitAmountTextField.isHidden = false
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Categories"
+        searchController.searchBar.placeholder = "Search People"
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
         navigationItem.rightBarButtonItem?.isEnabled = false
-//        navigationController?.navigationBar.prefersLargeTitles = true
+        navigationController?.navigationBar.prefersLargeTitles = true
         
         people = RealmHelper.getAllPersons()
         sortPeople()
-        
-        titleTextField.delegate = self
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
         tableView.register(UINib(nibName: Constants.newDebtPersonCell, bundle: nil), forCellReuseIdentifier: Constants.newDebtPersonCell)
-        
-        titleTextField.becomeFirstResponder()
         
         underlineView.backgroundColor = UIColor(for: debtCategory)
     }
@@ -86,22 +84,28 @@ class NewDebtViewController: UIViewController {
 
     @IBAction func switchValueChanged(_ sender: Any) {
         isSplitting = splitSwitch.isOn
+        tableView.reloadData()
         
         if isSplitting {
             splitAmountTextField.isEnabled = true
+            view.endEditing(true)
             splitAmountTextField.becomeFirstResponder()
         } else {
             splitAmountTextField.isEnabled = false
-            splitAmountTextField.resignFirstResponder()
+            view.endEditing(true)
+//            splitAmountTextField.resignFirstResponder()
         }
     }
     
     @IBAction func cancelAction(_ sender: Any) {
+        RealmHelper.removeDebtCategory(debtCategory: debtCategory)
+        NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         dismiss(animated: true, completion: nil)
     }
     
     @IBAction func doneAction(_ sender: Any) {
-        RealmHelper.add(debtCategory: debtCategory, with: selectedPeople)
+        view.endEditing(true)
+        RealmHelper.add(debtCategory: debtCategory, with: selectedPeople, and: costDict)
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         dismiss(animated: true, completion: nil)
     }
@@ -119,10 +123,20 @@ extension NewDebtViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: Constants.newDebtPersonCell, for: indexPath) as! NewDebtPersonTableViewCell
+        cell.delegate = self
         
         let person = getPerson(for: indexPath)
         
         cell.setup(with: person, selected: selectedPeople.contains(person))
+        if isSplitting {
+            cell.costTextField.isEnabled = false
+            cell.costTextField.alpha = 0.1
+//            cell.costTextField.isHidden = true
+        } else {
+            cell.costTextField.isEnabled = true
+            cell.costTextField.alpha = 1
+//            cell.costTextField.isHidden = false
+        }
         
         return cell
     }
@@ -134,6 +148,9 @@ extension NewDebtViewController: UITableViewDelegate, UITableViewDataSource {
         let person = getPerson(for: indexPath)
         
         if cell.isCellSelected {
+            if !isSplitting {
+                cell.costTextField.becomeFirstResponder()
+            }
             selectedPeople.append(person)
             if selectedPeople.count > 0 {
                 navigationItem.rightBarButtonItem?.isEnabled = true
@@ -149,24 +166,19 @@ extension NewDebtViewController: UITableViewDelegate, UITableViewDataSource {
     }
 }
 
-extension NewDebtViewController: UITextFieldDelegate {
-    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        textField.resignFirstResponder()
-        return true
-    }
-    
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        if textField == titleTextField {
-            title = textField.text
-            debtCategory.name = textField.text ?? ""
-        }
-    }
-}
-
 extension NewDebtViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         if let searchText = searchController.searchBar.text {
             filterPeople(for: searchText)
         }
+    }
+}
+
+extension NewDebtViewController: NewDebtPersonTableViewCellDelegate {
+    func newDebtPersonTableViewCell(_ cell: NewDebtPersonTableViewCell, didChangeCostTo cost: Double) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        let person = getPerson(for: indexPath)
+        costDict[person] = cost
     }
 }

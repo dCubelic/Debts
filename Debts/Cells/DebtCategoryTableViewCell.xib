@@ -39,7 +39,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="42" height="21"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <textInputTraits key="textInputTraits"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="words"/>
                                     </textField>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yzx-IK-rvI">
                                         <rect key="frame" x="0.0" y="25" width="42" height="14.5"/>
@@ -57,7 +57,6 @@
                                     <constraint firstItem="yzx-IK-rvI" firstAttribute="leading" secondItem="YMR-05-VTJ" secondAttribute="leading" id="luq-Wj-yxo"/>
                                     <constraint firstItem="Wxd-Z0-h9W" firstAttribute="centerY" secondItem="O6K-ul-IpY" secondAttribute="centerY" id="pkD-Dd-H7U"/>
                                     <constraint firstItem="Wxd-Z0-h9W" firstAttribute="width" secondItem="O6K-ul-IpY" secondAttribute="width" id="sJL-qL-qWj"/>
-                                    <constraint firstItem="yzx-IK-rvI" firstAttribute="top" secondItem="O6K-ul-IpY" secondAttribute="bottom" constant="4" id="t1h-N9-cDb"/>
                                     <constraint firstAttribute="bottom" secondItem="yzx-IK-rvI" secondAttribute="bottom" id="wfG-9c-SKg"/>
                                     <constraint firstItem="O6K-ul-IpY" firstAttribute="top" secondItem="YMR-05-VTJ" secondAttribute="top" id="xSj-gm-URY"/>
                                 </constraints>
@@ -100,14 +99,18 @@
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="nsq-Gh-hcS" secondAttribute="bottom" constant="8" id="2WY-0a-Mqo"/>
+                            <constraint firstItem="nsq-Gh-hcS" firstAttribute="top" relation="greaterThanOrEqual" secondItem="b9T-VS-5ap" secondAttribute="top" constant="8" id="8K1-F2-VbD"/>
                             <constraint firstItem="4aD-S3-jow" firstAttribute="leading" secondItem="b9T-VS-5ap" secondAttribute="leading" id="FGO-9X-V90"/>
                             <constraint firstAttribute="bottom" secondItem="4aD-S3-jow" secondAttribute="bottom" id="Hum-iS-dwT"/>
+                            <constraint firstItem="yzx-IK-rvI" firstAttribute="centerY" secondItem="o1g-l3-X4t" secondAttribute="centerY" id="QwP-9c-LWm"/>
                             <constraint firstItem="YMR-05-VTJ" firstAttribute="centerY" secondItem="b9T-VS-5ap" secondAttribute="centerY" id="ThY-cd-wVV"/>
                             <constraint firstItem="YMR-05-VTJ" firstAttribute="leading" secondItem="4aD-S3-jow" secondAttribute="trailing" constant="8" id="dRN-ht-rBe"/>
                             <constraint firstItem="ZUZ-1D-zXA" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="YMR-05-VTJ" secondAttribute="trailing" constant="15" id="e08-hC-bqQ"/>
                             <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="YMR-05-VTJ" secondAttribute="bottom" constant="8" id="fYR-BY-WAK"/>
                             <constraint firstItem="nsq-Gh-hcS" firstAttribute="centerY" secondItem="b9T-VS-5ap" secondAttribute="centerY" id="ieC-tA-TLq"/>
                             <constraint firstAttribute="trailing" secondItem="nsq-Gh-hcS" secondAttribute="trailing" constant="8" id="ooW-qL-y6B"/>
+                            <constraint firstItem="Wxd-Z0-h9W" firstAttribute="centerY" secondItem="ZUZ-1D-zXA" secondAttribute="centerY" id="pEx-RT-tMB"/>
                             <constraint firstItem="YMR-05-VTJ" firstAttribute="top" relation="greaterThanOrEqual" secondItem="b9T-VS-5ap" secondAttribute="top" constant="8" id="yMx-n9-ZeC"/>
                             <constraint firstItem="4aD-S3-jow" firstAttribute="top" secondItem="b9T-VS-5ap" secondAttribute="top" id="ySQ-1s-WIt"/>
                         </constraints>

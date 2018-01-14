@@ -235,5 +235,9 @@ extension MyDebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
         
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
     }
+    
+    func debtCategoryTableViewCellDidCancel(_ cell: DebtCategoryTableViewCell) {
+        reloadDebtCategories()
+    }
 }
 
