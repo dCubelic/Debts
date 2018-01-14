@@ -2,6 +2,10 @@ import UIKit
 
 class MyDebtCategoriesViewController: UIViewController {
     
+    enum MyDebtCategoriesControllerState {
+        case defaultState, addingState, editingState
+    }
+    
     @IBOutlet weak var tableView: UITableView!
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -14,6 +18,7 @@ class MyDebtCategoriesViewController: UIViewController {
         .red, .blue, .yellow, .brown, .green, .gray, .purple, .orange, .magenta
     ]
     var colorMap: [DebtCategory: UIColor] = [:]
+    var state: MyDebtCategoriesControllerState = .defaultState
     
     private static let nameComparator: (DebtCategory, DebtCategory) -> Bool = { $0.name.lowercased() < $1.name.lowercased() }
     private static let totalDebtComparator: (DebtCategory, DebtCategory) -> Bool = { $0.totalDebt > $1.totalDebt }
@@ -102,11 +107,18 @@ class MyDebtCategoriesViewController: UIViewController {
     }
     
     @IBAction func addAction(_ sender: Any) {
-        let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.newDebtViewController) as! NewDebtViewController
-        vc.isMyDebt = true
+        let newDebtCategory = DebtCategory()
+        newDebtCategory.isMyDebt = true
+        let indexPath = IndexPath(row: 0, section: 0)
         
-        let navVC = UINavigationController(rootViewController: vc)
-        present(navVC, animated: true, completion: nil)
+        debtCategories.insert(newDebtCategory, at: 0)
+        tableView.insertRows(at: [indexPath], with: .automatic)
+        tableView.scrollToRow(at: indexPath, at: .none, animated: false)
+        
+        let cell = tableView.cellForRow(at: indexPath) as! DebtCategoryTableViewCell
+        cell.editTitle()
+        
+        state = .addingState
     }
 }
 
@@ -234,6 +246,16 @@ extension MyDebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
         RealmHelper.changeTitle(for: debtCategory, title: title)
         
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+    
+        if state == .addingState {
+            let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.newDebtViewController) as! NewDebtViewController
+            vc.debtCategory = debtCategory
+            
+            let navVC = UINavigationController(rootViewController: vc)
+            present(navVC, animated: true, completion: nil)
+        }
+        
+        state = .defaultState
     }
     
     func debtCategoryTableViewCellDidCancel(_ cell: DebtCategoryTableViewCell) {
