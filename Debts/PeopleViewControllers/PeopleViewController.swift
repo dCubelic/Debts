@@ -15,7 +15,7 @@ class PeopleViewController: UIViewController {
     
     var people: [Person] = []
     var filteredPeople: [Person] = []
-    var sortComparator = nameComparator
+    var sortComparator = totalDebtComparator
     var state: ControllerState = .defaultState {
         didSet {
             if state == .defaultState {
@@ -136,27 +136,17 @@ class PeopleViewController: UIViewController {
     }
 
     @IBAction func addPerson(_ sender: Any) {
-////        let newPerson = RealmHelper.addPerson(name: "")
-//        let newPerson = Person()
-//        let indexPath = IndexPath(row: 0, section: 0)
-////
-//        people.insert(newPerson, at: 0)
-//        tableView.insertRows(at: [indexPath], with: .automatic)
-//
-////
-//////        let cell = tableView.dataSource?.tableView(tableView, cellForRowAt: indexPath) as! PersonTableViewCell
-//        let cell = tableView.cellForRow(at: indexPath) as! PersonTableViewCell
-//        cell.editName()
-//        tableView.isUserInteractionEnabled = false
-//
-//        state = .addingState
+        let newPerson = Person()
+        let indexPath = IndexPath(row: 0, section: 0)
 
-        
-        let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.addPersonViewController) as! AddPersonViewController
-        vc.delegate = self
-        let navVC = UINavigationController(rootViewController: vc)
+        people.insert(newPerson, at: 0)
+        tableView.insertRows(at: [indexPath], with: .automatic)
+        tableView.scrollToRow(at: indexPath, at: .none, animated: false)
 
-        present(navVC, animated: true, completion: nil)
+        let cell = tableView.cellForRow(at: indexPath) as! PersonTableViewCell
+        cell.editName()
+
+        state = .addingState
     }
     
     @IBAction func leftBarButtonAction(_ sender: Any) {
@@ -174,7 +164,7 @@ class PeopleViewController: UIViewController {
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             
             present(actionSheet, animated: true, completion: nil)
-        } else {
+        } else if state == .addingState {
             reloadPeople()
             tableView.isUserInteractionEnabled = true
             state = .defaultState
@@ -232,6 +222,7 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
             let cell = tableView.cellForRow(at: indexPath) as! PersonTableViewCell
 
             cell.editName()
+            self.state = .addingState
             
             completionHandler(true)
         }
