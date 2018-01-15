@@ -74,14 +74,13 @@ class RealmHelper {
     static func add(debtCategory: DebtCategory, with people: [Person], and costDictionary: [Person: Double]) {
         try! realm.write {
             for person in people {
+                guard let cost = costDictionary[person] else { continue }
+               
                 let debt = Debt()
                 debt.debtCategory = debtCategory
                 debt.person = person
-                if let cost = costDictionary[person] {
-                    debt.cost = cost
-                } else {
-                    continue
-                }
+                debt.cost = cost
+                
                 realm.add(debt)
             }
         }

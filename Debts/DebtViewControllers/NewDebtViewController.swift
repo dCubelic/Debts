@@ -3,6 +3,7 @@ import UIKit
 class NewDebtViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var splitAmountTextField: UITextField!
     @IBOutlet weak var splitSwitch: UISwitch!
     @IBOutlet weak var underlineView: UIView!
@@ -17,10 +18,30 @@ class NewDebtViewController: UIViewController {
     var costDict: [Person: Double] = [:]
     var debtCategory = DebtCategory()
     
+    var keyboardObserver: NSObjectProtocol?
+    
+    deinit {
+        if let keyboardObserver = keyboardObserver {
+            NotificationCenter.default.removeObserver(keyboardObserver)
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        debtCategory.isMyDebt = isMyDebt
+        keyboardObserver = NotificationCenter.default.addObserver(forName: .UIKeyboardWillChangeFrame, object: nil, queue: nil, using: { (notification) in
+            if let userInfo = notification.userInfo,
+                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
+                let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
+                let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
+                
+                self.tableViewBottomConstraint.constant = UIScreen.main.bounds.height - endFrameValue.cgRectValue.minY
+
+                UIView.animate(withDuration: durationValue.doubleValue, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
+                    self.view.layoutIfNeeded()
+                }, completion: nil)
+            }
+        })
         
         title = debtCategory.name
         
@@ -98,8 +119,7 @@ class NewDebtViewController: UIViewController {
     }
     
     @IBAction func cancelAction(_ sender: Any) {
-        RealmHelper.removeDebtCategory(debtCategory: debtCategory)
-        NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        RealmHelper.removeEmptyDebtCategories()
         dismiss(animated: true, completion: nil)
     }
     
@@ -127,16 +147,7 @@ extension NewDebtViewController: UITableViewDelegate, UITableViewDataSource {
         
         let person = getPerson(for: indexPath)
         
-        cell.setup(with: person, selected: selectedPeople.contains(person))
-        if isSplitting {
-            cell.costTextField.isEnabled = false
-            cell.costTextField.alpha = 0.1
-//            cell.costTextField.isHidden = true
-        } else {
-            cell.costTextField.isEnabled = true
-            cell.costTextField.alpha = 1
-//            cell.costTextField.isHidden = false
-        }
+        cell.setup(with: person, selected: selectedPeople.contains(person), cost: costDict[person])
         
         return cell
     }

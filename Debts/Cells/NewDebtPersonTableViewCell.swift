@@ -51,7 +51,7 @@ class NewDebtPersonTableViewCell: UITableViewCell {
         isCellSelected = !isCellSelected
     }
 
-    func setup(with person: Person, selected: Bool) {
+    func setup(with person: Person, selected: Bool, cost: Double?) {
         personColor = UIColor(for: person)
         nameLabel.text = person.name
         
@@ -64,7 +64,7 @@ class NewDebtPersonTableViewCell: UITableViewCell {
         costTextField.text = String(
             format: "%@%.2f%@",
             Constants.currencyBeforeValue ? Constants.currency : "",
-            0,
+            cost ?? 0,
             Constants.currencyBeforeValue ? "" : Constants.currency
         )
         

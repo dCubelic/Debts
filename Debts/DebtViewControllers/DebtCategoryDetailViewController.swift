@@ -41,6 +41,8 @@ class DebtCategoryDetailViewController: UIViewController {
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPeople))
+        
         tableView.register(UINib(nibName: Constants.debtDetailCell, bundle: nil), forCellReuseIdentifier: Constants.debtDetailCell)
         
         guard let debtCategory = debtCategory else { return }
@@ -63,6 +65,24 @@ class DebtCategoryDetailViewController: UIViewController {
     
     @objc func tapAction() {
         view.endEditing(true)
+    }
+    
+    @objc func addPeople() {
+        guard let debtCategory = debtCategory else { return }
+        
+        let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.newDebtViewController) as! NewDebtViewController
+        vc.debtCategory = debtCategory
+        
+        var dc: [Person: Double] = [:]
+        for debt in debtCategory.debts {
+            if let person = debt.person {
+                dc[person] = debt.cost
+            }
+        }
+        vc.costDict = dc
+        
+        let navVC = UINavigationController(rootViewController: vc)
+        present(navVC, animated: true, completion: nil)
     }
     
     @objc func reloadDebts() {
