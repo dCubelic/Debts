@@ -13,8 +13,28 @@ import RealmSwift
 //}
 
 class RealmHelper {
-
-    static let realm = try! Realm()
+    
+    static var realm: Realm {
+        do {
+            let realm = try Realm()
+            return realm
+        } catch {
+            print("Could not access realm: \(error)")
+        }
+        return self.realm
+    }
+    
+    public static func write(realm: Realm, writeClosure: () -> Void) {
+        do {
+            try realm.write {
+                writeClosure()
+            }
+        } catch {
+            print("Could not write to realm: \(error)")
+        }
+    }
+    
+    //    static let realm = try! Realm()
     
     static func getAllPersons() -> [Person] {
         return realm.objects(Person.self).toArray()
@@ -29,24 +49,24 @@ class RealmHelper {
     }
     
     static func getDebts(for person: Person) -> [Debt] {
-//        let defaultDebt = DebtCategory()
+        //        let defaultDebt = DebtCategory()
         return realm.objects(Debt.self).filter("person = %@", person).toArray()
-//        return realm.objects(Debt.self).filter("person = %@", person).map({ DebtCategoryByPerson(debtCategory: $0.debtCategory ?? defaultDebt, cost: $0.cost, dateAdded: $0.dateAdded) })
+        //        return realm.objects(Debt.self).filter("person = %@", person).map({ DebtCategoryByPerson(debtCategory: $0.debtCategory ?? defaultDebt, cost: $0.cost, dateAdded: $0.dateAdded) })
     }
     
-//    static func getPersons(for debtCategory: DebtCategory) -> [Debt] {
-////        let defaultPerson = Person()
-//        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).toArray()
-////        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).map({ PersonByDebtCategory(person: $0.person ?? defaultPerson, cost: $0.cost)})
-//    }
+    //    static func getPersons(for debtCategory: DebtCategory) -> [Debt] {
+    ////        let defaultPerson = Person()
+    //        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).toArray()
+    ////        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).map({ PersonByDebtCategory(person: $0.person ?? defaultPerson, cost: $0.cost)})
+    //    }
     
-//    static func getDebts(for person: Person) -> [Debt] {
-//        return realm.objects(Debt.self).filter("person = %@ AND debtCategory.isMyDebt = false", person).toArray()
-//    }
-//
-//    static func getMyDebts(for person: Person) -> [Debt] {
-//        return realm.objects(Debt.self).filter("person = %@ AND debtCategory.isMyDebt = true", person).toArray()
-//    }
+    //    static func getDebts(for person: Person) -> [Debt] {
+    //        return realm.objects(Debt.self).filter("person = %@ AND debtCategory.isMyDebt = false", person).toArray()
+    //    }
+    //
+    //    static func getMyDebts(for person: Person) -> [Debt] {
+    //        return realm.objects(Debt.self).filter("person = %@ AND debtCategory.isMyDebt = true", person).toArray()
+    //    }
     
     static func getDebts(for debtCategory: DebtCategory) -> [Debt] {
         return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).toArray()
@@ -64,7 +84,7 @@ class RealmHelper {
         let person = Person()
         person.name = name
         
-        try! realm.write {
+        write(realm: realm) {
             realm.add(person, update: true)
         }
         
@@ -72,10 +92,10 @@ class RealmHelper {
     }
     
     static func add(debtCategory: DebtCategory, with people: [Person], and costDictionary: [Person: Double]) {
-        try! realm.write {
+        write(realm: realm) {
             for person in people {
                 guard let cost = costDictionary[person] else { continue }
-               
+                
                 let debt = Debt()
                 debt.debtCategory = debtCategory
                 debt.person = person
@@ -87,7 +107,7 @@ class RealmHelper {
     }
     
     static func removePerson(person: Person) {
-        try! realm.write {
+        write(realm: realm) {
             realm.delete(person.debts)
             realm.delete(person)
         }
@@ -95,14 +115,14 @@ class RealmHelper {
     }
     
     static func removeDebtCategory(debtCategory: DebtCategory) {
-        try! realm.write {
+        write(realm: realm) {
             realm.delete(debtCategory.debts)
             realm.delete(debtCategory)
         }
     }
     
     static func removeDebt(_ debt: Debt) {
-        try! realm.write {
+        write(realm: realm) {
             realm.delete(debt)
         }
         
@@ -110,7 +130,7 @@ class RealmHelper {
     }
     
     static func removeDebts(for person: Person) {
-        try! realm.write {
+        write(realm: realm) {
             realm.delete(person.debts)
         }
         
@@ -118,13 +138,13 @@ class RealmHelper {
     }
     
     static func changeCost(for debt: Debt, cost: Double) {
-        try! realm.write {
+        write(realm: realm) {
             debt.cost = cost
         }
     }
     
     static func changeName(for person: Person, name: String) {
-        try! realm.write {
+        write(realm: realm) {
             person.name = name
             if !(realm.objects(Person.self).filter("uuid = %@", person.uuid).count == 1) {
                 realm.add(person)
@@ -133,7 +153,7 @@ class RealmHelper {
     }
     
     static func changeTitle(for debtCategory: DebtCategory, title: String) {
-        try! realm.write {
+        write(realm: realm) {
             debtCategory.name = title
             if !(realm.objects(DebtCategory.self).filter("uuid = %@", debtCategory.uuid).count == 1) {
                 realm.add(debtCategory)
@@ -167,29 +187,25 @@ class RealmHelper {
     
     static func removeEmptyDebtCategories() {
         let debtCategories = realm.objects(DebtCategory.self)
-        
-        for debtCategory in debtCategories {
-            if debtCategory.debts.count == 0 {
-                try! realm.write {
-                    realm.delete(debtCategory)
-                }
+        write(realm: realm) {
+            for debtCategory in debtCategories where debtCategory.debts.isEmpty {
+                realm.delete(debtCategory)
             }
         }
-        
     }
- 
+    
 }
 
 extension Results {
     
     func toArray() -> [Element] {
-        return self.map{$0}
+        return self.map {$0}
     }
 }
 
 extension RealmSwift.List {
     
     func toArray() -> [Element] {
-        return self.map{$0}
+        return self.map {$0}
     }
 }

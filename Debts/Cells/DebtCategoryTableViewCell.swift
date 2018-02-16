@@ -15,35 +15,35 @@ class DebtCategoryTableViewCell: UITableViewCell {
     @IBOutlet weak var categoryView: UIView!
     @IBOutlet weak var leftView: UIView!
     @IBOutlet weak var underlineView: UIView!
-    
+
     weak var delegate: DebtCategoryTableViewCellDelegate?
-    
+
     let dateFormatter: DateFormatter = {
         let df = DateFormatter()
         df.dateFormat = "dd MMM yyyy"
         return df
     }()
-    
+
     override func awakeFromNib() {
         super.awakeFromNib()
 
         selectionStyle = .none
-        
+
         self.backgroundColor = .clear
-        
+
         categoryView.layer.cornerRadius = 8
         categoryView.clipsToBounds = true
         categoryView.backgroundColor = UIColor(white: 246/255, alpha: 1)
-        
+
         titleTextField.isHidden = true
         titleTextField.delegate = self
-        
+
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSize.zero
         layer.shadowRadius = 3
     }
-    
+
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         if highlighted {
             categoryView.backgroundColor = UIColor(white: 220/255, alpha: 1)
@@ -51,26 +51,26 @@ class DebtCategoryTableViewCell: UITableViewCell {
             categoryView.backgroundColor = UIColor(white: 246/255, alpha: 1)
         }
     }
-    
+
     func setup(with debtCategory: DebtCategory) {
         titleLabel.text = debtCategory.name
         dateLabel.text = dateFormatter.string(from: debtCategory.dateCreated)
-        
+
         detailLabel.text = String(
             format: "%@%.2f%@",
             Constants.currencyBeforeValue ? Constants.currency : "",
             debtCategory.totalDebt,
             Constants.currencyBeforeValue ? "" : Constants.currency
         )
-        
+
         let color = UIColor(for: debtCategory)
-        
+
         leftView.backgroundColor = color
         underlineView.backgroundColor = color
-        
+
         let debts = RealmHelper.getDebts(for: debtCategory)
-        
-        if(debts.count > 2) {
+
+        if debts.count > 2 {
             subtitleLabel.text = "\(debts.count) people"
         } else if debts.count > 0 {
             var peopleString = ""
@@ -92,24 +92,24 @@ class DebtCategoryTableViewCell: UITableViewCell {
         titleTextField.text = titleLabel.text
         titleTextField.becomeFirstResponder()
     }
-    
+
 }
 
 extension DebtCategoryTableViewCell: UITextFieldDelegate {
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text else { return }
         titleLabel.text = textField.text
-        
+
         titleTextField.isHidden = true
         titleLabel.isHidden = false
-        
+
         if text.count == 0 {
             delegate?.debtCategoryTableViewCellDidCancel(self)
         } else {
             delegate?.debtCategoryTableViewCell(self, didChangeTitleTo: text)
         }
     }
-    
+
 //    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
 //        guard let text = textField.text else { return false }
 //        
@@ -119,7 +119,7 @@ extension DebtCategoryTableViewCell: UITextFieldDelegate {
 //        
 //        return true
 //    }
-    
+
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

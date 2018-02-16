@@ -5,7 +5,7 @@ class DebtCategoriesViewController: UIViewController {
     enum DebtCategoriesControllerState {
         case defaultState, addingState, editingState
     }
-
+    
     @IBOutlet weak var tableView: UITableView!
     
     let searchController = UISearchController(searchResultsController: nil)
@@ -14,11 +14,18 @@ class DebtCategoriesViewController: UIViewController {
     var filteredDebtCategories: [DebtCategory] = []
     var sortComparator: (DebtCategory, DebtCategory) -> Bool = dateComparator
     
-    var colors: [UIColor] = [
-        .red, .blue, .yellow, .brown, .green, .gray, .purple, .orange, .magenta
-    ]
-    var colorMap: [DebtCategory: UIColor] = [:]
-    var state: DebtCategoriesControllerState = .defaultState
+    var state: DebtCategoriesControllerState = .defaultState {
+        didSet {
+            if state == .defaultState {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addAction(_:)))
+                navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "Sort")
+            } else if state == .addingState {
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneEditting))
+                navigationItem.leftBarButtonItem?.image = nil
+                navigationItem.leftBarButtonItem?.title = "Cancel"
+            }
+        }
+    }
     
     private static let nameComparator: (DebtCategory, DebtCategory) -> Bool = { $0.name.lowercased() < $1.name.lowercased() }
     private static let totalDebtComparator: (DebtCategory, DebtCategory) -> Bool = { $0.totalDebt > $1.totalDebt }
@@ -26,13 +33,15 @@ class DebtCategoriesViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
+        
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(doneEditting))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
         title = "Debts"
         navigationController?.navigationBar.prefersLargeTitles = true
+        
+        tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
@@ -53,7 +62,7 @@ class DebtCategoriesViewController: UIViewController {
         navigationController?.navigationBar.tintColor = nil
     }
     
-    @objc func tapAction() {
+    @objc func doneEditting() {
         view.endEditing(true)
     }
     
@@ -94,29 +103,35 @@ class DebtCategoriesViewController: UIViewController {
         tableView.insertRows(at: [indexPath], with: .automatic)
         tableView.scrollToRow(at: indexPath, at: .none, animated: false)
         
-        let cell = tableView.cellForRow(at: indexPath) as! DebtCategoryTableViewCell
+        guard let cell = tableView.cellForRow(at: indexPath) as? DebtCategoryTableViewCell else { return }
         cell.editTitle()
         
         state = .addingState
     }
-    @IBAction func sortAction(_ sender: Any) {
-        let actionSheet = UIAlertController(title: "Sort by:", message: nil, preferredStyle: .actionSheet)
-        
-        actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (alertAction) in
-            self.sortComparator = DebtCategoriesViewController.nameComparator
-            self.sortDebtCategories()
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (alertAction) in
-            self.sortComparator = DebtCategoriesViewController.totalDebtComparator
-            self.sortDebtCategories()
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Date Created", style: .default, handler: { (alertAction) in
-            self.sortComparator = DebtCategoriesViewController.dateComparator
-            self.sortDebtCategories()
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        
-        present(actionSheet, animated: true, completion: nil)
+    @IBAction func leftBarButtonAction(_ sender: Any) {
+        if state == .defaultState {
+            let actionSheet = UIAlertController(title: "Sort by:", message: nil, preferredStyle: .actionSheet)
+            
+            actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in
+                self.sortComparator = DebtCategoriesViewController.nameComparator
+                self.sortDebtCategories()
+            }))
+            actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (_) in
+                self.sortComparator = DebtCategoriesViewController.totalDebtComparator
+                self.sortDebtCategories()
+            }))
+            actionSheet.addAction(UIAlertAction(title: "Date Created", style: .default, handler: { (_) in
+                self.sortComparator = DebtCategoriesViewController.dateComparator
+                self.sortDebtCategories()
+            }))
+            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            
+            present(actionSheet, animated: true, completion: nil)
+        } else {
+            reloadDebtCategories()
+            tableView.isUserInteractionEnabled = true
+            state = .defaultState
+        }
     }
 }
 
@@ -135,7 +150,8 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryCell, for: indexPath) as! DebtCategoryTableViewCell
+        let cell = tableView.dequeueReusableCell(ofType: DebtCategoryTableViewCell.self, withIdentifier: Constants.categoryCell, for: indexPath)
+        //        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryCell, for: indexPath) as! DebtCategoryTableViewCell
         
         var debtCategory: DebtCategory
         if isFiltering() {
@@ -151,7 +167,8 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.debtCategoryDetailViewController) as! DebtCategoryDetailViewController
+        let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(ofType: DebtCategoryDetailViewController.self, withIdentifier: Constants.Storyboard.debtCategoryDetailViewController)
+        //        let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.debtCategoryDetailViewController) as! DebtCategoryDetailViewController
         
         var debtCategory: DebtCategory
         if isFiltering() {
@@ -166,7 +183,7 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { (action, view, completionHandler) in
+        let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
             
             var debtCategory: DebtCategory
             if self.isFiltering() {
@@ -182,8 +199,8 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
             completionHandler(true)
         }
         
-        let edit = UIContextualAction(style: .normal, title: "Edit\nName") { (action, view, completionHandler) in
-            let cell = tableView.cellForRow(at: indexPath) as! DebtCategoryTableViewCell
+        let edit = UIContextualAction(style: .normal, title: "Edit\nName") { (_, _, completionHandler) in
+            guard let cell = tableView.cellForRow(at: indexPath) as? DebtCategoryTableViewCell else { return }
             
             cell.editTitle()
             
@@ -225,8 +242,9 @@ extension DebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
         if state == .addingState {
-            let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.newDebtViewController) as! NewDebtViewController
+            let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(ofType: NewDebtViewController.self, withIdentifier: Constants.Storyboard.newDebtViewController)
             vc.debtCategory = debtCategory
+            vc.people = RealmHelper.getAllPersons()
             
             let navVC = UINavigationController(rootViewController: vc)
             present(navVC, animated: true, completion: nil)
@@ -237,5 +255,6 @@ extension DebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
     
     func debtCategoryTableViewCellDidCancel(_ cell: DebtCategoryTableViewCell) {
         reloadDebtCategories()
+        state = .defaultState
     }
 }
