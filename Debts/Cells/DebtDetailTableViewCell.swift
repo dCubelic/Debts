@@ -106,6 +106,8 @@ class DebtDetailTableViewCell: UITableViewCell {
 extension DebtDetailTableViewCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         textField.text = costLabel.text?.replacingOccurrences(of: Constants.currency, with: "")
+        textField.text = costTextField.text?.replacingOccurrences(of: "0.00", with: "")
+        textField.text = costTextField.text?.replacingOccurrences(of: ".00", with: "")
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {

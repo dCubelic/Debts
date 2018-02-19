@@ -68,13 +68,16 @@ class NewDebtPersonTableViewCell: UITableViewCell {
             isCellSelected = false
         }
 
+        setCost(cost: cost)
+    }
+    
+    func setCost(cost: Double?) {
         costTextField.text = String(
             format: "%@%.2f%@",
             Constants.currencyBeforeValue ? Constants.currency : "",
             cost ?? 0,
             Constants.currencyBeforeValue ? "" : Constants.currency
         )
-
     }
     
     func editName() {
@@ -110,7 +113,6 @@ extension NewDebtPersonTableViewCell: UITextFieldDelegate {
             delegate?.newDebtPersonTableViewCell(self, didChangeCostTo: cost)
         } else if textField == nameTextField {
             delegate?.newDebtPersonTableViewCell(self, didChangeNameTo: nameTextField.text ?? "")
-            costTextField.becomeFirstResponder()
         }
     }
 

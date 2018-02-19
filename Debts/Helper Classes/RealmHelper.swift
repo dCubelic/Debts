@@ -126,7 +126,7 @@ class RealmHelper {
             realm.delete(debt)
         }
         
-        removeEmptyDebtCategories()
+//        removeEmptyDebtCategories()
     }
     
     static func removeDebts(for person: Person) {
