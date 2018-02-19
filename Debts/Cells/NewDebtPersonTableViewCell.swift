@@ -2,6 +2,7 @@ import UIKit
 
 protocol NewDebtPersonTableViewCellDelegate: class {
     func newDebtPersonTableViewCell(_ cell: NewDebtPersonTableViewCell, didChangeCostTo cost: Double)
+    func newDebtPersonTableViewCell(_ cell: NewDebtPersonTableViewCell, changingCostTo cost: Double)
     func newDebtPersonTableViewCell(_ cell: NewDebtPersonTableViewCell, didChangeNameTo name: String)
 }
 
@@ -131,9 +132,11 @@ extension NewDebtPersonTableViewCell: UITextFieldDelegate {
             let updatedText = currentText.replacingCharacters(in: range, with: string)
             
             let text = updatedText.replacingOccurrences(of: ",", with: ".")
-            if Double(text) != nil {
+            if let cost = Double(text) {
+                delegate?.newDebtPersonTableViewCell(self, changingCostTo: cost)
                 return true
             } else if text.count == 0 {
+                delegate?.newDebtPersonTableViewCell(self, changingCostTo: 0)
                 return true
             }
             

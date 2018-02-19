@@ -118,11 +118,13 @@
                     </navigationItem>
                     <connections>
                         <outlet property="addPersonBarButton" destination="dmz-Yx-XNn" id="SjQ-Fc-t6B"/>
+                        <outlet property="numberOfPeopleLabel" destination="JAe-rC-nN7" id="gbn-dA-YAq"/>
                         <outlet property="splitAmountTextField" destination="fJs-sE-e66" id="gLY-Al-687"/>
                         <outlet property="splitSwitch" destination="HUJ-aY-bpm" id="39B-JC-nAz"/>
                         <outlet property="tableView" destination="U6g-iy-74f" id="A39-X5-zJn"/>
                         <outlet property="tableViewBottomConstraint" destination="M1G-Rk-vwY" id="hDM-g7-fmS"/>
                         <outlet property="tableViewHeaderView" destination="Thb-AJ-pyi" id="cCf-AC-w8Q"/>
+                        <outlet property="totalCostLabel" destination="7Pt-Ft-XGm" id="7aV-Um-e7v"/>
                         <outlet property="underlineView" destination="GUO-ip-jD4" id="GcD-c6-sDH"/>
                     </connections>
                 </viewController>

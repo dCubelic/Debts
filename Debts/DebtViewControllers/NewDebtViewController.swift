@@ -9,6 +9,8 @@ class NewDebtViewController: UIViewController {
     @IBOutlet weak var underlineView: UIView!
     @IBOutlet weak var tableViewHeaderView: UIView!
     @IBOutlet weak var addPersonBarButton: UIBarButtonItem!
+    @IBOutlet weak var totalCostLabel: UILabel!
+    @IBOutlet weak var numberOfPeopleLabel: UILabel!
     
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -204,6 +206,27 @@ extension NewDebtViewController: UITableViewDelegate, UITableViewDataSource {
                 navigationItem.rightBarButtonItem?.isEnabled = false
             }
         }
+        
+        updateHeaderLabels()
+    }
+    
+    func updateHeaderLabels() {
+        
+        var totalCost: Double = 0
+        selectedPeople.forEach { (person) in
+            if let cost = costDict[person] {
+                totalCost += cost
+            }
+        }
+        totalCostLabel.text = String(
+            format: "%@%.2f%@",
+            Constants.currencyBeforeValue ? Constants.currency : "",
+            totalCost,
+            Constants.currencyBeforeValue ? "" : Constants.currency
+        )
+        
+        let numberOfPeople = selectedPeople.count
+        numberOfPeopleLabel.text = "over \(numberOfPeople) \(numberOfPeople == 1 ? "person" : "people")"
     }
 }
 
@@ -224,13 +247,9 @@ extension NewDebtViewController: NewDebtPersonTableViewCellDelegate {
             NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
             navigationItem.rightBarButtonItem?.isEnabled = true
         } else {
-            people.remove(at: 0)
             selectedPeople.remove(at: 0)
-//            cell.isCellSelected = false
-//            tableView.beginUpdates()
+            people.remove(at: 0)
             tableView.reloadData()
-//            tableView.deleteRows(at: [indexPath], with: .bottom)
-//            tableView.endUpdates()
         }
         
         didCancel = false
@@ -242,5 +261,14 @@ extension NewDebtViewController: NewDebtPersonTableViewCellDelegate {
 
         let person = getPerson(for: indexPath)
         costDict[person] = cost
+    }
+    
+    func newDebtPersonTableViewCell(_ cell: NewDebtPersonTableViewCell, changingCostTo cost: Double) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        let person = people[indexPath.row]
+        costDict[person] = cost
+        
+        updateHeaderLabels()
     }
 }
