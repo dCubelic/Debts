@@ -16,14 +16,19 @@ class NewDebtViewController: UIViewController {
 
     var isSplitting = false
     var isMyDebt = false
+    var didCancel = false
+    
     var people: [Person] = []
     var filteredPeople: [Person] = []
     var selectedPeople: [Person] = []
+    
     var costDict: [Person: Double] = [:]
     var costDictBackup: [Person: Double] = [:]
+    
     var debtCategory = DebtCategory()
-    var didCancel = false
+    
     var splittingAmount: Double = 0
+    
     var state: ControllerState = .defaultState {
         didSet {
             if state == .defaultState {
@@ -162,7 +167,6 @@ class NewDebtViewController: UIViewController {
 
     @IBAction func cancelAction(_ sender: Any) {
         if state == .defaultState {
-            RealmHelper.removeEmptyDebtCategories()
             dismiss(animated: true, completion: nil)
         } else if state == .addingState {
             didCancel = true
