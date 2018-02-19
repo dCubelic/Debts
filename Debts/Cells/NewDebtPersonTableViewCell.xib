@@ -44,6 +44,12 @@
                                 <rect key="frame" x="284" y="10.5" width="8" height="17"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                             </view>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" adjustsFontForContentSizeCategory="YES" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zcg-kL-Ngf">
+                                <rect key="frame" x="12" y="11.5" width="8" height="17"/>
+                                <nil key="textColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -53,6 +59,10 @@
                             <constraint firstItem="QKc-vo-pCn" firstAttribute="centerY" secondItem="bJQ-vf-is0" secondAttribute="centerY" id="H7b-JE-FQ4"/>
                             <constraint firstAttribute="bottom" secondItem="KPL-2W-1rZ" secondAttribute="bottom" id="I9e-ya-nee"/>
                             <constraint firstItem="KPL-2W-1rZ" firstAttribute="leading" secondItem="bJQ-vf-is0" secondAttribute="leading" id="NiW-Pd-AIs"/>
+                            <constraint firstItem="zcg-kL-Ngf" firstAttribute="centerY" secondItem="bJQ-vf-is0" secondAttribute="centerY" id="TBk-il-aRL"/>
+                            <constraint firstItem="zcg-kL-Ngf" firstAttribute="leading" secondItem="KPL-2W-1rZ" secondAttribute="trailing" constant="8" id="YAg-x8-XVO"/>
+                            <constraint firstItem="zcg-kL-Ngf" firstAttribute="top" relation="greaterThanOrEqual" secondItem="bJQ-vf-is0" secondAttribute="top" constant="8" id="edB-wj-J0B"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="zcg-kL-Ngf" secondAttribute="bottom" constant="8" id="fSN-8s-x1m"/>
                             <constraint firstItem="u4i-yF-DiG" firstAttribute="width" secondItem="o0j-kb-jxf" secondAttribute="width" id="fWZ-zQ-des"/>
                             <constraint firstItem="QKc-vo-pCn" firstAttribute="top" relation="greaterThanOrEqual" secondItem="bJQ-vf-is0" secondAttribute="top" constant="8" id="kq9-Dx-te9"/>
                             <constraint firstItem="u4i-yF-DiG" firstAttribute="centerY" secondItem="bJQ-vf-is0" secondAttribute="centerY" id="mgp-la-zNZ"/>
@@ -61,6 +71,11 @@
                             <constraint firstItem="KPL-2W-1rZ" firstAttribute="top" secondItem="bJQ-vf-is0" secondAttribute="top" id="sFh-8D-lgS"/>
                             <constraint firstItem="QKc-vo-pCn" firstAttribute="leading" secondItem="KPL-2W-1rZ" secondAttribute="trailing" constant="8" id="uXD-Zo-11N"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="subviews">
+                                <exclude reference="QKc-vo-pCn"/>
+                            </mask>
+                        </variation>
                     </view>
                 </subviews>
                 <constraints>
@@ -76,6 +91,7 @@
                 <outlet property="costTextField" destination="o0j-kb-jxf" id="ah9-cP-NnZ"/>
                 <outlet property="leftView" destination="KPL-2W-1rZ" id="BRN-fE-yOi"/>
                 <outlet property="nameLabel" destination="QKc-vo-pCn" id="U4y-Dp-z6n"/>
+                <outlet property="nameTextField" destination="zcg-kL-Ngf" id="9Ex-2C-sax"/>
             </connections>
         </tableViewCell>
     </objects>

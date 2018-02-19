@@ -13,7 +13,7 @@ class MyDebtCategoriesViewController: UIViewController {
     var debtCategories: [DebtCategory] = []
     var filteredDebtCategories: [DebtCategory] = []
     var sortComparator: (DebtCategory, DebtCategory) -> Bool = dateComparator
-
+    var didCancel = false
     var colors: [UIColor] = [
         .red, .blue, .yellow, .brown, .green, .gray, .purple, .orange, .magenta
     ]
@@ -119,6 +119,17 @@ class MyDebtCategoriesViewController: UIViewController {
         cell.editTitle()
 
         state = .addingState
+    }
+    
+    func getDebtCategory(for indexPath: IndexPath) -> DebtCategory {
+        var debtCategory: DebtCategory
+        if isFiltering() {
+            debtCategory = filteredDebtCategories[indexPath.row]
+        } else {
+            debtCategory = debtCategories[indexPath.row]
+        }
+        
+        return debtCategory
     }
 }
 
@@ -233,33 +244,46 @@ extension MyDebtCategoriesViewController: UISearchResultsUpdating {
 }
 
 extension MyDebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
-    func debtCategoryTableViewCell(_ cell: DebtCategoryTableViewCell, didChangeTitleTo title: String) {
+    func debtCategoryTableViewCellDidEndEditing(_ cell: DebtCategoryTableViewCell, title: String) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
-
-        var debtCategory: DebtCategory
-        if self.isFiltering() {
-            debtCategory = self.filteredDebtCategories[indexPath.row]
-        } else {
-            debtCategory = self.debtCategories[indexPath.row]
+        
+        if !didCancel {
+            let debtCategory = getDebtCategory(for: indexPath)
+            RealmHelper.changeTitle(for: debtCategory, title: title)
+            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         }
-
-        RealmHelper.changeTitle(for: debtCategory, title: title)
-
-        NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
-
-        if state == .addingState {
-            let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(ofType: NewDebtViewController.self, withIdentifier: Constants.Storyboard.newDebtViewController)
-            vc.debtCategory = debtCategory
-            vc.people = RealmHelper.getAllPersons()
-
-            let navVC = UINavigationController(rootViewController: vc)
-            present(navVC, animated: true, completion: nil)
-        }
-
+        didCancel = false
+        
         state = .defaultState
     }
-
-    func debtCategoryTableViewCellDidCancel(_ cell: DebtCategoryTableViewCell) {
-        reloadDebtCategories()
-    }
+    
+//    func debtCategoryTableViewCell(_ cell: DebtCategoryTableViewCell, didChangeTitleTo title: String) {
+//        guard let indexPath = tableView.indexPath(for: cell) else { return }
+//
+//        var debtCategory: DebtCategory
+//        if self.isFiltering() {
+//            debtCategory = self.filteredDebtCategories[indexPath.row]
+//        } else {
+//            debtCategory = self.debtCategories[indexPath.row]
+//        }
+//
+//        RealmHelper.changeTitle(for: debtCategory, title: title)
+//
+//        NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+//
+//        if state == .addingState {
+//            let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(ofType: NewDebtViewController.self, withIdentifier: Constants.Storyboard.newDebtViewController)
+//            vc.debtCategory = debtCategory
+//            vc.people = RealmHelper.getAllPersons()
+//
+//            let navVC = UINavigationController(rootViewController: vc)
+//            present(navVC, animated: true, completion: nil)
+//        }
+//
+//        state = .defaultState
+//    }
+//
+//    func debtCategoryTableViewCellDidCancel(_ cell: DebtCategoryTableViewCell) {
+//        reloadDebtCategories()
+//    }
 }

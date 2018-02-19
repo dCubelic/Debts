@@ -117,6 +117,7 @@
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="addPersonBarButton" destination="dmz-Yx-XNn" id="SjQ-Fc-t6B"/>
                         <outlet property="splitAmountTextField" destination="fJs-sE-e66" id="gLY-Al-687"/>
                         <outlet property="splitSwitch" destination="HUJ-aY-bpm" id="39B-JC-nAz"/>
                         <outlet property="tableView" destination="U6g-iy-74f" id="A39-X5-zJn"/>

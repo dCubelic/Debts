@@ -8,6 +8,7 @@ class NewDebtViewController: UIViewController {
     @IBOutlet weak var splitSwitch: UISwitch!
     @IBOutlet weak var underlineView: UIView!
     @IBOutlet weak var tableViewHeaderView: UIView!
+    @IBOutlet weak var addPersonBarButton: UIBarButtonItem!
     
     let searchController = UISearchController(searchResultsController: nil)
 
@@ -18,6 +19,16 @@ class NewDebtViewController: UIViewController {
     var selectedPeople: [Person] = []
     var costDict: [Person: Double] = [:]
     var debtCategory = DebtCategory()
+    var didCancel = false
+    var state: ControllerState = .defaultState {
+        didSet {
+            if state == .defaultState {
+                addPersonBarButton.isEnabled = true
+            } else if state == .addingState {
+                addPersonBarButton.isEnabled = false
+            }
+        }
+    }
 
     var keyboardObserver: NSObjectProtocol?
 
@@ -59,8 +70,7 @@ class NewDebtViewController: UIViewController {
 
         navigationItem.rightBarButtonItem?.isEnabled = false
         navigationController?.navigationBar.prefersLargeTitles = true
-
-//        people = RealmHelper.getAllPersons()
+        
         sortPeople()
         
         tableView.keyboardDismissMode = .interactive
@@ -110,9 +120,11 @@ class NewDebtViewController: UIViewController {
         tableView.scrollToRow(at: indexPath, at: .none, animated: false)
 
         guard let cell = tableView.cellForRow(at: indexPath) as? NewDebtPersonTableViewCell else { return }
-//        cell.editCo
+        cell.editName()
+        cell.isCellSelected = true
+        selectedPeople.insert(newPerson, at: 0)
 
-//        state = .addingState
+        state = .addingState
     }
 
     @IBAction func switchValueChanged(_ sender: Any) {
@@ -131,8 +143,13 @@ class NewDebtViewController: UIViewController {
     }
 
     @IBAction func cancelAction(_ sender: Any) {
-        RealmHelper.removeEmptyDebtCategories()
-        dismiss(animated: true, completion: nil)
+        if state == .defaultState {
+            RealmHelper.removeEmptyDebtCategories()
+            dismiss(animated: true, completion: nil)
+        } else if state == .addingState {
+            didCancel = true
+            view.endEditing(true)
+        }
     }
 
     @IBAction func doneAction(_ sender: Any) {
@@ -199,6 +216,27 @@ extension NewDebtViewController: UISearchResultsUpdating {
 }
 
 extension NewDebtViewController: NewDebtPersonTableViewCellDelegate {
+    func newDebtPersonTableViewCell(_ cell: NewDebtPersonTableViewCell, didChangeNameTo name: String) {
+        guard let indexPath = tableView.indexPath(for: cell) else { return }
+        
+        if !name.isEmpty && !didCancel {
+            RealmHelper.changeName(for: people[indexPath.row], name: name)
+            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+            navigationItem.rightBarButtonItem?.isEnabled = true
+        } else {
+            people.remove(at: 0)
+            selectedPeople.remove(at: 0)
+//            cell.isCellSelected = false
+//            tableView.beginUpdates()
+            tableView.reloadData()
+//            tableView.deleteRows(at: [indexPath], with: .bottom)
+//            tableView.endUpdates()
+        }
+        
+        didCancel = false
+        state = .defaultState
+    }
+    
     func newDebtPersonTableViewCell(_ cell: NewDebtPersonTableViewCell, didChangeCostTo cost: Double) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
 

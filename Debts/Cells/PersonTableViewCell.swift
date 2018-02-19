@@ -1,8 +1,9 @@
 import UIKit
 
 protocol PersonTableViewCellDelegate: class {
-    func personTableViewCell(_ cell: PersonTableViewCell, didChangeNameTo name: String)
-    func personTableViewCellDidCancel(_ cell: PersonTableViewCell)
+    func personTableViewCellDidEndEditing(_ cell: PersonTableViewCell, name: String)
+//    func personTableViewCell(_ cell: PersonTableViewCell, didChangeNameTo name: String)
+//    func personTableViewCellDidCancel(_ cell: PersonTableViewCell)
 }
 
 class PersonTableViewCell: UITableViewCell {
@@ -91,12 +92,14 @@ extension PersonTableViewCell: UITextFieldDelegate {
 
         titleLabel.isHidden = false
         nameTextField.isHidden = true
-
-        if text.count == 0 {
-            delegate?.personTableViewCellDidCancel(self)
-        } else {
-            delegate?.personTableViewCell(self, didChangeNameTo: text)
-        }
+        
+        delegate?.personTableViewCellDidEndEditing(self, name: text)
+        
+//        if text.count == 0 {
+//            delegate?.personTableViewCellDidCancel(self)
+//        } else {
+//            delegate?.personTableViewCell(self, didChangeNameTo: text)
+//        }
     }
 
 //    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {

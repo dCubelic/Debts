@@ -13,7 +13,7 @@ class DebtCategoriesViewController: UIViewController {
     var debtCategories: [DebtCategory] = []
     var filteredDebtCategories: [DebtCategory] = []
     var sortComparator: (DebtCategory, DebtCategory) -> Bool = dateComparator
-    
+    var didCancel = false
     var state: DebtCategoriesControllerState = .defaultState {
         didSet {
             if state == .defaultState {
@@ -128,10 +128,20 @@ class DebtCategoriesViewController: UIViewController {
             
             present(actionSheet, animated: true, completion: nil)
         } else {
-            reloadDebtCategories()
-            tableView.isUserInteractionEnabled = true
-            state = .defaultState
+            didCancel = true
+            view.endEditing(true)
         }
+    }
+    
+    func getDebtCategory(for indexPath: IndexPath) -> DebtCategory {
+        var debtCategory: DebtCategory
+        if isFiltering() {
+            debtCategory = filteredDebtCategories[indexPath.row]
+        } else {
+            debtCategory = debtCategories[indexPath.row]
+        }
+        
+        return debtCategory
     }
 }
 
@@ -151,14 +161,8 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: DebtCategoryTableViewCell.self, withIdentifier: Constants.categoryCell, for: indexPath)
-        //        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.categoryCell, for: indexPath) as! DebtCategoryTableViewCell
         
-        var debtCategory: DebtCategory
-        if isFiltering() {
-            debtCategory = filteredDebtCategories[indexPath.row]
-        } else {
-            debtCategory = debtCategories[indexPath.row]
-        }
+        let debtCategory = getDebtCategory(for: indexPath)
         
         cell.delegate = self
         cell.setup(with: debtCategory)
@@ -168,14 +172,8 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(ofType: DebtCategoryDetailViewController.self, withIdentifier: Constants.Storyboard.debtCategoryDetailViewController)
-        //        let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(withIdentifier: Constants.Storyboard.debtCategoryDetailViewController) as! DebtCategoryDetailViewController
         
-        var debtCategory: DebtCategory
-        if isFiltering() {
-            debtCategory = filteredDebtCategories[indexPath.row]
-        } else {
-            debtCategory = debtCategories[indexPath.row]
-        }
+        let debtCategory = getDebtCategory(for: indexPath)
         
         vc.debtCategory = debtCategory
         
@@ -185,12 +183,7 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
             
-            var debtCategory: DebtCategory
-            if self.isFiltering() {
-                debtCategory = self.filteredDebtCategories[indexPath.row]
-            } else {
-                debtCategory = self.debtCategories[indexPath.row]
-            }
+            let debtCategory = self.getDebtCategory(for: indexPath)
             
             RealmHelper.removeDebtCategory(debtCategory: debtCategory)
             
@@ -227,18 +220,18 @@ extension DebtCategoriesViewController: UISearchResultsUpdating {
 }
 
 extension DebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
-    func debtCategoryTableViewCell(_ cell: DebtCategoryTableViewCell, didChangeTitleTo title: String) {
+    func debtCategoryTableViewCellDidEndEditing(_ cell: DebtCategoryTableViewCell, title: String) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
-        var debtCategory: DebtCategory
-        if self.isFiltering() {
-            debtCategory = self.filteredDebtCategories[indexPath.row]
-        } else {
-            debtCategory = self.debtCategories[indexPath.row]
+        if didCancel || title.isEmpty {
+            didCancel = false
+            state = .defaultState
+            reloadDebtCategories()
+            return
         }
         
+        let debtCategory = getDebtCategory(for: indexPath)
         RealmHelper.changeTitle(for: debtCategory, title: title)
-        
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
         if state == .addingState {
@@ -250,11 +243,7 @@ extension DebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
             present(navVC, animated: true, completion: nil)
         }
         
-        state = .defaultState
-    }
-    
-    func debtCategoryTableViewCellDidCancel(_ cell: DebtCategoryTableViewCell) {
-        reloadDebtCategories()
+        didCancel = false
         state = .defaultState
     }
 }

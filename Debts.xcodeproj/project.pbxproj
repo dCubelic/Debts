@@ -103,6 +103,8 @@
 		B4A9EF3D1FFFB337006CDDB6 /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		B4BA5B9E2003B06F002A9712 /* MyDebtCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDebtCategoriesViewController.swift; sourceTree = "<group>"; };
 		B4BA5BA02003BFEA002A9712 /* NewDebtViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDebtViewController.swift; sourceTree = "<group>"; };
+		B4F47511203AC6FC00892D01 /* RealmSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = RealmSwift.framework; path = "../../../Downloads/realm-swift-3.1.1/ios/swift-4.0.2/RealmSwift.framework"; sourceTree = "<group>"; };
+		B4F47512203AC6FD00892D01 /* Realm.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Realm.framework; path = "../../../Downloads/realm-swift-3.1.1/ios/swift-4.0.2/Realm.framework"; sourceTree = "<group>"; };
 		B4FE3EF51FFE1B03002129F8 /* UIColor+Debts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Debts.swift"; sourceTree = "<group>"; };
 		B4FE3EFD1FFE3EC4002129F8 /* PersonDetailTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailTableViewCell.swift; sourceTree = "<group>"; };
 		B4FE3EFE1FFE3EC4002129F8 /* PersonDetailTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PersonDetailTableViewCell.xib; sourceTree = "<group>"; };
@@ -139,7 +141,9 @@
 			isa = PBXGroup;
 			children = (
 				B42296C01FEDB43F0067F913 /* Realm.framework */,
+				B4F47512203AC6FD00892D01 /* Realm.framework */,
 				B42296C11FEDB43F0067F913 /* RealmSwift.framework */,
+				B4F47511203AC6FC00892D01 /* RealmSwift.framework */,
 				B42296911FEDB4240067F913 /* Debts */,
 				B42296901FEDB4240067F913 /* Products */,
 			);

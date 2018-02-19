@@ -1,8 +1,9 @@
 import UIKit
 
 protocol DebtCategoryTableViewCellDelegate: class {
-    func debtCategoryTableViewCell(_ cell: DebtCategoryTableViewCell, didChangeTitleTo title: String)
-    func debtCategoryTableViewCellDidCancel(_ cell: DebtCategoryTableViewCell)
+    func debtCategoryTableViewCellDidEndEditing(_ cell: DebtCategoryTableViewCell, title: String)
+//    func debtCategoryTableViewCell(_ cell: DebtCategoryTableViewCell, didChangeTitleTo title: String)
+//    func debtCategoryTableViewCellDidCancel(_ cell: DebtCategoryTableViewCell)
 }
 
 class DebtCategoryTableViewCell: UITableViewCell {
@@ -103,11 +104,12 @@ extension DebtCategoryTableViewCell: UITextFieldDelegate {
         titleTextField.isHidden = true
         titleLabel.isHidden = false
 
-        if text.count == 0 {
-            delegate?.debtCategoryTableViewCellDidCancel(self)
-        } else {
-            delegate?.debtCategoryTableViewCell(self, didChangeTitleTo: text)
-        }
+        delegate?.debtCategoryTableViewCellDidEndEditing(self, title: text)
+//        if text.count == 0 {
+//            delegate?.debtCategoryTableViewCellDidCancel(self)
+//        } else {
+//            delegate?.debtCategoryTableViewCell(self, didChangeTitleTo: text)
+//        }
     }
 
 //    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
