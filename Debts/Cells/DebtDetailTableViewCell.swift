@@ -63,13 +63,7 @@ class DebtDetailTableViewCell: UITableViewCell {
         nameLabel.text = debt.person?.name
         dateLabel.text = dateFormatter.string(from: debt.dateAdded)
 
-        costLabel.text = String(
-            format: "%@%.2f%@",
-            Constants.currencyBeforeValue ? Constants.currency : "",
-            debt.cost,
-            Constants.currencyBeforeValue ? "" : Constants.currency
-        )
-
+        costLabel.text = Currency.stringWithSelectedCurrency(for: debt.cost)
     }
 
     func setupForPersonDetails(with debt: Debt) {
@@ -81,12 +75,7 @@ class DebtDetailTableViewCell: UITableViewCell {
         nameLabel.text = debtCategory.name
         dateLabel.text = dateFormatter.string(from: debt.dateAdded)
 
-        costLabel.text = String(
-            format: "%@%.2f%@",
-            Constants.currencyBeforeValue ? Constants.currency : "",
-            debt.cost,
-            Constants.currencyBeforeValue ? "" : Constants.currency
-        )
+        costLabel.text = Currency.stringWithSelectedCurrency(for: debt.cost)
 
         if debtCategory.isMyDebt {
             costLabel.textColor = .red
@@ -105,7 +94,7 @@ class DebtDetailTableViewCell: UITableViewCell {
 
 extension DebtDetailTableViewCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        textField.text = costLabel.text?.replacingOccurrences(of: Constants.currency, with: "")
+        textField.text = costLabel.text?.replacingOccurrences(of: Currency.loadCurrency().symbol, with: "")
         textField.text = costTextField.text?.replacingOccurrences(of: "0.00", with: "")
         textField.text = costTextField.text?.replacingOccurrences(of: ".00", with: "")
     }
@@ -114,13 +103,8 @@ extension DebtDetailTableViewCell: UITextFieldDelegate {
         let text = (textField.text ?? "").replacingOccurrences(of: ",", with: ".")
         guard let cost = Double(text) else { return }
 
-        costLabel.text = String(
-            format: "%@%.2f%@",
-            Constants.currencyBeforeValue ? Constants.currency : "",
-            cost,
-            Constants.currencyBeforeValue ? "" : Constants.currency
-        )
-
+        costLabel.text = Currency.stringWithSelectedCurrency(for: cost)
+        
         costLabel.isHidden = false
         costTextField.isHidden = true
 
@@ -129,10 +113,10 @@ extension DebtDetailTableViewCell: UITextFieldDelegate {
 
     func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
         let text = (textField.text ?? "").replacingOccurrences(of: ",", with: ".")
-        guard Double(text) != nil else { return false }
+//        guard Double(text) != nil else { return falsse }
 
         if text.count == 0 {
-            return false
+//            return false
         }
 
         return true

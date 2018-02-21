@@ -7,6 +7,8 @@ class MyDebtCategoriesViewController: UIViewController {
     }
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyTableViewLabel: UILabel!
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -27,6 +29,13 @@ class MyDebtCategoriesViewController: UIViewController {
         }
     }
     
+    var keyboardObserver: NSObjectProtocol?
+    deinit {
+        if let keyboardObserver = keyboardObserver {
+            NotificationCenter.default.removeObserver(keyboardObserver)
+        }
+    }
+    
     private static let nameComparator: (DebtCategory, DebtCategory) -> Bool = { $0.name.lowercased() < $1.name.lowercased() }
     private static let totalDebtComparator: (DebtCategory, DebtCategory) -> Bool = { $0.totalDebt > $1.totalDebt }
     private static let dateComparator: (DebtCategory, DebtCategory) -> Bool = { $0.dateCreated > $1.dateCreated }
@@ -38,7 +47,7 @@ class MyDebtCategoriesViewController: UIViewController {
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
-        title = "Debts"
+        title = "My Debts"
         navigationController?.navigationBar.prefersLargeTitles = true
         
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
@@ -52,6 +61,22 @@ class MyDebtCategoriesViewController: UIViewController {
         tableView.register(UINib(nibName: Constants.categoryCell, bundle: nil), forCellReuseIdentifier: Constants.categoryCell)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebtCategories), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        
+        keyboardObserver = NotificationCenter.default.addObserver(forName: .UIKeyboardWillChangeFrame, object: nil, queue: nil, using: { (notification) in
+            if let userInfo = notification.userInfo,
+                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
+                let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
+                let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
+                
+                if let tabBarHeight = self.tabBarController?.tabBar.frame.height {
+                    self.tableViewBottomConstraint.constant = UIScreen.main.bounds.height - endFrameValue.cgRectValue.minY - tabBarHeight
+                }
+                
+                UIView.animate(withDuration: durationValue.doubleValue, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
+                    self.view.layoutIfNeeded()
+                }, completion: nil)
+            }
+        })
         
         reloadDebtCategories()
     }
@@ -154,6 +179,12 @@ extension MyDebtCategoriesViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if debtCategories.count == 0 {
+            emptyTableViewLabel.isHidden = false
+        } else {
+            emptyTableViewLabel.isHidden = true
+        }
+        
         if isFiltering() {
             return filteredDebtCategories.count
         }

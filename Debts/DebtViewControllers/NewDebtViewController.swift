@@ -167,6 +167,7 @@ class NewDebtViewController: UIViewController {
 
     @IBAction func cancelAction(_ sender: Any) {
         if state == .defaultState {
+            RealmHelper.removeDebtCategory(debtCategory: debtCategory)
             dismiss(animated: true, completion: nil)
         } else if state == .addingState {
             didCancel = true
@@ -188,12 +189,8 @@ class NewDebtViewController: UIViewController {
                 totalCost += cost
             }
         }
-        totalCostLabel.text = String(
-            format: "%@%.2f%@",
-            Constants.currencyBeforeValue ? Constants.currency : "",
-            totalCost,
-            Constants.currencyBeforeValue ? "" : Constants.currency
-        )
+        
+        totalCostLabel.text = Currency.stringWithSelectedCurrency(for: totalCost)
         
         let numberOfPeople = selectedPeople.count
         numberOfPeopleLabel.text = "over \(numberOfPeople) \(numberOfPeople == 1 ? "person" : "people")"

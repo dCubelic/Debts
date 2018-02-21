@@ -57,12 +57,7 @@ class DebtCategoryTableViewCell: UITableViewCell {
         titleLabel.text = debtCategory.name
         dateLabel.text = dateFormatter.string(from: debtCategory.dateCreated)
 
-        detailLabel.text = String(
-            format: "%@%.2f%@",
-            Constants.currencyBeforeValue ? Constants.currency : "",
-            debtCategory.totalDebt,
-            Constants.currencyBeforeValue ? "" : Constants.currency
-        )
+        detailLabel.text = Currency.stringWithSelectedCurrency(for: debtCategory.totalDebt)
 
         let color = UIColor(for: debtCategory)
 

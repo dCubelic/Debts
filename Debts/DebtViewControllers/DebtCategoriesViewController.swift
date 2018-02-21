@@ -7,6 +7,8 @@ class DebtCategoriesViewController: UIViewController {
     }
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyTableViewLabel: UILabel!
+    @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     
     let searchController = UISearchController(searchResultsController: nil)
     
@@ -24,6 +26,13 @@ class DebtCategoriesViewController: UIViewController {
                 navigationItem.leftBarButtonItem?.image = nil
                 navigationItem.leftBarButtonItem?.title = "Cancel"
             }
+        }
+    }
+    
+    var keyboardObserver: NSObjectProtocol?
+    deinit {
+        if let keyboardObserver = keyboardObserver {
+            NotificationCenter.default.removeObserver(keyboardObserver)
         }
     }
     
@@ -52,6 +61,22 @@ class DebtCategoriesViewController: UIViewController {
         tableView.register(UINib(nibName: Constants.categoryCell, bundle: nil), forCellReuseIdentifier: Constants.categoryCell)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebtCategories), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        
+        keyboardObserver = NotificationCenter.default.addObserver(forName: .UIKeyboardWillChangeFrame, object: nil, queue: nil, using: { (notification) in
+            if let userInfo = notification.userInfo,
+                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
+                let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
+                let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
+                
+                if let tabBarHeight = self.tabBarController?.tabBar.frame.height {
+                    self.tableViewBottomConstraint.constant = UIScreen.main.bounds.height - endFrameValue.cgRectValue.minY - tabBarHeight
+                }
+                
+                UIView.animate(withDuration: durationValue.doubleValue, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
+                    self.view.layoutIfNeeded()
+                }, completion: nil)
+            }
+        })
         
         reloadDebtCategories()
     }
@@ -152,6 +177,12 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if debtCategories.count == 0 {
+            emptyTableViewLabel.isHidden = false
+        } else {
+            emptyTableViewLabel.isHidden = true
+        }
+        
         if isFiltering() {
             return filteredDebtCategories.count
         }

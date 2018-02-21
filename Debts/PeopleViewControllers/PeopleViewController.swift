@@ -7,6 +7,7 @@ enum ControllerState {
 class PeopleViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var emptyTableViewLabel: UILabel!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var leftBarButtonItem: UIBarButtonItem!
     
@@ -188,6 +189,12 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if people.count == 0 {
+            emptyTableViewLabel.isHidden = false
+        } else {
+            emptyTableViewLabel.isHidden = true
+        }
+        
         if isFiltering() {
             return filteredPeople.count
         }

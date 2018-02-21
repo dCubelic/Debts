@@ -78,7 +78,7 @@
                         <constraints>
                             <constraint firstItem="ktz-1u-Bfv" firstAttribute="leading" secondItem="qxj-87-VGi" secondAttribute="trailing" constant="8" id="11O-hq-VQe"/>
                             <constraint firstItem="AeP-vY-6Ha" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ktz-1u-Bfv" secondAttribute="trailing" constant="5" id="3G1-iE-72i"/>
-                            <constraint firstItem="YqX-yw-eb4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Q0-QT-bUr" secondAttribute="top" constant="8" id="6nC-9u-KYi"/>
+                            <constraint firstItem="YqX-yw-eb4" firstAttribute="top" relation="greaterThanOrEqual" secondItem="6Q0-QT-bUr" secondAttribute="top" constant="4" id="6nC-9u-KYi"/>
                             <constraint firstItem="ktz-1u-Bfv" firstAttribute="centerY" secondItem="6Q0-QT-bUr" secondAttribute="centerY" id="TxV-u5-9V7"/>
                             <constraint firstItem="BZI-TN-OH5" firstAttribute="centerY" secondItem="ktz-1u-Bfv" secondAttribute="centerY" id="Zpt-8r-zQx"/>
                             <constraint firstItem="BZI-TN-OH5" firstAttribute="leading" secondItem="qxj-87-VGi" secondAttribute="trailing" constant="8" id="an0-pK-BVA"/>
@@ -87,7 +87,7 @@
                             <constraint firstItem="YqX-yw-eb4" firstAttribute="centerY" secondItem="6Q0-QT-bUr" secondAttribute="centerY" id="nKo-cx-vSw"/>
                             <constraint firstItem="qxj-87-VGi" firstAttribute="top" secondItem="6Q0-QT-bUr" secondAttribute="top" id="ojn-d7-GSX"/>
                             <constraint firstItem="yNq-Az-xVz" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="ktz-1u-Bfv" secondAttribute="trailing" constant="15" id="p82-W5-lgA"/>
-                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="YqX-yw-eb4" secondAttribute="bottom" constant="8" id="rQk-dv-qwd"/>
+                            <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="YqX-yw-eb4" secondAttribute="bottom" constant="4" id="rQk-dv-qwd"/>
                             <constraint firstAttribute="trailing" secondItem="YqX-yw-eb4" secondAttribute="trailing" constant="8" id="z76-rc-f7e"/>
                         </constraints>
                     </view>

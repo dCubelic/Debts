@@ -89,12 +89,8 @@ class PersonDetailViewController: UIViewController {
 
         debts = RealmHelper.getDebts(for: person)
 
-        totalDebtLabel.text = String(
-            format: "%@%.2f%@",
-            Constants.currencyBeforeValue ? Constants.currency : "",
-            person.totalDebt,
-            Constants.currencyBeforeValue ? "" : Constants.currency
-        )
+        totalDebtLabel.text = Currency.stringWithSelectedCurrency(for: person.totalDebt)
+
         numberOfDebtsLabel.text = "\(person.debts.count) debt\(person.debts.count == 1 ? "" : "s")"
 
         tableView.reloadData()

@@ -18,12 +18,29 @@ struct Constants {
     struct TableViewHeights {
 //        static let categoryCell: CGFloat = 80
     }
+    
+    struct UserDefaults {
+        static let currency = "currency"
+    }
 
     static let categoryCell = "DebtCategoryTableViewCell"
     static let debtDetailCell = "DebtDetailTableViewCell"
     static let personCell = "PersonTableViewCell"
     static let newDebtPersonCell = "NewDebtPersonTableViewCell"
-
-    static var currency = "kn"
-    static var currencyBeforeValue = false
+    
 }
+
+//struct Currency {
+//    static var symbol = "kn"
+//    static var beforeValue = false
+//    
+//    static func stringWithCurrency(for cost: Double) -> String {
+//        return String(
+//            format: "%@%.2f%@",
+//            beforeValue ? symbol : "",
+//            cost,
+//            beforeValue ? "" : symbol
+//        )
+//    }
+//}
+

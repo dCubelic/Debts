@@ -48,12 +48,7 @@ class PersonTableViewCell: UITableViewCell {
 
     func setup(with person: Person) {
         titleLabel.text = person.name
-        detailLabel.text = String(
-            format: "%@%.2f%@",
-            Constants.currencyBeforeValue ? Constants.currency : "",
-            abs(person.totalDebt),
-            Constants.currencyBeforeValue ? "" : Constants.currency
-        )
+        detailLabel.text = Currency.stringWithSelectedCurrency(for: abs(person.totalDebt))
 
         let color = UIColor(for: person)
 

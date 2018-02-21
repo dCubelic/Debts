@@ -72,12 +72,7 @@ class NewDebtPersonTableViewCell: UITableViewCell {
     }
     
     func setCost(cost: Double?) {
-        costTextField.text = String(
-            format: "%@%.2f%@",
-            Constants.currencyBeforeValue ? Constants.currency : "",
-            cost ?? 0,
-            Constants.currencyBeforeValue ? "" : Constants.currency
-        )
+        costTextField.text = Currency.stringWithSelectedCurrency(for: cost ?? 0)
     }
     
     func editName() {
@@ -89,7 +84,7 @@ class NewDebtPersonTableViewCell: UITableViewCell {
 extension NewDebtPersonTableViewCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == costTextField {
-            textField.text = costTextField.text?.replacingOccurrences(of: Constants.currency, with: "")
+            textField.text = costTextField.text?.replacingOccurrences(of: Currency.loadCurrency().symbol, with: "")
             textField.text = costTextField.text?.replacingOccurrences(of: "0.00", with: "")
             textField.text = costTextField.text?.replacingOccurrences(of: ".00", with: "")
         } else if textField == nameTextField {
@@ -103,12 +98,7 @@ extension NewDebtPersonTableViewCell: UITextFieldDelegate {
             if text.isEmpty { text = "0" }
             guard let cost = Double(text) else { return }
             
-            costTextField.text = String(
-                format: "%@%.2f%@",
-                Constants.currencyBeforeValue ? Constants.currency : "",
-                cost,
-                Constants.currencyBeforeValue ? "" : Constants.currency
-            )
+            costTextField.text = Currency.stringWithSelectedCurrency(for: cost)
             
             delegate?.newDebtPersonTableViewCell(self, didChangeCostTo: cost)
         } else if textField == nameTextField {
