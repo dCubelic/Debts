@@ -1,7 +1,7 @@
 import UIKit
 
 class HomeViewController: UIViewController {
-
+    
     @IBOutlet weak var homeView: UIView!
     @IBOutlet weak var underlineView: UIView!
     @IBOutlet weak var underlineView2: UIView!
@@ -17,44 +17,28 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var currencyTextField: UITextField!
     @IBOutlet weak var saveButton: UIButton!
     @IBOutlet weak var deleteAllDataButton: UIButton!
+    @IBOutlet weak var currencyUnderlineView: UIView!
     
     var currencyPickerView: UIPickerView?
     var showingSettings = false
     var currencies = Currency.currencies.sorted(by: { $0.name < $1.name })
-    var selectedCurrency: Currency?
+    var selectedCurrency = Currency.loadCurrency()
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
         view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         
         title = "Home"
-
+        
         navigationController?.navigationBar.prefersLargeTitles = true
-
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
         view.addGestureRecognizer(tapGesture)
         
-        homeView.layer.cornerRadius = 25
-        homeView.backgroundColor = UIColor(white: 246 / 255, alpha: 1)
-        settingsView.layer.cornerRadius = 25
-        settingsView.backgroundColor = UIColor(white: 246/255, alpha: 1)
-
-        underlineView.backgroundColor = UIColor(for: RealmHelper.getTotalOfDebts())
-        underlineView.layer.cornerRadius = 2
-        underlineView2.backgroundColor = UIColor(white: 230 / 255, alpha: 1)
-
-        newMyDebt.layer.cornerRadius = 8
-        newMyDebt.backgroundColor = UIColor(white: 230 / 255, alpha: 1)
-        newDebt.layer.cornerRadius = 8
-        newDebt.backgroundColor = UIColor(white: 230 / 255, alpha: 1)
-
-        myDebtsLabel.textColor = .red
-
+        setupViews()
+        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
-
-        initializeShadows()
-        initializeCurrencyPickerView()
         
         reloadData()
     }
@@ -66,15 +50,42 @@ class HomeViewController: UIViewController {
         showingSettings = false
     }
     
+    func setupViews() {
+        homeView.layer.cornerRadius = 25
+        homeView.backgroundColor = UIColor(white: 246 / 255, alpha: 1)
+        settingsView.layer.cornerRadius = 25
+        settingsView.backgroundColor = UIColor(white: 246/255, alpha: 1)
+        
+        underlineView.backgroundColor = UIColor(for: RealmHelper.getTotalOfDebts())
+        underlineView.layer.cornerRadius = 2
+        underlineView2.backgroundColor = UIColor(white: 230 / 255, alpha: 1)
+        
+        newMyDebt.layer.cornerRadius = 8
+        newMyDebt.backgroundColor = UIColor(white: 230 / 255, alpha: 1)
+        newDebt.layer.cornerRadius = 8
+        newDebt.backgroundColor = UIColor(white: 230 / 255, alpha: 1)
+        
+        myDebtsLabel.textColor = .red
+        
+        saveButton.layer.cornerRadius = 8
+        saveButton.backgroundColor = UIColor(white: 246/255, alpha: 1)
+        deleteAllDataButton.layer.cornerRadius = 8
+        deleteAllDataButton.backgroundColor = UIColor(white: 246/255, alpha: 1)
+        
+        currencyUnderlineView.backgroundColor = UIColor(for: RealmHelper.getTotalOfDebts())
+        currencyUnderlineView.layer.cornerRadius = 2
+        
+        initializeShadows()
+        initializeCurrencyPickerView()
+    }
+    
     func initializeCurrencyPickerView() {
         currencyPickerView = UIPickerView()
         currencyPickerView?.delegate = self
         currencyPickerView?.dataSource = self
-//        currencyPickerView?.selectRow(<#T##row: Int##Int#>, inComponent: <#T##Int#>, animated: <#T##Bool#>)
-        
         currencyTextField.inputView = currencyPickerView
     }
-
+    
     func initializeShadows() {
         homeView.layer.shadowColor = UIColor.black.cgColor
         homeView.layer.shadowOpacity = 0.2
@@ -85,26 +96,36 @@ class HomeViewController: UIViewController {
         settingsView.layer.shadowOpacity = 0.2
         settingsView.layer.shadowOffset = CGSize.zero
         settingsView.layer.shadowRadius = 3
+        
+        saveButton.layer.shadowColor = UIColor.black.cgColor
+        saveButton.layer.shadowOpacity = 0.2
+        saveButton.layer.shadowOffset = CGSize.zero
+        saveButton.layer.shadowRadius = 3
+        
+        deleteAllDataButton.layer.shadowColor = UIColor.black.cgColor
+        deleteAllDataButton.layer.shadowOpacity = 0.2
+        deleteAllDataButton.layer.shadowOffset = CGSize.zero
+        deleteAllDataButton.layer.shadowRadius = 3
     }
     
     @objc func tapAction() {
         view.endEditing(true)
     }
-
+    
     @objc func reloadData() {
         let totalAllDebt = RealmHelper.getTotalOfAllDebts()
         totalDebtLabel.text = Currency.stringWithSelectedCurrency(for: totalAllDebt)
-
+        
         let myTotalDebt = RealmHelper.getTotalOfMyDebts()
         let totalDebt = RealmHelper.getTotalOfDebts()
-
+        
         debtsLabel.text = Currency.stringWithSelectedCurrency(for: totalDebt)
         myDebtsLabel.text = Currency.stringWithSelectedCurrency(for: myTotalDebt)
-
+        
         let numberOfCategories = RealmHelper.getNumberOfDebtCategories()
         let numberOfPeople = RealmHelper.getNumberOfPeople()
         let numberOfDebts = RealmHelper.getNumberOfDebts()
-
+        
         categoriesLabel.text = String(numberOfCategories)
         personsLabel.text = String(numberOfPeople)
         numberOfDebtsLabel.text = String(numberOfDebts)
@@ -112,26 +133,39 @@ class HomeViewController: UIViewController {
     
     @IBAction func settingsAction(_ sender: Any) {
         if showingSettings {
-            UIView.transition(from: settingsView, to: homeView, duration: 0.8, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
+            UIView.transition(from: settingsView, to: homeView, duration: 0.8, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
             showingSettings = false
         } else {
             UIView.transition(from: homeView, to: settingsView, duration: 0.8, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
             currencyTextField.text = Currency.loadCurrency().name
-            if let selectedCurrency = selectedCurrency, let index = currencies.index(of: selectedCurrency) {
+            
+            if let index = currencies.index(where: { (currency) -> Bool in
+                currency == Currency.loadCurrency()
+            }) {
                 currencyPickerView?.selectRow(index, inComponent: 0, animated: true)
             }
+            
             showingSettings = true
         }
     }
     
     @IBAction func saveAction(_ sender: Any) {
-        if let currency = selectedCurrency {
-            Currency.saveCurrency(currency: currency)
-            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
-        }
+        Currency.saveCurrency(currency: selectedCurrency)
+        NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        
+        currencyTextField.resignFirstResponder()
     }
     
     @IBAction func deleteAllDataAction(_ sender: Any) {
+        let alert = UIAlertController(title: "Delete All Data?", message: "Are you sure you wish to delete ALL data?", preferredStyle: .alert)
+        
+        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+            RealmHelper.deleteAllData()
+            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        }))
+        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        
+        present(alert, animated: true, completion: nil)
     }
 }
 

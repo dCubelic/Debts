@@ -60,6 +60,12 @@ class Currency: NSObject, NSCoding {
     var symbol: String
     var beforeValue: Bool
     
+    static var currencies: [Currency] = [
+        Currency(name: "USD", symbol: "$", beforeValue: true),
+        Currency(name: "HRK", symbol: "kn", beforeValue: false),
+        Currency(name: "EUR", symbol: "€", beforeValue: true)
+    ]
+    
     init(name: String, symbol: String, beforeValue: Bool) {
         self.name = name
         self.symbol = symbol
@@ -70,6 +76,10 @@ class Currency: NSObject, NSCoding {
         self.name = decoder.decodeObject(forKey: "name") as? String ?? ""
         self.symbol = decoder.decodeObject(forKey: "symbol") as? String ?? ""
         self.beforeValue = decoder.decodeBool(forKey: "beforeValue")
+    }
+    
+    static func == (lhs: Currency, rhs: Currency) -> Bool {
+        return lhs.name == rhs.name && lhs.symbol == rhs.symbol && lhs.beforeValue == rhs.beforeValue
     }
     
     func encode(with aCoder: NSCoder) {
@@ -100,10 +110,4 @@ class Currency: NSObject, NSCoding {
             currency.beforeValue ? "" : currency.symbol
         )
     }
-    
-    static var currencies = [
-        Currency(name: "USD", symbol: "$", beforeValue: true),
-        Currency(name: "HRK", symbol: "kn", beforeValue: false),
-        Currency(name: "EUR", symbol: "€", beforeValue: true)
-    ]
 }

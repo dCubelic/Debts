@@ -194,6 +194,12 @@ class RealmHelper {
         }
     }
     
+    static func deleteAllData() {
+        write(realm: realm) {
+            realm.deleteAll()
+        }
+    }
+    
 }
 
 extension Results {
