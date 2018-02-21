@@ -161,4 +161,8 @@ extension DebtCategoryDetailViewController: DebtDetailTableViewCellDelegate {
         RealmHelper.changeCost(for: debts[indexPath.row], cost: cost)
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
     }
+    
+    func debtDetailTableViewCellDidCancel(_ cell: DebtDetailTableViewCell) {
+        reloadDebts()
+    }
 }

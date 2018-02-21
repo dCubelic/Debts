@@ -113,10 +113,6 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
         return cell
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print(indexPath)
-    }
-
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
             RealmHelper.removeDebt(self.debts[indexPath.row])
@@ -149,5 +145,9 @@ extension PersonDetailViewController: DebtDetailTableViewCellDelegate {
 
         RealmHelper.changeCost(for: debts[indexPath.row], cost: cost)
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+    }
+    
+    func debtDetailTableViewCellDidCancel(_ cell: DebtDetailTableViewCell) {
+        reloadDebts()
     }
 }

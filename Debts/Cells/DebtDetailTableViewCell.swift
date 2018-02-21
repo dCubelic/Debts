@@ -2,6 +2,7 @@ import UIKit
 
 protocol DebtDetailTableViewCellDelegate: class {
     func debtDetailTableViewCell(_ cell: DebtDetailTableViewCell, didUpdateCost cost: Double)
+    func debtDetailTableViewCellDidCancel(_ cell: DebtDetailTableViewCell)
 }
 
 class DebtDetailTableViewCell: UITableViewCell {
@@ -76,7 +77,7 @@ class DebtDetailTableViewCell: UITableViewCell {
         dateLabel.text = dateFormatter.string(from: debt.dateAdded)
 
         costLabel.text = Currency.stringWithSelectedCurrency(for: debt.cost)
-
+        
         if debtCategory.isMyDebt {
             costLabel.textColor = .red
         } else {
@@ -100,27 +101,31 @@ extension DebtDetailTableViewCell: UITextFieldDelegate {
     }
 
     func textFieldDidEndEditing(_ textField: UITextField) {
-        let text = (textField.text ?? "").replacingOccurrences(of: ",", with: ".")
-        guard let cost = Double(text) else { return }
-
-        costLabel.text = Currency.stringWithSelectedCurrency(for: cost)
-        
         costLabel.isHidden = false
         costTextField.isHidden = true
+        
+        let text = (textField.text ?? "").replacingOccurrences(of: ",", with: ".")
+        
+        guard let cost = Double(text) else {
+            delegate?.debtDetailTableViewCellDidCancel(self)
+            return
+        }
+
+        costLabel.text = Currency.stringWithSelectedCurrency(for: cost)
 
         delegate?.debtDetailTableViewCell(self, didUpdateCost: cost)
     }
 
-    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-        let text = (textField.text ?? "").replacingOccurrences(of: ",", with: ".")
-//        guard Double(text) != nil else { return falsse }
-
-        if text.count == 0 {
-//            return false
-        }
-
-        return true
-    }
+//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
+//        let text = (textField.text ?? "").replacingOccurrences(of: ",", with: ".")
+////        guard Double(text) != nil else { return falsse }
+//
+//        if text.count == 0 {
+////            return false
+//        }
+//
+//        return true
+//    }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let currentText = textField.text as NSString? else { return true }
