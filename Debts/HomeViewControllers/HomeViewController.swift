@@ -20,7 +20,6 @@ class HomeViewController: UIViewController {
     @IBOutlet weak var currencyUnderlineView: UIView!
     
     var currencyPickerView: UIPickerView?
-    var showingSettings = false
     var currencies = Currency.currencies.sorted(by: { $0.name < $1.name })
     var selectedCurrency = Currency.loadCurrency()
     
@@ -39,6 +38,7 @@ class HomeViewController: UIViewController {
         setupViews()
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadData), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Settings"), style: .plain, target: self, action: #selector(settingsAction))
         
         reloadData()
     }
@@ -47,7 +47,26 @@ class HomeViewController: UIViewController {
         super.viewDidDisappear(animated)
         
         UIView.transition(from: settingsView, to: homeView, duration: 0, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
-        showingSettings = false
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Settings"), style: .plain, target: self, action: #selector(settingsAction))
+    }
+    
+    @objc func doneAction() {
+        UIView.transition(from: settingsView, to: homeView, duration: 0.8, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "Settings"), style: .plain, target: self, action: #selector(settingsAction))
+    }
+    
+    @objc func settingsAction() {
+        UIView.transition(from: homeView, to: settingsView, duration: 0.8, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
+        
+        currencyTextField.text = Currency.loadCurrency().name
+        
+        if let index = currencies.index(where: { (currency) -> Bool in
+            currency == Currency.loadCurrency()
+        }) {
+            currencyPickerView?.selectRow(index, inComponent: 0, animated: true)
+        }
+        
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .done, target: self, action: #selector(doneAction))
     }
     
     func setupViews() {
@@ -129,24 +148,6 @@ class HomeViewController: UIViewController {
         categoriesLabel.text = String(numberOfCategories)
         personsLabel.text = String(numberOfPeople)
         numberOfDebtsLabel.text = String(numberOfDebts)
-    }
-    
-    @IBAction func settingsAction(_ sender: Any) {
-        if showingSettings {
-            UIView.transition(from: settingsView, to: homeView, duration: 0.8, options: [.transitionFlipFromLeft, .showHideTransitionViews], completion: nil)
-            showingSettings = false
-        } else {
-            UIView.transition(from: homeView, to: settingsView, duration: 0.8, options: [.transitionFlipFromRight, .showHideTransitionViews], completion: nil)
-            currencyTextField.text = Currency.loadCurrency().name
-            
-            if let index = currencies.index(where: { (currency) -> Bool in
-                currency == Currency.loadCurrency()
-            }) {
-                currencyPickerView?.selectRow(index, inComponent: 0, animated: true)
-            }
-            
-            showingSettings = true
-        }
     }
     
     @IBAction func saveAction(_ sender: Any) {

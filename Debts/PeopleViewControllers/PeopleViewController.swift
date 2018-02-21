@@ -227,11 +227,16 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
             
             let person = self.getPerson(for: indexPath)
             
-            RealmHelper.removePerson(person: person)
+            let alert = UIAlertController(title: "Remove Person?", message: "Are you sure you wish to remove '\(person.name)' and all of their debts?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+                RealmHelper.removePerson(person: person)
+                NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             
-            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+            self.present(alert, animated: true, completion: nil)
             
-            completionHandler(true)
+            completionHandler(false)
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit\nName") { (_, _, completionHandler) in

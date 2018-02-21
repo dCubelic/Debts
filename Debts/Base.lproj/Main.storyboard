@@ -644,11 +644,7 @@
                         <viewLayoutGuide key="safeArea" id="qSZ-vg-KLy"/>
                     </view>
                     <navigationItem key="navigationItem" title="Debts" id="UWj-2g-USF">
-                        <barButtonItem key="rightBarButtonItem" title="Item" image="Settings" id="W1a-1c-Rzv">
-                            <connections>
-                                <action selector="settingsAction:" destination="5U8-0H-ato" id="5Al-IH-dQx"/>
-                            </connections>
-                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" title="Item" image="Settings" id="W1a-1c-Rzv"/>
                     </navigationItem>
                     <connections>
                         <outlet property="categoriesLabel" destination="Av4-yT-Fi2" id="gc1-wW-JKH"/>
@@ -1042,7 +1038,7 @@
                     <navigationItem key="navigationItem" id="4ny-ZX-I4d">
                         <barButtonItem key="leftBarButtonItem" title="Sort" image="Sort" id="ZpX-Gx-EzI">
                             <connections>
-                                <action selector="sortAction:" destination="oF6-oA-cQf" id="sba-CJ-SNY"/>
+                                <action selector="leftBarButtonAction:" destination="oF6-oA-cQf" id="etX-LO-7ei"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="Imr-kE-dV2">

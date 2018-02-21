@@ -216,11 +216,16 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
             
             let debtCategory = self.getDebtCategory(for: indexPath)
             
-            RealmHelper.removeDebtCategory(debtCategory: debtCategory)
+            let alert = UIAlertController(title: "Remove Debt?", message: "Are you sure you want to remove '\(debtCategory.name)'?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+                RealmHelper.removeDebtCategory(debtCategory: debtCategory)
+                NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+            }))
+            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             
-            NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+            self.present(alert, animated: true, completion: nil)
             
-            completionHandler(true)
+            completionHandler(false)
         }
         
         let edit = UIContextualAction(style: .normal, title: "Edit\nName") { (_, _, completionHandler) in
