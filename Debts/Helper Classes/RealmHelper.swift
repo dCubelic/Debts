@@ -1,5 +1,6 @@
 import Foundation
 import RealmSwift
+import CoreSpotlight
 
 //struct DebtCategoryByPerson {
 //    var debtCategory: DebtCategory
@@ -88,16 +89,18 @@ class RealmHelper {
         return debtCategory.totalDebt
     }
     
-    static func addPerson(name: String) -> Person {
-        let person = Person()
-        person.name = name
-        
-        write(realm: realm) {
-            realm.add(person, update: true)
-        }
-        
-        return person
-    }
+//    static func addPerson(name: String) -> Person {
+//        let person = Person()
+//        person.name = name
+//
+//        write(realm: realm) {
+//            realm.add(person, update: true)
+//        }
+//
+//        CSSearchableIndex.default().indexSearchableItems([person.searchableItem], completionHandler: nil)
+//
+//        return person
+//    }
     
     static func add(debtCategory: DebtCategory, with people: [Person], and costDictionary: [Person: Double]) {
         write(realm: realm) {
@@ -112,9 +115,11 @@ class RealmHelper {
                 realm.add(debt)
             }
         }
+        CSSearchableIndex.default().indexSearchableItems([debtCategory.searchableItem], completionHandler: nil)
     }
     
     static func removePerson(person: Person) {
+        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [person.uuid], completionHandler: nil)
         write(realm: realm) {
             realm.delete(person.debts)
             realm.delete(person)
@@ -123,6 +128,7 @@ class RealmHelper {
     }
     
     static func removeDebtCategory(debtCategory: DebtCategory) {
+        CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [debtCategory.uuid], completionHandler: nil)
         write(realm: realm) {
             realm.delete(debtCategory.debts)
             realm.delete(debtCategory)
@@ -151,13 +157,14 @@ class RealmHelper {
         }
     }
     
-    static func changeName(for person: Person, name: String) {
+    static func updateName(for person: Person, name: String) {
         write(realm: realm) {
             person.name = name
             if !(realm.objects(Person.self).filter("uuid = %@", person.uuid).count == 1) {
                 realm.add(person)
             }
         }
+        CSSearchableIndex.default().indexSearchableItems([person.searchableItem], completionHandler: nil)
     }
     
     static func changeTitle(for debtCategory: DebtCategory, title: String) {
@@ -206,6 +213,7 @@ class RealmHelper {
         write(realm: realm) {
             realm.deleteAll()
         }
+        CSSearchableIndex.default().deleteAllSearchableItems(completionHandler: nil)
     }
     
 }

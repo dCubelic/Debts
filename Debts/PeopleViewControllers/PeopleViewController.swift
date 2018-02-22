@@ -1,4 +1,5 @@
 import UIKit
+import CoreSpotlight
 
 enum ControllerState {
     case defaultState, addingState
@@ -229,8 +230,10 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
             
             let alert = UIAlertController(title: "Remove Person?", message: "Are you sure you wish to remove '\(person.name)' and all of their debts?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+                CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [person.uuid], completionHandler: nil)
                 RealmHelper.removePerson(person: person)
                 NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+
             }))
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             
@@ -279,7 +282,7 @@ extension PeopleViewController: PersonTableViewCellDelegate {
         }
         
         let person = getPerson(for: indexPath)
-        RealmHelper.changeName(for: person, name: name)
+        RealmHelper.updateName(for: person, name: name)
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
         didCancel = false

@@ -272,7 +272,7 @@ extension NewDebtViewController: NewDebtPersonTableViewCellDelegate {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
         if !name.isEmpty && !didCancel {
-            RealmHelper.changeName(for: people[indexPath.row], name: name)
+            RealmHelper.updateName(for: people[indexPath.row], name: name)
             NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
             navigationItem.rightBarButtonItem?.isEnabled = true
         } else {

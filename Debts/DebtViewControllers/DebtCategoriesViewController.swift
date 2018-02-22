@@ -94,6 +94,7 @@ class DebtCategoriesViewController: UIViewController {
     @objc func reloadDebtCategories() {
         debtCategories = RealmHelper.getAllDebtCategories()
         sortDebtCategories()
+        
         if let searchText = searchController.searchBar.text {
             filterDebtCategories(for: searchText)
         }
