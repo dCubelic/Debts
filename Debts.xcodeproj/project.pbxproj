@@ -23,6 +23,7 @@
 		B43F6AE11FFA9C2D009283F5 /* DebtCategoriesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B43F6AE01FFA9C2D009283F5 /* DebtCategoriesViewController.swift */; };
 		B4858A3E1FEE65AF0051A45E /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A3D1FEE65AF0051A45E /* Constants.swift */; };
 		B4858A401FEE663C0051A45E /* RealmHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4858A3F1FEE663C0051A45E /* RealmHelper.swift */; };
+		B48CCF8E203EDB5000E05A2B /* ModelSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48CCF8D203EDB5000E05A2B /* ModelSearch.swift */; };
 		B493220B1FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B49322091FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift */; };
 		B4958AC420049FE90016D5C7 /* NewDebtPersonTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4958AC220049FE90016D5C7 /* NewDebtPersonTableViewCell.swift */; };
 		B4958AC520049FE90016D5C7 /* NewDebtPersonTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = B4958AC320049FE90016D5C7 /* NewDebtPersonTableViewCell.xib */; };
@@ -91,6 +92,7 @@
 		B43F6AE01FFA9C2D009283F5 /* DebtCategoriesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtCategoriesViewController.swift; sourceTree = "<group>"; };
 		B4858A3D1FEE65AF0051A45E /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		B4858A3F1FEE663C0051A45E /* RealmHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmHelper.swift; sourceTree = "<group>"; };
+		B48CCF8D203EDB5000E05A2B /* ModelSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelSearch.swift; sourceTree = "<group>"; };
 		B49322091FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebtCategoryTableViewCell.swift; sourceTree = "<group>"; };
 		B4958AC220049FE90016D5C7 /* NewDebtPersonTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewDebtPersonTableViewCell.swift; sourceTree = "<group>"; };
 		B4958AC320049FE90016D5C7 /* NewDebtPersonTableViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = NewDebtPersonTableViewCell.xib; sourceTree = "<group>"; };
@@ -215,6 +217,7 @@
 			isa = PBXGroup;
 			children = (
 				B42296C81FEDBE5C0067F913 /* Models.swift */,
+				B48CCF8D203EDB5000E05A2B /* ModelSearch.swift */,
 				B4858A3D1FEE65AF0051A45E /* Constants.swift */,
 				B4858A3F1FEE663C0051A45E /* RealmHelper.swift */,
 				B4FE3EF51FFE1B03002129F8 /* UIColor+Debts.swift */,
@@ -420,6 +423,7 @@
 				B4BA5BA12003BFEA002A9712 /* NewDebtViewController.swift in Sources */,
 				B49E42721FFD202600FAE6F4 /* PersonTableViewCell.swift in Sources */,
 				B415C6452036C2400048F1CA /* UIStoryboard+Debts.swift in Sources */,
+				B48CCF8E203EDB5000E05A2B /* ModelSearch.swift in Sources */,
 				B43F6AE11FFA9C2D009283F5 /* DebtCategoriesViewController.swift in Sources */,
 				B4BA5B9F2003B06F002A9712 /* MyDebtCategoriesViewController.swift in Sources */,
 				B4958AC420049FE90016D5C7 /* NewDebtPersonTableViewCell.swift in Sources */,

@@ -49,6 +49,10 @@ class DebtCategoryDetailViewController: UIViewController {
         
         guard let debtCategory = debtCategory else { return }
         
+        let activity = debtCategory.userActivity
+        activity.isEligibleForSearch = true
+        userActivity = activity
+        
         underlineView.backgroundColor = UIColor(for: debtCategory)
         title = debtCategory.name
         
@@ -63,6 +67,11 @@ class DebtCategoryDetailViewController: UIViewController {
         guard let debtCategory = debtCategory else { return }
         
         navigationController?.navigationBar.tintColor = UIColor(for: debtCategory)
+    }
+    
+    override func updateUserActivityState(_ activity: NSUserActivity) {
+        guard let debtCategory = debtCategory else { return }
+        activity.addUserInfoEntries(from: debtCategory.userActivityUserInfo)
     }
     
     @objc func tapAction() {

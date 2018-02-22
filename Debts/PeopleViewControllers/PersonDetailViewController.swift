@@ -45,6 +45,10 @@ class PersonDetailViewController: UIViewController {
         view.addGestureRecognizer(tapGesture)
 
         guard let person = person else { return }
+        
+        let activity = person.userActivity
+        activity.isEligibleForSearch = true
+        userActivity = activity
 
 //        navigationController?.navigationBar.tintColor = UIColor(for: person)
         underlineView.backgroundColor = UIColor(for: person)
@@ -63,6 +67,11 @@ class PersonDetailViewController: UIViewController {
         guard let person = person else { return }
 
         navigationController?.navigationBar.tintColor = UIColor(for: person)
+    }
+    
+    override func updateUserActivityState(_ activity: NSUserActivity) {
+        guard let person = person else { return }
+        activity.addUserInfoEntries(from: person.userActivityUserInfo)
     }
 
     @objc func tapAction() {

@@ -54,6 +54,14 @@ class RealmHelper {
         //        return realm.objects(Debt.self).filter("person = %@", person).map({ DebtCategoryByPerson(debtCategory: $0.debtCategory ?? defaultDebt, cost: $0.cost, dateAdded: $0.dateAdded) })
     }
     
+    static func getPerson(forUuid uuid: String) -> Person? {
+        return realm.objects(Person.self).first(where: { $0.uuid == uuid })
+    }
+    
+    static func getDebtCategory(forUuid uuid: String) -> DebtCategory? {
+        return realm.objects(DebtCategory.self).first(where: { $0.uuid == uuid })
+    }
+    
     //    static func getPersons(for debtCategory: DebtCategory) -> [Debt] {
     ////        let defaultPerson = Person()
     //        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).toArray()

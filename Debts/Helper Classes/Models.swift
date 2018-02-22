@@ -111,3 +111,5 @@ class Currency: NSObject, NSCoding {
         )
     }
 }
+
+
