@@ -43,6 +43,7 @@ class PeopleViewController: UIViewController {
             return $0.totalDebt < $1.totalDebt
         }
     }
+    private static let comparators = [nameComparator, totalDebtComparator]
     
     var keyboardObserver: NSObjectProtocol?
     deinit {
@@ -92,6 +93,15 @@ class PeopleViewController: UIViewController {
         definesPresentationContext = true
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadPeople), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        
+        switch UserDefaults.standard.integer(forKey: Constants.UserDefaults.peopleSortComparator) {
+        case 0:
+            sortComparator = PeopleViewController.nameComparator
+        case 1:
+            sortComparator = PeopleViewController.totalDebtComparator
+        default:
+            break
+        }
         
         reloadPeople()
     }
@@ -167,8 +177,14 @@ class PeopleViewController: UIViewController {
         if state == .defaultState {
             let actionSheet = UIAlertController(title: nil, message: "Sort by:", preferredStyle: .actionSheet)
             
-            actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in self.sortComparator = PeopleViewController.nameComparator }))
-            actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (_) in self.sortComparator = PeopleViewController.totalDebtComparator }))
+            actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in
+                self.sortComparator = PeopleViewController.nameComparator
+                UserDefaults.standard.set(0, forKey: Constants.UserDefaults.peopleSortComparator)
+            }))
+            actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (_) in
+                self.sortComparator = PeopleViewController.totalDebtComparator
+                UserDefaults.standard.set(1, forKey: Constants.UserDefaults.peopleSortComparator)
+            }))
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             
             present(actionSheet, animated: true, completion: nil)

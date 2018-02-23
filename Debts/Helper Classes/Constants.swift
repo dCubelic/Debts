@@ -17,6 +17,10 @@ struct Constants {
     
     struct UserDefaults {
         static let currency = "currency"
+        static let peopleSortComparator = "peopleSortComparator"
+        static let debtCategoriesSortComparator = "debtCategoriesSortComparator"
+        static let debtCategoryDetailsSortComparator = "debtCategoryDetailsSortComparator"
+        static let personDetailSortComparator = "personDetailSortComparator"
     }
     
     struct Cells {

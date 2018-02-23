@@ -64,6 +64,17 @@ class PersonDetailViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebts), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
 
+        switch UserDefaults.standard.integer(forKey: Constants.UserDefaults.personDetailSortComparator) {
+        case 0:
+            sortComparator = PersonDetailViewController.nameComparator
+        case 1:
+            sortComparator = PersonDetailViewController.debtComparator
+        case 2:
+            sortComparator = PersonDetailViewController.dateComparator
+        default:
+            break
+        }
+        
         reloadDebts()
     }
 
@@ -112,9 +123,18 @@ class PersonDetailViewController: UIViewController {
     @IBAction func sortAction(_ sender: Any) {
         let actionSheet = UIAlertController(title: nil, message: "Sort by:", preferredStyle: .actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in self.sortComparator = PersonDetailViewController.nameComparator }))
-        actionSheet.addAction(UIAlertAction(title: "Debt", style: .default, handler: { (_) in self.sortComparator = PersonDetailViewController.debtComparator }))
-        actionSheet.addAction(UIAlertAction(title: "Date Added", style: .default, handler: { (_) in self.sortComparator = PersonDetailViewController.dateComparator }))
+        actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in
+            self.sortComparator = PersonDetailViewController.nameComparator
+            UserDefaults.standard.set(0, forKey: Constants.UserDefaults.personDetailSortComparator)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Debt", style: .default, handler: { (_) in
+            self.sortComparator = PersonDetailViewController.debtComparator
+            UserDefaults.standard.set(1, forKey: Constants.UserDefaults.personDetailSortComparator)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Date Added", style: .default, handler: { (_) in
+            self.sortComparator = PersonDetailViewController.dateComparator
+            UserDefaults.standard.set(2, forKey: Constants.UserDefaults.personDetailSortComparator)
+        }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         present(actionSheet, animated: true, completion: nil)

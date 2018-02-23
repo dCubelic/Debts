@@ -66,6 +66,17 @@ class DebtCategoryDetailViewController: UIViewController {
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebts), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
+        switch UserDefaults.standard.integer(forKey: Constants.UserDefaults.debtCategoryDetailsSortComparator) {
+        case 0:
+            sortComparator = DebtCategoryDetailViewController.nameComparator
+        case 1:
+            sortComparator = DebtCategoryDetailViewController.debtComparator
+        case 2:
+            sortComparator = DebtCategoryDetailViewController.dateComparator
+        default:
+            break
+        }
+        
         reloadDebts()
     }
     
@@ -123,9 +134,17 @@ class DebtCategoryDetailViewController: UIViewController {
         let actionSheet = UIAlertController(title: nil, message: "Sort by:", preferredStyle: .actionSheet)
         
         actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in
-            self.sortComparator = DebtCategoryDetailViewController.nameComparator }))
-        actionSheet.addAction(UIAlertAction(title: "Debt", style: .default, handler: { (_) in self.sortComparator = DebtCategoryDetailViewController.debtComparator }))
-        actionSheet.addAction(UIAlertAction(title: "Date Added", style: .default, handler: { (_) in self.sortComparator = DebtCategoryDetailViewController.dateComparator }))
+            self.sortComparator = DebtCategoryDetailViewController.nameComparator
+            UserDefaults.standard.set(0, forKey: Constants.UserDefaults.debtCategoryDetailsSortComparator)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Debt", style: .default, handler: { (_) in
+            self.sortComparator = DebtCategoryDetailViewController.debtComparator
+            UserDefaults.standard.set(1, forKey: Constants.UserDefaults.debtCategoryDetailsSortComparator)
+        }))
+        actionSheet.addAction(UIAlertAction(title: "Date Added", style: .default, handler: { (_) in
+            self.sortComparator = DebtCategoryDetailViewController.dateComparator
+            UserDefaults.standard.set(2, forKey: Constants.UserDefaults.debtCategoryDetailsSortComparator)
+        }))
         actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
         
         present(actionSheet, animated: true, completion: nil)
