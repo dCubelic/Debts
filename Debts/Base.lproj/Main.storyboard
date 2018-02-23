@@ -811,11 +811,18 @@
                         <viewLayoutGuide key="safeArea" id="Eqg-wP-hPL"/>
                     </view>
                     <navigationItem key="navigationItem" title="Title" id="9GG-2Z-Xqa">
-                        <barButtonItem key="rightBarButtonItem" systemItem="trash" id="hdc-ek-AsS">
-                            <connections>
-                                <action selector="deleteAction:" destination="qmC-oq-VEy" id="QGt-7U-a8h"/>
-                            </connections>
-                        </barButtonItem>
+                        <rightBarButtonItems>
+                            <barButtonItem systemItem="trash" id="hdc-ek-AsS">
+                                <connections>
+                                    <action selector="deleteAction:" destination="qmC-oq-VEy" id="QGt-7U-a8h"/>
+                                </connections>
+                            </barButtonItem>
+                            <barButtonItem title="Item" image="Sort" id="Ize-ss-lhQ">
+                                <connections>
+                                    <action selector="sortAction:" destination="qmC-oq-VEy" id="wjf-g4-mra"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
@@ -985,7 +992,16 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="fE7-gH-TwE"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Title" id="3fK-WC-YrG"/>
+                    <navigationItem key="navigationItem" title="Title" id="3fK-WC-YrG">
+                        <rightBarButtonItems>
+                            <barButtonItem title="Item" id="OvH-tu-mmE"/>
+                            <barButtonItem title="Item" image="Sort" id="OC0-WV-cln">
+                                <connections>
+                                    <action selector="sortAction:" destination="FFy-R9-wcm" id="ahN-i2-sio"/>
+                                </connections>
+                            </barButtonItem>
+                        </rightBarButtonItems>
+                    </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="numberOfDebtsLabel" destination="1he-WY-jl4" id="R7W-Pp-vSW"/>

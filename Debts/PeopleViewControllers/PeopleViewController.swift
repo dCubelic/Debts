@@ -16,7 +16,11 @@ class PeopleViewController: UIViewController {
     
     var people: [Person] = []
     var filteredPeople: [Person] = []
-    var sortComparator = totalDebtComparator
+    var sortComparator = totalDebtComparator {
+        didSet {
+            sortPeople()
+        }
+    }
     var state: ControllerState = .defaultState {
         didSet {
             if state == .defaultState {
@@ -161,16 +165,10 @@ class PeopleViewController: UIViewController {
     
     @IBAction func leftBarButtonAction(_ sender: Any) {
         if state == .defaultState {
-            let actionSheet = UIAlertController(title: "Sort by:", message: nil, preferredStyle: .actionSheet)
+            let actionSheet = UIAlertController(title: nil, message: "Sort by:", preferredStyle: .actionSheet)
             
-            actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in
-                self.sortComparator = PeopleViewController.nameComparator
-                self.sortPeople()
-            }))
-            actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (_) in
-                self.sortComparator = PeopleViewController.totalDebtComparator
-                self.sortPeople()
-            }))
+            actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in self.sortComparator = PeopleViewController.nameComparator }))
+            actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (_) in self.sortComparator = PeopleViewController.totalDebtComparator }))
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             
             present(actionSheet, animated: true, completion: nil)

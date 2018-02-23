@@ -78,7 +78,6 @@ class NewDebtViewController: UIViewController {
 
         splitAmountTextField.isHidden = false
         splitAmountTextField.delegate = self
-
         
         //Search
         searchController.searchResultsUpdater = self

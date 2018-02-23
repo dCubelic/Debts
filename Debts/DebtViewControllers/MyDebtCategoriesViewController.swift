@@ -21,7 +21,7 @@ class MyDebtCategoriesViewController: UIViewController {
             if state == .defaultState {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addAction(_:)))
                 navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "Sort")
-            } else if state == .addingState {
+            } else if state == .addingState || state == .editingState {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneEditting))
                 navigationItem.leftBarButtonItem?.image = nil
                 navigationItem.leftBarButtonItem?.title = "Cancel"
@@ -234,6 +234,7 @@ extension MyDebtCategoriesViewController: UITableViewDataSource, UITableViewDele
             guard let cell = tableView.cellForRow(at: indexPath) as? DebtCategoryTableViewCell else { return }
             
             cell.editTitle()
+            self.state = .editingState
             
             completionHandler(true)
         }

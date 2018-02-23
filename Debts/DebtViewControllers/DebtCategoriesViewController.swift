@@ -14,14 +14,18 @@ class DebtCategoriesViewController: UIViewController {
     
     var debtCategories: [DebtCategory] = []
     var filteredDebtCategories: [DebtCategory] = []
-    var sortComparator: (DebtCategory, DebtCategory) -> Bool = dateComparator
+    var sortComparator = dateComparator {
+        didSet {
+            sortDebtCategories()
+        }
+    }
     var didCancel = false
     var state: DebtCategoriesControllerState = .defaultState {
         didSet {
             if state == .defaultState {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addAction(_:)))
                 navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "Sort")
-            } else if state == .addingState {
+            } else if state == .addingState || state == .editingState {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneEditting))
                 navigationItem.leftBarButtonItem?.image = nil
                 navigationItem.leftBarButtonItem?.title = "Cancel"
@@ -139,20 +143,11 @@ class DebtCategoriesViewController: UIViewController {
     
     @IBAction func leftBarButtonAction(_ sender: Any) {
         if state == .defaultState {
-            let actionSheet = UIAlertController(title: "Sort by:", message: nil, preferredStyle: .actionSheet)
+            let actionSheet = UIAlertController(title: nil, message: "Sort by:", preferredStyle: .actionSheet)
             
-            actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in
-                self.sortComparator = DebtCategoriesViewController.nameComparator
-                self.sortDebtCategories()
-            }))
-            actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (_) in
-                self.sortComparator = DebtCategoriesViewController.totalDebtComparator
-                self.sortDebtCategories()
-            }))
-            actionSheet.addAction(UIAlertAction(title: "Date Created", style: .default, handler: { (_) in
-                self.sortComparator = DebtCategoriesViewController.dateComparator
-                self.sortDebtCategories()
-            }))
+            actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in self.sortComparator = DebtCategoriesViewController.nameComparator }))
+            actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (_) in self.sortComparator = DebtCategoriesViewController.totalDebtComparator }))
+            actionSheet.addAction(UIAlertAction(title: "Date Created", style: .default, handler: { (_) in self.sortComparator = DebtCategoriesViewController.dateComparator }))
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             
             present(actionSheet, animated: true, completion: nil)
@@ -235,6 +230,8 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
             guard let cell = tableView.cellForRow(at: indexPath) as? DebtCategoryTableViewCell else { return }
             
             cell.editTitle()
+            self.state = .editingState
+            
             completionHandler(true)
         }
         edit.backgroundColor = .gray

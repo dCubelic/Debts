@@ -10,13 +10,25 @@ class PersonDetailViewController: UIViewController {
 
     var person: Person?
     var debts: [Debt] = []
-
+    var sortComparator = debtComparator {
+        didSet {
+            sortDebts()
+        }
+    }
+    
     var keyboardObserver: NSObjectProtocol?
     deinit {
         if let keyboardObserver = keyboardObserver {
             NotificationCenter.default.removeObserver(keyboardObserver)
         }
     }
+    
+    private static let nameComparator: (Debt, Debt) -> Bool = {
+        guard let dc = $0.debtCategory, let dc2 = $1.debtCategory else { return false }
+        return dc.name.lowercased() < dc2.name.lowercased()
+    }
+    private static let debtComparator: (Debt, Debt) -> Bool = { $0.cost > $1.cost }
+    private static let dateComparator: (Debt, Debt) -> Bool = { $0.dateAdded > $1.dateAdded }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -61,9 +73,26 @@ class PersonDetailViewController: UIViewController {
 
         navigationController?.navigationBar.tintColor = UIColor(for: person)
     }
+    
+    func sortDebts() {
+        debts.sort(by: sortComparator)
+        tableView.reloadData()
+    }
 
     @objc func tapAction() {
         view.endEditing(true)
+    }
+    
+    @objc func reloadDebts() {
+        guard let person = person else { return }
+        
+        debts = RealmHelper.getDebts(for: person)
+        sortDebts()
+        
+        totalDebtLabel.text = Currency.stringWithSelectedCurrency(for: person.totalDebt)
+        numberOfDebtsLabel.text = "\(person.debts.count) debt\(person.debts.count == 1 ? "" : "s")"
+        
+        tableView.reloadData()
     }
 
     @IBAction func deleteAction(_ sender: Any) {
@@ -79,16 +108,16 @@ class PersonDetailViewController: UIViewController {
 
         present(alert, animated: true, completion: nil)
     }
-
-    @objc func reloadDebts() {
-        guard let person = person else { return }
-
-        debts = RealmHelper.getDebts(for: person)
-
-        totalDebtLabel.text = Currency.stringWithSelectedCurrency(for: person.totalDebt)
-        numberOfDebtsLabel.text = "\(person.debts.count) debt\(person.debts.count == 1 ? "" : "s")"
-
-        tableView.reloadData()
+    
+    @IBAction func sortAction(_ sender: Any) {
+        let actionSheet = UIAlertController(title: nil, message: "Sort by:", preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in self.sortComparator = PersonDetailViewController.nameComparator }))
+        actionSheet.addAction(UIAlertAction(title: "Debt", style: .default, handler: { (_) in self.sortComparator = PersonDetailViewController.debtComparator }))
+        actionSheet.addAction(UIAlertAction(title: "Date Added", style: .default, handler: { (_) in self.sortComparator = PersonDetailViewController.dateComparator }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true, completion: nil)
     }
 
 }

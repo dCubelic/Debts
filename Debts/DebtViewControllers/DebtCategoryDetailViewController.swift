@@ -10,6 +10,11 @@ class DebtCategoryDetailViewController: UIViewController {
     
     var debtCategory: DebtCategory?
     var debts: [Debt] = []
+    var sortComparator = debtComparator {
+        didSet {
+            sortDebts()
+        }
+    }
     
     var keyboardObserver: NSObjectProtocol?
     deinit {
@@ -17,6 +22,13 @@ class DebtCategoryDetailViewController: UIViewController {
             NotificationCenter.default.removeObserver(keyboardObserver)
         }
     }
+    
+    private static let nameComparator: (Debt, Debt) -> Bool = {
+        guard let p = $0.person, let p2 = $1.person else { return false }
+        return p.name.lowercased() < p2.name.lowercased()
+    }
+    private static let debtComparator: (Debt, Debt) -> Bool = { $0.cost > $1.cost }
+    private static let dateComparator: (Debt, Debt) -> Bool = { $0.dateAdded > $1.dateAdded }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -68,6 +80,11 @@ class DebtCategoryDetailViewController: UIViewController {
         view.endEditing(true)
     }
     
+    func sortDebts() {
+        debts.sort(by: sortComparator)
+        tableView.reloadData()
+    }
+    
     @objc func addPeople() {
         guard let debtCategory = debtCategory else { return }
         
@@ -94,6 +111,7 @@ class DebtCategoryDetailViewController: UIViewController {
         guard let debtCategory = debtCategory else { return }
         
         debts = RealmHelper.getDebts(for: debtCategory)
+        sortDebts()
         
         totalDebtLabel.text = Currency.stringWithSelectedCurrency(for: debtCategory.totalDebt)
         numberOfDebtsLabel.text = "\(debtCategory.debts.count) debt\(debtCategory.debts.count == 1 ? "" : "s")"
@@ -101,6 +119,17 @@ class DebtCategoryDetailViewController: UIViewController {
         tableView.reloadData()
     }
     
+    @IBAction func sortAction(_ sender: Any) {
+        let actionSheet = UIAlertController(title: nil, message: "Sort by:", preferredStyle: .actionSheet)
+        
+        actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in
+            self.sortComparator = DebtCategoryDetailViewController.nameComparator }))
+        actionSheet.addAction(UIAlertAction(title: "Debt", style: .default, handler: { (_) in self.sortComparator = DebtCategoryDetailViewController.debtComparator }))
+        actionSheet.addAction(UIAlertAction(title: "Date Added", style: .default, handler: { (_) in self.sortComparator = DebtCategoryDetailViewController.dateComparator }))
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(actionSheet, animated: true, completion: nil)
+    }
 }
 
 extension DebtCategoryDetailViewController: UITableViewDelegate, UITableViewDataSource {
