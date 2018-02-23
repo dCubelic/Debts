@@ -26,7 +26,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Home"
+        title = "Overview"
         
         view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         

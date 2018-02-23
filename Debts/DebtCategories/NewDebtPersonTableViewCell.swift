@@ -123,13 +123,13 @@ extension NewDebtPersonTableViewCell: UITextFieldDelegate {
             let text = updatedText.replacingOccurrences(of: ",", with: ".")
             if let cost = Double(text) {
                 delegate?.newDebtPersonTableViewCell(self, changingCostTo: cost)
-                return true
+                return false
             } else if text.count == 0 {
                 delegate?.newDebtPersonTableViewCell(self, changingCostTo: 0)
-                return true
+                return false
             }
             
-            return false
+            return true
         } else if textField == nameTextField {
             
         }
