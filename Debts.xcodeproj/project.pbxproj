@@ -135,6 +135,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		B404656F20405DA7006F7EA4 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				B42296C81FEDBE5C0067F913 /* Models.swift */,
+				B48CCF8D203EDB5000E05A2B /* ModelSearch.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		B42296861FEDB4240067F913 = {
 			isa = PBXGroup;
 			children = (
@@ -163,40 +172,39 @@
 				B422969E1FEDB4240067F913 /* Info.plist */,
 				B42296921FEDB4240067F913 /* AppDelegate.swift */,
 				B42296961FEDB4240067F913 /* Main.storyboard */,
-				B493220D1FFCE3A200F597A3 /* Cells */,
-				B4AAD0211FEE6EB3000519B5 /* PeopleViewControllers */,
-				B4A9EF361FFF79D5006CDDB6 /* DebtViewControllers */,
 				B4A9EF3F1FFFB33B006CDDB6 /* HomeViewControllers */,
+				B4A9EF361FFF79D5006CDDB6 /* DebtCategories */,
+				B4AAD0211FEE6EB3000519B5 /* People */,
+				B493220D1FFCE3A200F597A3 /* Shared Cells */,
+				B404656F20405DA7006F7EA4 /* Models */,
 				B4AAD0201FEE6E9F000519B5 /* Helper Classes */,
 				B4AAD0221FEE6EC5000519B5 /* SupportingFiles */,
 			);
 			path = Debts;
 			sourceTree = "<group>";
 		};
-		B493220D1FFCE3A200F597A3 /* Cells */ = {
+		B493220D1FFCE3A200F597A3 /* Shared Cells */ = {
 			isa = PBXGroup;
 			children = (
-				B49E42701FFD202600FAE6F4 /* PersonTableViewCell.swift */,
-				B49E42711FFD202600FAE6F4 /* PersonTableViewCell.xib */,
-				B49322091FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift */,
-				B49E426E1FFD139200FAE6F4 /* DebtCategoryTableViewCell.xib */,
 				B4A9EF371FFF8A85006CDDB6 /* DebtDetailTableViewCell.swift */,
 				B4A9EF381FFF8A85006CDDB6 /* DebtDetailTableViewCell.xib */,
-				B4958AC220049FE90016D5C7 /* NewDebtPersonTableViewCell.swift */,
-				B4958AC320049FE90016D5C7 /* NewDebtPersonTableViewCell.xib */,
 			);
-			path = Cells;
+			path = "Shared Cells";
 			sourceTree = "<group>";
 		};
-		B4A9EF361FFF79D5006CDDB6 /* DebtViewControllers */ = {
+		B4A9EF361FFF79D5006CDDB6 /* DebtCategories */ = {
 			isa = PBXGroup;
 			children = (
 				B43F6AE01FFA9C2D009283F5 /* DebtCategoriesViewController.swift */,
 				B4BA5B9E2003B06F002A9712 /* MyDebtCategoriesViewController.swift */,
+				B49322091FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift */,
+				B49E426E1FFD139200FAE6F4 /* DebtCategoryTableViewCell.xib */,
 				B4A9EF3B1FFF8A92006CDDB6 /* DebtCategoryDetailViewController.swift */,
 				B4BA5BA02003BFEA002A9712 /* NewDebtViewController.swift */,
+				B4958AC220049FE90016D5C7 /* NewDebtPersonTableViewCell.swift */,
+				B4958AC320049FE90016D5C7 /* NewDebtPersonTableViewCell.xib */,
 			);
-			path = DebtViewControllers;
+			path = DebtCategories;
 			sourceTree = "<group>";
 		};
 		B4A9EF3F1FFFB33B006CDDB6 /* HomeViewControllers */ = {
@@ -210,8 +218,6 @@
 		B4AAD0201FEE6E9F000519B5 /* Helper Classes */ = {
 			isa = PBXGroup;
 			children = (
-				B42296C81FEDBE5C0067F913 /* Models.swift */,
-				B48CCF8D203EDB5000E05A2B /* ModelSearch.swift */,
 				B4858A3D1FEE65AF0051A45E /* Constants.swift */,
 				B4858A3F1FEE663C0051A45E /* RealmHelper.swift */,
 				B4FE3EF51FFE1B03002129F8 /* UIColor+Debts.swift */,
@@ -221,13 +227,15 @@
 			path = "Helper Classes";
 			sourceTree = "<group>";
 		};
-		B4AAD0211FEE6EB3000519B5 /* PeopleViewControllers */ = {
+		B4AAD0211FEE6EB3000519B5 /* People */ = {
 			isa = PBXGroup;
 			children = (
 				B42296CC1FEDCF240067F913 /* PeopleViewController.swift */,
 				B42296CE1FEDD0CF0067F913 /* PersonDetailViewController.swift */,
+				B49E42701FFD202600FAE6F4 /* PersonTableViewCell.swift */,
+				B49E42711FFD202600FAE6F4 /* PersonTableViewCell.xib */,
 			);
-			path = PeopleViewControllers;
+			path = People;
 			sourceTree = "<group>";
 		};
 		B4AAD0221FEE6EC5000519B5 /* SupportingFiles */ = {
