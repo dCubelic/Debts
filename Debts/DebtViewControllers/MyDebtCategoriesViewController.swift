@@ -52,13 +52,14 @@ class MyDebtCategoriesViewController: UIViewController {
         
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         
+        //Search
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search Categories"
         navigationItem.searchController = searchController
         definesPresentationContext = true
         
-        tableView.register(UINib(nibName: Constants.categoryCell, bundle: nil), forCellReuseIdentifier: Constants.categoryCell)
+        tableView.register(UINib(nibName: Constants.Cells.categoryCell, bundle: nil), forCellReuseIdentifier: Constants.Cells.categoryCell)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebtCategories), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
@@ -162,6 +163,7 @@ class MyDebtCategoriesViewController: UIViewController {
     
     func getDebtCategory(for indexPath: IndexPath) -> DebtCategory {
         var debtCategory: DebtCategory
+        
         if isFiltering() {
             debtCategory = filteredDebtCategories[indexPath.row]
         } else {
@@ -193,7 +195,7 @@ extension MyDebtCategoriesViewController: UITableViewDataSource, UITableViewDele
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(ofType: DebtCategoryTableViewCell.self, withIdentifier: Constants.categoryCell, for: indexPath)
+        let cell = tableView.dequeueReusableCell(ofType: DebtCategoryTableViewCell.self, withIdentifier: Constants.Cells.categoryCell, for: indexPath)
         
         let debtCategory = getDebtCategory(for: indexPath)
         
@@ -207,7 +209,6 @@ extension MyDebtCategoriesViewController: UITableViewDataSource, UITableViewDele
         let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(ofType: DebtCategoryDetailViewController.self, withIdentifier: Constants.Storyboard.debtCategoryDetailViewController)
         
         let debtCategory = getDebtCategory(for: indexPath)
-        
         vc.debtCategory = debtCategory
         
         navigationController?.pushViewController(vc, animated: true)
@@ -215,7 +216,6 @@ extension MyDebtCategoriesViewController: UITableViewDataSource, UITableViewDele
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
-            
             let debtCategory = self.getDebtCategory(for: indexPath)
             
             let alert = UIAlertController(title: "Remove Debt?", message: "Are you sure you want to remove '\(debtCategory.name)'?", preferredStyle: .alert)
@@ -226,9 +226,9 @@ extension MyDebtCategoriesViewController: UITableViewDataSource, UITableViewDele
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             
             self.present(alert, animated: true, completion: nil)
-            
             completionHandler(false)
         }
+        delete.backgroundColor = .red
         
         let edit = UIContextualAction(style: .normal, title: "Edit\nName") { (_, _, completionHandler) in
             guard let cell = tableView.cellForRow(at: indexPath) as? DebtCategoryTableViewCell else { return }
@@ -237,8 +237,6 @@ extension MyDebtCategoriesViewController: UITableViewDataSource, UITableViewDele
             
             completionHandler(true)
         }
-        
-        delete.backgroundColor = .red
         edit.backgroundColor = .gray
         
         let config = UISwipeActionsConfiguration(actions: [delete, edit])

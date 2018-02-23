@@ -1,6 +1,14 @@
 import UIKit
 
 extension UIColor {
+    open class var cellBackgroundColor: UIColor {
+        return UIColor(white: 246/255, alpha: 1)
+    }
+    
+    open class var cellBackgroundColorHighlighted: UIColor {
+        return UIColor(white: 220/255, alpha: 1)
+    }
+    
     convenience init(for debtCategory: DebtCategory) {
         let colors = UIColor.hashStringToRGB(string: debtCategory.uuid)
         self.init(red: CGFloat(colors.0) / 255, green: CGFloat(colors.1) / 255, blue: CGFloat(colors.2) / 255, alpha: 1)

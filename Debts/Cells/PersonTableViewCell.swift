@@ -2,8 +2,6 @@ import UIKit
 
 protocol PersonTableViewCellDelegate: class {
     func personTableViewCellDidEndEditing(_ cell: PersonTableViewCell, name: String)
-//    func personTableViewCell(_ cell: PersonTableViewCell, didChangeNameTo name: String)
-//    func personTableViewCellDidCancel(_ cell: PersonTableViewCell)
 }
 
 class PersonTableViewCell: UITableViewCell {
@@ -27,11 +25,12 @@ class PersonTableViewCell: UITableViewCell {
 
         personView.layer.cornerRadius = 8
         personView.clipsToBounds = true
-        personView.backgroundColor = UIColor(white: 246/255, alpha: 1)
+        personView.backgroundColor = .cellBackgroundColor
 
         nameTextField.isHidden = true
         nameTextField.delegate = self
 
+        // Shadow
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSize.zero
@@ -40,9 +39,9 @@ class PersonTableViewCell: UITableViewCell {
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         if highlighted {
-            personView.backgroundColor = UIColor(white: 220/255, alpha: 1)
+            personView.backgroundColor = .cellBackgroundColorHighlighted
         } else {
-            personView.backgroundColor = UIColor(white: 246/255, alpha: 1)
+            personView.backgroundColor = .cellBackgroundColor
         }
     }
 
@@ -56,9 +55,9 @@ class PersonTableViewCell: UITableViewCell {
         underlineView.backgroundColor = color
 
         if person.totalDebt < 0 {
-            detailLabel.textColor = UIColor.red
+            detailLabel.textColor = .red
         } else {
-            detailLabel.textColor = UIColor.black
+            detailLabel.textColor = .black
         }
 
         let debts = RealmHelper.getDebts(for: person)
@@ -68,7 +67,6 @@ class PersonTableViewCell: UITableViewCell {
         } else {
             subtitleLabel.text = "\(debts.count) debts"
         }
-
     }
 
     func editName() {
@@ -80,35 +78,21 @@ class PersonTableViewCell: UITableViewCell {
 }
 
 extension PersonTableViewCell: UITextFieldDelegate {
-
+    
     func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
         guard let text = textField.text else { return }
+        
         titleLabel.text = textField.text
 
         titleLabel.isHidden = false
         nameTextField.isHidden = true
         
         delegate?.personTableViewCellDidEndEditing(self, name: text)
-        
-//        if text.count == 0 {
-//            delegate?.personTableViewCellDidCancel(self)
-//        } else {
-//            delegate?.personTableViewCell(self, didChangeNameTo: text)
-//        }
     }
-
-//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-//        guard let text = textField.text else { return false }
-//        
-//        if text.count == 0 {
-//            return false
-//        }
-//        
-//        return true
-//    }
 
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true
     }
+    
 }

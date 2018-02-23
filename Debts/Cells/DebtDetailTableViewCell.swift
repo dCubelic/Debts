@@ -32,7 +32,7 @@ class DebtDetailTableViewCell: UITableViewCell {
 
         personView.layer.cornerRadius = 8
         personView.clipsToBounds = true
-        personView.backgroundColor = UIColor(white: 246/255, alpha: 1)
+        personView.backgroundColor = .cellBackgroundColor
 
         costTextField.isHidden = true
         costTextField.delegate = self
@@ -49,9 +49,9 @@ class DebtDetailTableViewCell: UITableViewCell {
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         if highlighted {
-            personView.backgroundColor = UIColor(white: 220/255, alpha: 1)
+            personView.backgroundColor = .cellBackgroundColorHighlighted
         } else {
-            personView.backgroundColor = UIColor(white: 246/255, alpha: 1)
+            personView.backgroundColor = .cellBackgroundColor
         }
     }
 
@@ -117,17 +117,6 @@ extension DebtDetailTableViewCell: UITextFieldDelegate {
 
         delegate?.debtDetailTableViewCell(self, didUpdateCost: cost)
     }
-
-//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-//        let text = (textField.text ?? "").replacingOccurrences(of: ",", with: ".")
-////        guard Double(text) != nil else { return falsse }
-//
-//        if text.count == 0 {
-////            return false
-//        }
-//
-//        return true
-//    }
 
     func textField(_ textField: UITextField, shouldChangeCharactersIn range: NSRange, replacementString string: String) -> Bool {
         guard let currentText = textField.text as NSString? else { return true }

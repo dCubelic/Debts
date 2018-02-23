@@ -2,8 +2,6 @@ import UIKit
 
 protocol DebtCategoryTableViewCellDelegate: class {
     func debtCategoryTableViewCellDidEndEditing(_ cell: DebtCategoryTableViewCell, title: String)
-//    func debtCategoryTableViewCell(_ cell: DebtCategoryTableViewCell, didChangeTitleTo title: String)
-//    func debtCategoryTableViewCellDidCancel(_ cell: DebtCategoryTableViewCell)
 }
 
 class DebtCategoryTableViewCell: UITableViewCell {
@@ -34,11 +32,12 @@ class DebtCategoryTableViewCell: UITableViewCell {
 
         categoryView.layer.cornerRadius = 8
         categoryView.clipsToBounds = true
-        categoryView.backgroundColor = UIColor(white: 246/255, alpha: 1)
+        categoryView.backgroundColor = .cellBackgroundColor
 
         titleTextField.isHidden = true
         titleTextField.delegate = self
 
+        //Shadow
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSize.zero
@@ -47,9 +46,9 @@ class DebtCategoryTableViewCell: UITableViewCell {
 
     override func setHighlighted(_ highlighted: Bool, animated: Bool) {
         if highlighted {
-            categoryView.backgroundColor = UIColor(white: 220/255, alpha: 1)
+            categoryView.backgroundColor = .cellBackgroundColorHighlighted
         } else {
-            categoryView.backgroundColor = UIColor(white: 246/255, alpha: 1)
+            categoryView.backgroundColor = .cellBackgroundColor
         }
     }
 
@@ -66,7 +65,7 @@ class DebtCategoryTableViewCell: UITableViewCell {
 
         let debts = RealmHelper.getDebts(for: debtCategory)
 
-        if debts.count > 2 {
+        if debts.count > 2 || debts.count == 0 {
             subtitleLabel.text = "\(debts.count) people"
         } else if debts.count > 0 {
             var peopleString = ""
@@ -77,8 +76,6 @@ class DebtCategoryTableViewCell: UITableViewCell {
             peopleString.removeLast()
             peopleString.removeLast()
             subtitleLabel.text = peopleString
-        } else {
-            subtitleLabel.text = "0 people"
         }
     }
 
@@ -92,31 +89,18 @@ class DebtCategoryTableViewCell: UITableViewCell {
 }
 
 extension DebtCategoryTableViewCell: UITextFieldDelegate {
+    
     func textFieldDidEndEditing(_ textField: UITextField) {
         guard let text = textField.text else { return }
+        
         titleLabel.text = textField.text
 
         titleTextField.isHidden = true
         titleLabel.isHidden = false
 
         delegate?.debtCategoryTableViewCellDidEndEditing(self, title: text)
-//        if text.count == 0 {
-//            delegate?.debtCategoryTableViewCellDidCancel(self)
-//        } else {
-//            delegate?.debtCategoryTableViewCell(self, didChangeTitleTo: text)
-//        }
     }
-
-//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-//        guard let text = textField.text else { return false }
-//        
-//        if text.count == 0 {
-//            return false
-//        }
-//        
-//        return true
-//    }
-
+    
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
         return true

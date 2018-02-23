@@ -43,8 +43,9 @@ class NewDebtPersonTableViewCell: UITableViewCell {
 
         cellView.layer.cornerRadius = 8
         cellView.clipsToBounds = true
-        cellView.backgroundColor = UIColor(white: 246/255, alpha: 1)
+        cellView.backgroundColor = .cellBackgroundColor
 
+        //Shadow
         layer.shadowColor = UIColor.black.cgColor
         layer.shadowOpacity = 0.2
         layer.shadowOffset = CGSize.zero
@@ -85,7 +86,9 @@ extension NewDebtPersonTableViewCell: UITextFieldDelegate {
     func textFieldDidBeginEditing(_ textField: UITextField) {
         if textField == costTextField {
             textField.text = costTextField.text?.replacingOccurrences(of: Currency.loadCurrency().symbol, with: "")
-            textField.text = costTextField.text?.replacingOccurrences(of: "0.00", with: "")
+            if textField.text == "0.00" {
+                textField.text = ""
+            }
             textField.text = costTextField.text?.replacingOccurrences(of: ".00", with: "")
         } else if textField == nameTextField {
             
@@ -96,6 +99,7 @@ extension NewDebtPersonTableViewCell: UITextFieldDelegate {
         if textField == costTextField {
             var text = (textField.text ?? "").replacingOccurrences(of: ",", with: ".")
             if text.isEmpty { text = "0" }
+            
             guard let cost = Double(text) else { return }
             
             costTextField.text = Currency.stringWithSelectedCurrency(for: cost)
@@ -105,13 +109,6 @@ extension NewDebtPersonTableViewCell: UITextFieldDelegate {
             delegate?.newDebtPersonTableViewCell(self, didChangeNameTo: nameTextField.text ?? "")
         }
     }
-
-//    func textFieldShouldEndEditing(_ textField: UITextField) -> Bool {
-//        let text = (textField.text ?? "").replacingOccurrences(of: ",", with: ".")
-//        guard let _ = Double(text) else { return false }
-//
-//        return true
-//    }
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()

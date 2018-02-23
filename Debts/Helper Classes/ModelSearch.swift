@@ -9,14 +9,6 @@ extension Person {
         return ["id" as NSObject: uuid as AnyObject]
     }
     
-//    public var userActivity: NSUserActivity {
-//        let activity = NSUserActivity(activityType: Person.domainIdentifer)
-//        activity.title = name
-//        activity.userInfo = userActivityUserInfo
-//        activity.contentAttributeSet = attributeSet
-//        return activity
-//    }
-    
     public var searchableItem: CSSearchableItem {
         return CSSearchableItem(uniqueIdentifier: uuid, domainIdentifier: Person.domainIdentifer, attributeSet: attributeSet)
     }
@@ -35,14 +27,6 @@ extension DebtCategory {
     public var userActivityUserInfo: [NSObject: AnyObject] {
         return ["id" as NSObject: uuid as AnyObject]
     }
-    
-//    public var userActivity: NSUserActivity {
-//        let activity = NSUserActivity(activityType: DebtCategory.domainIdentifier)
-//        activity.title = name
-//        activity.userInfo = userActivityUserInfo
-//        activity.contentAttributeSet = attributeSet
-//        return activity
-//    }
 
     public var searchableItem: CSSearchableItem {
         return CSSearchableItem(uniqueIdentifier: uuid, domainIdentifier: DebtCategory.domainIdentifier, attributeSet: attributeSet)

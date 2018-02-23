@@ -49,9 +49,18 @@ class NewDebtViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        title = debtCategory.name
 
         tableViewHeaderView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
+        underlineView.backgroundColor = UIColor(for: debtCategory)
+    
+        tableView.keyboardDismissMode = .interactive
+        tableView.register(UINib(nibName: Constants.Cells.newDebtPersonCell, bundle: nil), forCellReuseIdentifier: Constants.Cells.newDebtPersonCell)
+        
+        navigationItem.rightBarButtonItem?.isEnabled = false
+        navigationController?.navigationBar.prefersLargeTitles = true
         
         keyboardObserver = NotificationCenter.default.addObserver(forName: .UIKeyboardWillChangeFrame, object: nil, queue: nil, using: { (notification) in
             if let userInfo = notification.userInfo,
@@ -67,28 +76,18 @@ class NewDebtViewController: UIViewController {
             }
         })
 
-        title = debtCategory.name
-
         splitAmountTextField.isHidden = false
         splitAmountTextField.delegate = self
 
+        
+        //Search
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search People"
         navigationItem.searchController = searchController
         definesPresentationContext = true
 
-        navigationItem.rightBarButtonItem?.isEnabled = false
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
         sortPeople()
-        
-        tableView.keyboardDismissMode = .interactive
-
-        tableView.register(UINib(nibName: Constants.newDebtPersonCell, bundle: nil), forCellReuseIdentifier: Constants.newDebtPersonCell)
-
-        underlineView.backgroundColor = UIColor(for: debtCategory)
-        
         updateHeaderLabels()
     }
 
@@ -114,6 +113,7 @@ class NewDebtViewController: UIViewController {
 
     func getPerson(for indexPath: IndexPath) -> Person {
         var person: Person
+        
         if isFiltering() {
             person = filteredPeople[indexPath.row]
         } else {
@@ -184,6 +184,7 @@ class NewDebtViewController: UIViewController {
     
     func updateHeaderLabels() {
         var totalCost: Double = 0
+        
         selectedPeople.forEach { (person) in
             if let cost = costDict[person] {
                 totalCost += cost
@@ -200,10 +201,10 @@ class NewDebtViewController: UIViewController {
         for person in selectedPeople {
             costDict[person] = splittingAmount/Double(selectedPeople.count)
         }
+        
         updateHeaderLabels()
         tableView.reloadData()
     }
-    
 }
 
 extension NewDebtViewController: UITableViewDelegate, UITableViewDataSource {
@@ -217,13 +218,13 @@ extension NewDebtViewController: UITableViewDelegate, UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(ofType: NewDebtPersonTableViewCell.self, withIdentifier: Constants.newDebtPersonCell, for: indexPath)
-        cell.delegate = self
+        let cell = tableView.dequeueReusableCell(ofType: NewDebtPersonTableViewCell.self, withIdentifier: Constants.Cells.newDebtPersonCell, for: indexPath)
 
         let person = getPerson(for: indexPath)
-
+        
+        cell.delegate = self
         cell.setup(with: person, selected: selectedPeople.contains(person), cost: costDict[person])
-
+        
         return cell
     }
 
@@ -240,6 +241,7 @@ extension NewDebtViewController: UITableViewDelegate, UITableViewDataSource {
             }
             selectedPeople.append(person)
         } else {
+            view.endEditing(true)
             if let index = selectedPeople.index(of: person) {
                 selectedPeople.remove(at: index)
             }
@@ -312,6 +314,7 @@ extension NewDebtViewController: UITextFieldDelegate {
         let updatedText = currentText.replacingCharacters(in: range, with: string)
         
         let text = updatedText.replacingOccurrences(of: ",", with: ".")
+        
         if let amount = Double(text) {
             splittingAmount = amount
             splitAmountOverSelectedPeople()

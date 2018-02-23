@@ -2,17 +2,6 @@ import Foundation
 import RealmSwift
 import CoreSpotlight
 
-//struct DebtCategoryByPerson {
-//    var debtCategory: DebtCategory
-//    var cost: Double
-//    var dateAdded: Date
-//}
-//
-//struct PersonByDebtCategory {
-//    var person: Person
-//    var cost: Double
-//}
-
 class RealmHelper {
     
     static var realm: Realm {
@@ -35,8 +24,6 @@ class RealmHelper {
         }
     }
     
-    //    static let realm = try! Realm()
-    
     static func getAllPersons() -> [Person] {
         return realm.objects(Person.self).toArray()
     }
@@ -50,9 +37,7 @@ class RealmHelper {
     }
     
     static func getDebts(for person: Person) -> [Debt] {
-        //        let defaultDebt = DebtCategory()
         return realm.objects(Debt.self).filter("person = %@", person).toArray()
-        //        return realm.objects(Debt.self).filter("person = %@", person).map({ DebtCategoryByPerson(debtCategory: $0.debtCategory ?? defaultDebt, cost: $0.cost, dateAdded: $0.dateAdded) })
     }
     
     static func getPerson(forUuid uuid: String) -> Person? {
@@ -62,20 +47,6 @@ class RealmHelper {
     static func getDebtCategory(forUuid uuid: String) -> DebtCategory? {
         return realm.objects(DebtCategory.self).first(where: { $0.uuid == uuid })
     }
-    
-    //    static func getPersons(for debtCategory: DebtCategory) -> [Debt] {
-    ////        let defaultPerson = Person()
-    //        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).toArray()
-    ////        return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).map({ PersonByDebtCategory(person: $0.person ?? defaultPerson, cost: $0.cost)})
-    //    }
-    
-    //    static func getDebts(for person: Person) -> [Debt] {
-    //        return realm.objects(Debt.self).filter("person = %@ AND debtCategory.isMyDebt = false", person).toArray()
-    //    }
-    //
-    //    static func getMyDebts(for person: Person) -> [Debt] {
-    //        return realm.objects(Debt.self).filter("person = %@ AND debtCategory.isMyDebt = true", person).toArray()
-    //    }
     
     static func getDebts(for debtCategory: DebtCategory) -> [Debt] {
         return realm.objects(Debt.self).filter("debtCategory = %@", debtCategory).toArray()
@@ -88,19 +59,6 @@ class RealmHelper {
     static func getCost(for debtCategory: DebtCategory) -> Double {
         return debtCategory.totalDebt
     }
-    
-//    static func addPerson(name: String) -> Person {
-//        let person = Person()
-//        person.name = name
-//
-//        write(realm: realm) {
-//            realm.add(person, update: true)
-//        }
-//
-//        CSSearchableIndex.default().indexSearchableItems([person.searchableItem], completionHandler: nil)
-//
-//        return person
-//    }
     
     static func add(debtCategory: DebtCategory, with people: [Person], and costDictionary: [Person: Double]) {
         write(realm: realm) {
@@ -139,8 +97,6 @@ class RealmHelper {
         write(realm: realm) {
             realm.delete(debt)
         }
-        
-//        removeEmptyDebtCategories()
     }
     
     static func removeDebts(for person: Person) {
@@ -219,14 +175,12 @@ class RealmHelper {
 }
 
 extension Results {
-    
     func toArray() -> [Element] {
         return self.map {$0}
     }
 }
 
 extension RealmSwift.List {
-    
     func toArray() -> [Element] {
         return self.map {$0}
     }

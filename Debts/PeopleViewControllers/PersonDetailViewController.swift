@@ -5,7 +5,6 @@ class PersonDetailViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var underlineView: UIView!
-
     @IBOutlet weak var totalDebtLabel: UILabel!
     @IBOutlet weak var numberOfDebtsLabel: UILabel!
 
@@ -21,12 +20,19 @@ class PersonDetailViewController: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+        guard let person = person else { return }
+        
+        title = person.name
+        
+        underlineView.backgroundColor = UIColor(for: person)
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
+        
+        tableView.register(UINib(nibName: Constants.Cells.debtDetailCell, bundle: nil), forCellReuseIdentifier: Constants.Cells.debtDetailCell)
         
         keyboardObserver = NotificationCenter.default.addObserver(forName: .UIKeyboardWillChangeFrame, object: nil, queue: nil, using: { (notification) in
             if let userInfo = notification.userInfo,
-//                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
+                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
                 let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
                 let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
 
@@ -34,7 +40,7 @@ class PersonDetailViewController: UIViewController {
                     self.tableViewBottomConstraint.constant = UIScreen.main.bounds.height - endFrameValue.cgRectValue.minY - tabBarHeight
                 }
 
-                UIView.animate(withDuration: 0, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
+                UIView.animate(withDuration: durationValue.doubleValue, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
                     self.view.layoutIfNeeded()
                 }, completion: nil)
             }
@@ -44,14 +50,6 @@ class PersonDetailViewController: UIViewController {
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
 
-        guard let person = person else { return }
-
-//        navigationController?.navigationBar.tintColor = UIColor(for: person)
-        underlineView.backgroundColor = UIColor(for: person)
-        title = person.name
-
-        tableView.register(UINib(nibName: Constants.debtDetailCell, bundle: nil), forCellReuseIdentifier: Constants.debtDetailCell)
-
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebts), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
 
         reloadDebts()
@@ -59,7 +57,6 @@ class PersonDetailViewController: UIViewController {
 
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-
         guard let person = person else { return }
 
         navigationController?.navigationBar.tintColor = UIColor(for: person)
@@ -81,7 +78,6 @@ class PersonDetailViewController: UIViewController {
         alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
 
         present(alert, animated: true, completion: nil)
-
     }
 
     @objc func reloadDebts() {
@@ -90,7 +86,6 @@ class PersonDetailViewController: UIViewController {
         debts = RealmHelper.getDebts(for: person)
 
         totalDebtLabel.text = Currency.stringWithSelectedCurrency(for: person.totalDebt)
-
         numberOfDebtsLabel.text = "\(person.debts.count) debt\(person.debts.count == 1 ? "" : "s")"
 
         tableView.reloadData()
@@ -105,7 +100,7 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(ofType: DebtDetailTableViewCell.self, withIdentifier: Constants.debtDetailCell, for: indexPath)
+        let cell = tableView.dequeueReusableCell(ofType: DebtDetailTableViewCell.self, withIdentifier: Constants.Cells.debtDetailCell, for: indexPath)
 
         cell.delegate = self
         cell.setupForPersonDetails(with: debts[indexPath.row])
@@ -118,18 +113,16 @@ extension PersonDetailViewController: UITableViewDataSource, UITableViewDelegate
             RealmHelper.removeDebt(self.debts[indexPath.row])
 
             NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
-
             completionHandler(true)
         }
-
+        delete.backgroundColor = .red
+        
         let edit = UIContextualAction(style: .normal, title: "Edit\nCost") { (_, _, completionHandler) in
             guard let cell = tableView.cellForRow(at: indexPath) as? DebtDetailTableViewCell else { return }
 
             cell.editCost()
             completionHandler(true)
         }
-
-        delete.backgroundColor = .red
         edit.backgroundColor = .gray
 
         let config = UISwipeActionsConfiguration(actions: [delete, edit])

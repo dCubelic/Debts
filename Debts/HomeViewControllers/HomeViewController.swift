@@ -26,9 +26,9 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
-        
         title = "Home"
+        
+        view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         
         navigationController?.navigationBar.prefersLargeTitles = true
         

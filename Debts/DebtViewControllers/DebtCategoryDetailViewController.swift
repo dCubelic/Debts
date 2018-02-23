@@ -21,11 +21,18 @@ class DebtCategoryDetailViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        guard let debtCategory = debtCategory else { return }
+        
+        title = debtCategory.name
+        
+        underlineView.backgroundColor = UIColor(for: debtCategory)
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
+        
+        tableView.register(UINib(nibName: Constants.Cells.debtDetailCell, bundle: nil), forCellReuseIdentifier: Constants.Cells.debtDetailCell)
         
         keyboardObserver = NotificationCenter.default.addObserver(forName: .UIKeyboardWillChangeFrame, object: nil, queue: nil, using: { (notification) in
             if let userInfo = notification.userInfo,
-                //                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
+                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
                 let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
                 let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
                 
@@ -33,7 +40,7 @@ class DebtCategoryDetailViewController: UIViewController {
                     self.tableViewBottomConstraint.constant = UIScreen.main.bounds.height - endFrameValue.cgRectValue.minY - tabBarHeight
                 }
                 
-                UIView.animate(withDuration: 0, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
+                UIView.animate(withDuration: durationValue.doubleValue, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
                     self.view.layoutIfNeeded()
                 }, completion: nil)
             }
@@ -45,13 +52,6 @@ class DebtCategoryDetailViewController: UIViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPeople))
         
-        tableView.register(UINib(nibName: Constants.debtDetailCell, bundle: nil), forCellReuseIdentifier: Constants.debtDetailCell)
-        
-        guard let debtCategory = debtCategory else { return }
-        
-        underlineView.backgroundColor = UIColor(for: debtCategory)
-        title = debtCategory.name
-        
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebts), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
         reloadDebts()
@@ -59,7 +59,6 @@ class DebtCategoryDetailViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
         guard let debtCategory = debtCategory else { return }
         
         navigationController?.navigationBar.tintColor = UIColor(for: debtCategory)
@@ -87,14 +86,6 @@ class DebtCategoryDetailViewController: UIViewController {
             return !containsDebt
         }
         
-//        var dc: [Person: Double] = [:]
-//        for debt in debtCategory.debts {
-//            if let person = debt.person {
-//                dc[person] = debt.cost
-//            }
-//        }
-//        vc.costDict = [:]
-        
         let navVC = UINavigationController(rootViewController: vc)
         present(navVC, animated: true, completion: nil)
     }
@@ -105,7 +96,6 @@ class DebtCategoryDetailViewController: UIViewController {
         debts = RealmHelper.getDebts(for: debtCategory)
         
         totalDebtLabel.text = Currency.stringWithSelectedCurrency(for: debtCategory.totalDebt)
-        
         numberOfDebtsLabel.text = "\(debtCategory.debts.count) debt\(debtCategory.debts.count == 1 ? "" : "s")"
         
         tableView.reloadData()
@@ -119,8 +109,7 @@ extension DebtCategoryDetailViewController: UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(ofType: DebtDetailTableViewCell.self, withIdentifier: Constants.debtDetailCell, for: indexPath)
-        //        let cell = tableView.dequeueReusableCell(withIdentifier: Constants.debtDetailCell, for: indexPath) as! DebtDetailTableViewCell
+        let cell = tableView.dequeueReusableCell(ofType: DebtDetailTableViewCell.self, withIdentifier: Constants.Cells.debtDetailCell, for: indexPath)
         
         cell.delegate = self
         cell.setupForDebtCategoryDetails(with: debts[indexPath.row])
@@ -133,9 +122,9 @@ extension DebtCategoryDetailViewController: UITableViewDelegate, UITableViewData
             RealmHelper.removeDebt(self.debts[indexPath.row])
             
             NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
-            
             completionHandler(true)
         }
+        delete.backgroundColor = .red
         
         let edit = UIContextualAction(style: .normal, title: "Edit\nCost") { (_, _, completionHandler) in
             guard let cell = tableView.cellForRow(at: indexPath) as? DebtDetailTableViewCell else { return }
@@ -143,8 +132,6 @@ extension DebtCategoryDetailViewController: UITableViewDelegate, UITableViewData
             cell.editCost()
             completionHandler(true)
         }
-        
-        delete.backgroundColor = .red
         edit.backgroundColor = .gray
         
         let config = UISwipeActionsConfiguration(actions: [delete, edit])

@@ -50,7 +50,13 @@ class PeopleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "People"
+        navigationController?.navigationBar.prefersLargeTitles = true
+        
+        view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
+        
+        tableView.register(UINib(nibName: Constants.Cells.personCell, bundle: nil), forCellReuseIdentifier: Constants.Cells.personCell)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPerson))
         
@@ -74,16 +80,12 @@ class PeopleViewController: UIViewController {
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
-        title = "People"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        
+        //Search bar
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search People"
         navigationItem.searchController = searchController
         definesPresentationContext = true
-        
-        tableView.register(UINib(nibName: Constants.personCell, bundle: nil), forCellReuseIdentifier: Constants.personCell)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadPeople), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
@@ -175,9 +177,6 @@ class PeopleViewController: UIViewController {
         } else if state == .addingState {
             didCancel = true
             view.endEditing(true)
-//            reloadPeople()
-            //            tableView.isUserInteractionEnabled = true
-//            state = .defaultState
         }
     }
     
@@ -204,7 +203,7 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(ofType: PersonTableViewCell.self, withIdentifier: Constants.personCell, for: indexPath)
+        let cell = tableView.dequeueReusableCell(ofType: PersonTableViewCell.self, withIdentifier: Constants.Cells.personCell, for: indexPath)
         
         let person = getPerson(for: indexPath)
         
@@ -218,8 +217,8 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
         let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(ofType: PersonDetailViewController.self, withIdentifier: Constants.Storyboard.personDetailViewController)
         
         let person = getPerson(for: indexPath)
-        
         vc.person = person
+        
         navigationController?.pushViewController(vc, animated: true)
     }
     

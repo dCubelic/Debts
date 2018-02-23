@@ -6,7 +6,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {      
         return true
     }
     
@@ -34,25 +34,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 }
             }
         }
-        
-//        if userActivity.activityType == Person.domainIdentifer, let objectId = userActivity.userInfo?["id"] as? String {
-//            rootVc.selectedIndex = 3
-//
-//            let personVc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(ofType: PersonDetailViewController.self, withIdentifier: Constants.Storyboard.personDetailViewController)
-//            personVc.person = RealmHelper.getPerson(forUuid: objectId)
-//
-//            (rootVc.selectedViewController as? UINavigationController)?.pushViewController(personVc, animated: true)
-//        } else if userActivity.activityType == DebtCategory.domainIdentifier, let objectId = userActivity.userInfo?["id"] as? String {
-//            let debtCategory = RealmHelper.getDebtCategory(forUuid: objectId)
-//            rootVc.selectedIndex = (debtCategory?.isMyDebt ?? false) ? 2 : 1
-//
-//            let debtCategoryVc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(ofType: DebtCategoryDetailViewController.self, withIdentifier: Constants.Storyboard.debtCategoryDetailViewController)
-//            debtCategoryVc.debtCategory = debtCategory
-//
-//            (rootVc.selectedViewController as? UINavigationController)?.pushViewController(debtCategoryVc, animated: true)
-//        } else {
-//            return false
-//        }
         
         self.window?.rootViewController = rootVc
         return true
