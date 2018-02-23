@@ -38,6 +38,7 @@ class PersonDetailViewController: UIViewController {
         title = person.name
         
         underlineView.backgroundColor = UIColor(for: person)
+        view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         
         tableView.register(UINib(nibName: Constants.Cells.debtDetailCell, bundle: nil), forCellReuseIdentifier: Constants.Cells.debtDetailCell)

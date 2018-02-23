@@ -38,6 +38,7 @@ class DebtCategoryDetailViewController: UIViewController {
         title = debtCategory.name
         
         underlineView.backgroundColor = UIColor(for: debtCategory)
+        view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         
         tableView.register(UINib(nibName: Constants.Cells.debtDetailCell, bundle: nil), forCellReuseIdentifier: Constants.Cells.debtDetailCell)
