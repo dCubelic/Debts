@@ -14,7 +14,11 @@ class MyDebtCategoriesViewController: UIViewController {
     
     var debtCategories: [DebtCategory] = []
     var filteredDebtCategories: [DebtCategory] = []
-    var sortComparator: (DebtCategory, DebtCategory) -> Bool = dateComparator
+    var sortComparator = dateComparator {
+        didSet {
+            sortDebtCategories()
+        }
+    }
     var didCancel = false
     var state: MyDebtCategoriesControllerState = .defaultState {
         didSet {
@@ -79,11 +83,23 @@ class MyDebtCategoriesViewController: UIViewController {
             }
         })
         
+        switch UserDefaults.standard.integer(forKey: Constants.UserDefaults.myDebtCategoriesSortComparator) {
+        case 0:
+            sortComparator = MyDebtCategoriesViewController.nameComparator
+        case 1:
+            sortComparator = MyDebtCategoriesViewController.totalDebtComparator
+        case 2:
+            sortComparator = MyDebtCategoriesViewController.dateComparator
+        default:
+            break
+        }
+        
         reloadDebtCategories()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
         reloadDebtCategories()
         navigationController?.navigationBar.tintColor = nil
     }
@@ -142,15 +158,15 @@ class MyDebtCategoriesViewController: UIViewController {
             
             actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in
                 self.sortComparator = MyDebtCategoriesViewController.nameComparator
-                self.sortDebtCategories()
+                UserDefaults.standard.set(0, forKey: Constants.UserDefaults.myDebtCategoriesSortComparator)
             }))
             actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (_) in
                 self.sortComparator = MyDebtCategoriesViewController.totalDebtComparator
-                self.sortDebtCategories()
+                UserDefaults.standard.set(1, forKey: Constants.UserDefaults.myDebtCategoriesSortComparator)
             }))
             actionSheet.addAction(UIAlertAction(title: "Date Created", style: .default, handler: { (_) in
                 self.sortComparator = MyDebtCategoriesViewController.dateComparator
-                self.sortDebtCategories()
+                UserDefaults.standard.set(2, forKey: Constants.UserDefaults.myDebtCategoriesSortComparator)
             }))
             actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
             
@@ -268,6 +284,7 @@ extension MyDebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
         }
         
         let debtCategory = getDebtCategory(for: indexPath)
+        
         RealmHelper.changeTitle(for: debtCategory, title: title)
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         

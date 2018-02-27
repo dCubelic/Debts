@@ -89,10 +89,12 @@ class Currency: NSObject, NSCoding {
     
     static func stringWithSelectedCurrency(for cost: Double) -> String {
         let currency = loadCurrency()
+        
         return String(
-            format: "%@%.2f%@",
+            format: "%@%@%.2f%@",
+            cost < 0 ? "-" : "",
             currency.beforeValue ? currency.symbol : "",
-            cost,
+            abs(cost),
             currency.beforeValue ? "" : currency.symbol
         )
     }
