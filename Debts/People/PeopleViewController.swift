@@ -147,7 +147,12 @@ class PeopleViewController: UIViewController {
         }
     }
     
+    func sortReversed(_ first: Person, _ second: Person) -> Bool {
+        return !sortComparator(first, second)
+    }
+    
     func sortPeople() {
+//        people.sort(by: sortReversed(_:_:))
         people.sort(by: sortComparator)
         tableView.reloadData()
     }
