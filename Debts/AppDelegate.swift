@@ -50,6 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     @objc func reindex() {
         CSSearchableIndex.default().indexSearchableItems(RealmHelper.getAllPersons().map({ $0.searchableItem }), completionHandler: nil)
         CSSearchableIndex.default().indexSearchableItems(RealmHelper.getAllDebtCategories().map({ $0.searchableItem }), completionHandler: nil)
+        CSSearchableIndex.default().indexSearchableItems(RealmHelper.getAllMyDebtCategories().map({ $0.searchableItem }), completionHandler: nil)
     }
     
 }
