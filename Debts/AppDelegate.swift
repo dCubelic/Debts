@@ -8,6 +8,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         window?.tintColor = UIColor.orange
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(reindex), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+        
         return true
     }
     
@@ -42,6 +45,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func applicationWillTerminate(_ application: UIApplication) {
         RealmHelper.removeEmptyDebtCategories()
+    }
+    
+    @objc func reindex() {
+        CSSearchableIndex.default().indexSearchableItems(RealmHelper.getAllPersons().map({ $0.searchableItem }), completionHandler: nil)
+        CSSearchableIndex.default().indexSearchableItems(RealmHelper.getAllDebtCategories().map({ $0.searchableItem }), completionHandler: nil)
     }
     
 }

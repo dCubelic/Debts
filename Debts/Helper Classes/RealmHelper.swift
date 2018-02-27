@@ -73,7 +73,7 @@ class RealmHelper {
                 realm.add(debt)
             }
         }
-        CSSearchableIndex.default().indexSearchableItems([debtCategory.searchableItem], completionHandler: nil)
+//        CSSearchableIndex.default().indexSearchableItems([debtCategory.searchableItem], completionHandler: nil)
     }
     
     static func removePerson(person: Person) {
@@ -120,7 +120,7 @@ class RealmHelper {
                 realm.add(person)
             }
         }
-        CSSearchableIndex.default().indexSearchableItems([person.searchableItem], completionHandler: nil)
+//        CSSearchableIndex.default().indexSearchableItems([person.searchableItem], completionHandler: nil)
     }
     
     static func changeTitle(for debtCategory: DebtCategory, title: String) {
@@ -158,8 +158,10 @@ class RealmHelper {
     
     static func removeEmptyDebtCategories() {
         let debtCategories = realm.objects(DebtCategory.self)
+        
         write(realm: realm) {
             for debtCategory in debtCategories where debtCategory.debts.isEmpty {
+                CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [debtCategory.uuid], completionHandler: nil)
                 realm.delete(debtCategory)
             }
         }

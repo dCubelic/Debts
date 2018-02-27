@@ -205,29 +205,29 @@
                                         <rect key="frame" x="10" y="152" width="355" height="250"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pRR-1V-VxQ">
-                                                <rect key="frame" x="0.0" y="30" width="355" height="190"/>
+                                                <rect key="frame" x="0.0" y="50" width="355" height="150"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Currency" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SVh-nF-bNk">
-                                                        <rect key="frame" x="30" y="55" width="71" height="20.5"/>
+                                                        <rect key="frame" x="30" y="35" width="71" height="20.5"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
                                                     </label>
                                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="right" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mJ6-1T-btp">
-                                                        <rect key="frame" x="116" y="56.5" width="209" height="17"/>
+                                                        <rect key="frame" x="116" y="36.5" width="209" height="17"/>
                                                         <nil key="textColor"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                         <textInputTraits key="textInputTraits"/>
                                                     </textField>
                                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8jB-CB-ZlH">
-                                                        <rect key="frame" x="30" y="75.5" width="295" height="3"/>
+                                                        <rect key="frame" x="30" y="55.5" width="295" height="3"/>
                                                         <color key="backgroundColor" red="1" green="0.33394850149999999" blue="0.1733380632" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="3" id="mRm-MZ-izL"/>
                                                         </constraints>
                                                     </view>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3S1-GD-N1g">
-                                                        <rect key="frame" x="30" y="110" width="140" height="30"/>
+                                                        <rect key="frame" x="30" y="90" width="140" height="30"/>
                                                         <state key="normal" title="Delete All Data">
                                                             <color key="titleColor" red="1" green="0.33394850149999999" blue="0.1733380632" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                         </state>
@@ -236,7 +236,7 @@
                                                         </connections>
                                                     </button>
                                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="24j-Ze-oio">
-                                                        <rect key="frame" x="185" y="110" width="140" height="30"/>
+                                                        <rect key="frame" x="185" y="90" width="140" height="30"/>
                                                         <state key="normal" title="Save"/>
                                                         <connections>
                                                             <action selector="saveAction:" destination="5U8-0H-ato" eventType="touchUpInside" id="YFc-d6-SVB"/>
@@ -628,9 +628,9 @@
                                         <constraints>
                                             <constraint firstAttribute="trailing" secondItem="pRR-1V-VxQ" secondAttribute="trailing" id="2G5-e0-YuB"/>
                                             <constraint firstAttribute="height" constant="250" id="812-Hp-kzO"/>
-                                            <constraint firstItem="pRR-1V-VxQ" firstAttribute="top" secondItem="XQR-dp-nwJ" secondAttribute="top" constant="30" id="H1j-dD-yG6"/>
+                                            <constraint firstItem="pRR-1V-VxQ" firstAttribute="top" secondItem="XQR-dp-nwJ" secondAttribute="top" constant="50" id="H1j-dD-yG6"/>
                                             <constraint firstItem="pRR-1V-VxQ" firstAttribute="leading" secondItem="XQR-dp-nwJ" secondAttribute="leading" id="KfY-Q1-sEr"/>
-                                            <constraint firstAttribute="bottom" secondItem="pRR-1V-VxQ" secondAttribute="bottom" constant="30" id="Ow2-UA-RSc"/>
+                                            <constraint firstAttribute="bottom" secondItem="pRR-1V-VxQ" secondAttribute="bottom" constant="50" id="Ow2-UA-RSc"/>
                                             <constraint firstItem="LBx-hg-62L" firstAttribute="top" secondItem="XQR-dp-nwJ" secondAttribute="top" id="bYd-ub-U4Y"/>
                                             <constraint firstItem="LBx-hg-62L" firstAttribute="leading" secondItem="XQR-dp-nwJ" secondAttribute="leading" id="gCf-yo-Xam"/>
                                             <constraint firstAttribute="trailing" secondItem="LBx-hg-62L" secondAttribute="trailing" id="o3p-k5-rps"/>
