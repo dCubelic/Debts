@@ -67,8 +67,8 @@
                                     <constraint firstItem="yNq-Az-xVz" firstAttribute="top" secondItem="YqX-yw-eb4" secondAttribute="top" id="rPx-db-Fu7"/>
                                 </constraints>
                             </view>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BZI-TN-OH5">
-                                <rect key="frame" x="12" y="19.5" width="9" height="21"/>
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="BZI-TN-OH5">
+                                <rect key="frame" x="12" y="19.5" width="49" height="21"/>
                                 <nil key="textColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="words"/>

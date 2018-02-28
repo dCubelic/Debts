@@ -56,7 +56,7 @@ class DebtDetailTableViewCell: UITableViewCell {
     }
 
     func setupForDebtCategoryDetails(with debt: Debt) {
-        guard let person = debt.person, let debtCategory = debt.debtCategory else { return }
+        guard let person = debt.person else { return }
 
         leftView.backgroundColor = UIColor(for: person)
         underlineView.backgroundColor = UIColor(for: person)
