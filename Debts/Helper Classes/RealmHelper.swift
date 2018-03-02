@@ -11,9 +11,15 @@ struct PersonByDebtCategory {
     var cost: Double
 }
 
-class RealmHelper {
+class RealmHelper: RealmFetchable {
+    
+    typealias T = Object
+    
+    static var realm: Realm = try! Realm()
 
-    static let realm = try! Realm()
+    static func getAll<T>() -> [T] where T : Object {
+        return realm.objects(T.self).toArray()
+    }
     
     static func getAllPersons() -> [Person] {
         return realm.objects(Person.self).toArray()
@@ -75,4 +81,12 @@ extension RealmSwift.List {
     func toArray() -> [Element] {
         return self.map{$0}
     }
+}
+
+
+protocol RealmFetchable {
+    
+    associatedtype T
+    static var realm: Realm { get }
+    static func getAll<T: Object>() -> [T]
 }

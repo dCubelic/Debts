@@ -25,7 +25,8 @@ class DebtsViewController: UIViewController {
     }
     
     func reloadDebtCategories() {
-        debtCategories = RealmHelper.getAllDebtCategories()
+//        debtCategories = RealmHelper.getAllDebtCategories()
+        debtCategories = RealmHelper.getAll()
         tableView.reloadData()
     }
     

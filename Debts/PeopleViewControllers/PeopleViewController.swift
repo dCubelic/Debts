@@ -43,7 +43,8 @@ class PeopleViewController: UIViewController {
     }
     
     func reloadPeople() {
-        people = RealmHelper.getAllPersons()
+//        people = RealmHelper.getAllPersons()
+        people = RealmHelper.getAll()
         sortPeople()
         tableView.reloadData()
     }
