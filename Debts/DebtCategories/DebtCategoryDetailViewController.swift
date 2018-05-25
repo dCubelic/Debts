@@ -24,8 +24,8 @@ class DebtCategoryDetailViewController: UIViewController {
     }
     
     private static let nameComparator: (Debt, Debt) -> Bool = {
-        guard let p = $0.person, let p2 = $1.person else { return false }
-        return p.name.lowercased() < p2.name.lowercased()
+        guard let person = $0.person, let p2 = $1.person else { return false }
+        return person.name.lowercased() < p2.name.lowercased()
     }
     private static let debtComparator: (Debt, Debt) -> Bool = { $0.cost > $1.cost }
     private static let dateComparator: (Debt, Debt) -> Bool = { $0.dateAdded > $1.dateAdded }

@@ -237,7 +237,7 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
             let alert = UIAlertController(title: "Remove Debt?", message: "Are you sure you want to remove '\(debtCategory.name)'?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
                 RealmHelper.removeDebtCategory(debtCategory: debtCategory)
-                NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
+                NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)  
             }))
             alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
             

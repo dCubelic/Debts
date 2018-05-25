@@ -26,10 +26,10 @@ extension UIColor {
 
     private static func hashStringToRGB(string: String) -> (Int, Int, Int) {
         let hash: Int = string.hashValue
-        let r: Int = (hash & 0xFF0000) >> 16
-        let g: Int = (hash & 0x00FF00) >> 8
-        let b: Int = (hash & 0x0000FF)
-        return (r, g, b)
+        let red: Int = (hash & 0xFF0000) >> 16
+        let green: Int = (hash & 0x00FF00) >> 8
+        let blue: Int = (hash & 0x0000FF)
+        return (red, green, blue)
     }
 
 }
