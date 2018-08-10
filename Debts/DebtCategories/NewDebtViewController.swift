@@ -81,6 +81,7 @@ class NewDebtViewController: UIViewController {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search People"
+        searchController.hidesNavigationBarDuringPresentation = false
         navigationItem.searchController = searchController
         definesPresentationContext = true
 
@@ -130,7 +131,9 @@ class NewDebtViewController: UIViewController {
         tableView.insertRows(at: [indexPath], with: .automatic)
         tableView.scrollToRow(at: indexPath, at: .none, animated: false)
         
-        splitAmountOverSelectedPeople()
+        if isSplitting {
+            splitAmountOverSelectedPeople()
+        }
 
         guard let cell = tableView.cellForRow(at: indexPath) as? NewDebtPersonTableViewCell else { return }
         cell.editName()
@@ -164,7 +167,8 @@ class NewDebtViewController: UIViewController {
 
     @IBAction func cancelAction(_ sender: Any) {
         if state == .defaultState {
-            RealmHelper.removeDebtCategory(debtCategory: debtCategory)
+            RealmHelper.removeEmptyDebtCategories()
+//            RealmHelper.removeDebtCategory(debtCategory: debtCategory)
             dismiss(animated: true, completion: nil)
         } else if state == .addingState {
             didCancel = true
@@ -292,13 +296,14 @@ extension NewDebtViewController: NewDebtPersonTableViewCellDelegate {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
 
         let person = getPerson(for: indexPath)
-        costDict[person] = cost
+//        costDict[person] = cost
     }
     
     func newDebtPersonTableViewCell(_ cell: NewDebtPersonTableViewCell, changingCostTo cost: Double) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
-        let person = people[indexPath.row]
+//        let person = people[indexPath.row]
+        let person = getPerson(for: indexPath)
         costDict[person] = cost
         
         updateHeaderLabels()
