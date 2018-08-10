@@ -6,7 +6,6 @@ class NewDebtViewController: UIViewController {
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
     @IBOutlet weak var splitAmountTextField: UITextField!
     @IBOutlet weak var splitSwitch: UISwitch!
-    @IBOutlet weak var underlineView: UIView!
     @IBOutlet weak var tableViewHeaderView: UIView!
     @IBOutlet weak var addPersonBarButton: UIBarButtonItem!
     @IBOutlet weak var totalCostLabel: UILabel!
@@ -54,7 +53,6 @@ class NewDebtViewController: UIViewController {
 
         tableViewHeaderView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
-        underlineView.backgroundColor = UIColor(for: debtCategory)
     
         tableView.keyboardDismissMode = .interactive
         tableView.register(UINib(nibName: Constants.Cells.newDebtPersonCell, bundle: nil), forCellReuseIdentifier: Constants.Cells.newDebtPersonCell)

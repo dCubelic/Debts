@@ -4,7 +4,6 @@ class DebtCategoryDetailViewController: UIViewController {
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var underlineView: UIView!
     @IBOutlet weak var totalDebtLabel: UILabel!
     @IBOutlet weak var numberOfDebtsLabel: UILabel!
     
@@ -37,7 +36,6 @@ class DebtCategoryDetailViewController: UIViewController {
         
         title = debtCategory.name
         
-        underlineView.backgroundColor = UIColor(for: debtCategory)
         view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         
@@ -85,7 +83,7 @@ class DebtCategoryDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         guard let debtCategory = debtCategory else { return }
         
-        navigationController?.navigationBar.tintColor = UIColor(for: debtCategory)
+//        navigationController?.navigationBar.tintColor = UIColor(for: debtCategory)
     }
     
     @objc func tapAction() {

@@ -4,7 +4,6 @@ class PersonDetailViewController: UIViewController {
 
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var tableViewBottomConstraint: NSLayoutConstraint!
-    @IBOutlet weak var underlineView: UIView!
     @IBOutlet weak var totalDebtLabel: UILabel!
     @IBOutlet weak var numberOfDebtsLabel: UILabel!
 
@@ -37,7 +36,6 @@ class PersonDetailViewController: UIViewController {
         
         title = person.name
         
-        underlineView.backgroundColor = UIColor(for: person)
         view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         
@@ -83,7 +81,7 @@ class PersonDetailViewController: UIViewController {
         super.viewWillAppear(animated)
         guard let person = person else { return }
 
-        navigationController?.navigationBar.tintColor = UIColor(for: person)
+//        navigationController?.navigationBar.tintColor = UIColor(for: person)
     }
     
     func sortDebts() {

@@ -31,5 +31,4 @@ extension UIColor {
         let blue: Int = (hash & 0x0000FF)
         return (red, green, blue)
     }
-
 }

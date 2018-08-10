@@ -202,17 +202,25 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		B4A355A8211DAF5A00962BB6 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				B49322091FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift */,
+				B49E426E1FFD139200FAE6F4 /* DebtCategoryTableViewCell.xib */,
+				B4958AC220049FE90016D5C7 /* NewDebtPersonTableViewCell.swift */,
+				B4958AC320049FE90016D5C7 /* NewDebtPersonTableViewCell.xib */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		B4A9EF361FFF79D5006CDDB6 /* DebtCategories */ = {
 			isa = PBXGroup;
 			children = (
 				B43F6AE01FFA9C2D009283F5 /* DebtCategoriesViewController.swift */,
 				B4BA5B9E2003B06F002A9712 /* MyDebtCategoriesViewController.swift */,
-				B49322091FFCD8F700F597A3 /* DebtCategoryTableViewCell.swift */,
-				B49E426E1FFD139200FAE6F4 /* DebtCategoryTableViewCell.xib */,
 				B4A9EF3B1FFF8A92006CDDB6 /* DebtCategoryDetailViewController.swift */,
 				B4BA5BA02003BFEA002A9712 /* NewDebtViewController.swift */,
-				B4958AC220049FE90016D5C7 /* NewDebtPersonTableViewCell.swift */,
-				B4958AC320049FE90016D5C7 /* NewDebtPersonTableViewCell.xib */,
+				B4A355A8211DAF5A00962BB6 /* Cells */,
 			);
 			path = DebtCategories;
 			sourceTree = "<group>";
@@ -320,7 +328,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0920;
-				LastUpgradeCheck = 0920;
+				LastUpgradeCheck = 0940;
 				ORGANIZATIONNAME = "Dominik Cubelic";
 				TargetAttributes = {
 					B422968E1FEDB4240067F913 = {
@@ -510,6 +518,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -517,6 +526,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
@@ -567,6 +577,7 @@
 				CLANG_WARN_BOOL_CONVERSION = YES;
 				CLANG_WARN_COMMA = YES;
 				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
 				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
 				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
 				CLANG_WARN_EMPTY_BODY = YES;
@@ -574,6 +585,7 @@
 				CLANG_WARN_INFINITE_RECURSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
