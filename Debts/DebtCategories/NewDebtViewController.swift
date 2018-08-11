@@ -168,7 +168,6 @@ class NewDebtViewController: UIViewController {
     @IBAction func cancelAction(_ sender: Any) {
         if state == .defaultState {
             RealmHelper.removeEmptyDebtCategories()
-//            RealmHelper.removeDebtCategory(debtCategory: debtCategory)
             dismiss(animated: true, completion: nil)
         } else if state == .addingState {
             didCancel = true
@@ -177,7 +176,12 @@ class NewDebtViewController: UIViewController {
     }
 
     @IBAction func doneAction(_ sender: Any) {
-        view.endEditing(true)
+        
+        if searchController.isActive {
+            dismiss(animated: true, completion: nil) //search controller
+            return
+        }
+        
         RealmHelper.add(debtCategory: debtCategory, with: selectedPeople, and: costDict)
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         dismiss(animated: true, completion: nil)
@@ -296,13 +300,11 @@ extension NewDebtViewController: NewDebtPersonTableViewCellDelegate {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
 
         let person = getPerson(for: indexPath)
-//        costDict[person] = cost
     }
     
     func newDebtPersonTableViewCell(_ cell: NewDebtPersonTableViewCell, changingCostTo cost: Double) {
         guard let indexPath = tableView.indexPath(for: cell) else { return }
         
-//        let person = people[indexPath.row]
         let person = getPerson(for: indexPath)
         costDict[person] = cost
         
