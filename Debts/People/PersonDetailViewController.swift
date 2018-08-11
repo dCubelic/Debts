@@ -37,25 +37,11 @@ class PersonDetailViewController: UIViewController {
         title = person.name
         
         view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
-        tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         
+        tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         tableView.register(UINib(nibName: Constants.Cells.debtDetailCell, bundle: nil), forCellReuseIdentifier: Constants.Cells.debtDetailCell)
         
-        keyboardObserver = NotificationCenter.default.addObserver(forName: .UIKeyboardWillChangeFrame, object: nil, queue: nil, using: { (notification) in
-            if let userInfo = notification.userInfo,
-                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
-                let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
-                let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
-
-                if let tabBarHeight = self.tabBarController?.tabBar.frame.height {
-                    self.tableViewBottomConstraint.constant = UIScreen.main.bounds.height - endFrameValue.cgRectValue.minY - tabBarHeight
-                }
-
-                UIView.animate(withDuration: durationValue.doubleValue, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
-                    self.view.layoutIfNeeded()
-                }, completion: nil)
-            }
-        })
+        keyboardObserver = registerKeyboardObserver(bottomConstraint: tableViewBottomConstraint)
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(tapAction))
         tapGesture.cancelsTouchesInView = false
@@ -63,6 +49,12 @@ class PersonDetailViewController: UIViewController {
 
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebts), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
 
+        setComparators()
+        
+        reloadDebts()
+    }
+    
+    func setComparators() {
         switch UserDefaults.standard.integer(forKey: Constants.UserDefaults.personDetailSortComparator) {
         case 0:
             sortComparator = PersonDetailViewController.nameComparator
@@ -73,17 +65,8 @@ class PersonDetailViewController: UIViewController {
         default:
             break
         }
-        
-        reloadDebts()
     }
 
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        guard let person = person else { return }
-
-//        navigationController?.navigationBar.tintColor = UIColor(for: person)
-    }
-    
     func sortDebts() {
         debts.sort(by: sortComparator)
         tableView.reloadData()

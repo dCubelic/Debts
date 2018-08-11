@@ -60,35 +60,28 @@ class NewDebtViewController: UIViewController {
         navigationItem.rightBarButtonItem?.isEnabled = false
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        keyboardObserver = NotificationCenter.default.addObserver(forName: .UIKeyboardWillChangeFrame, object: nil, queue: nil, using: { (notification) in
-            if let userInfo = notification.userInfo,
-                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
-                let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
-                let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
-
-                self.tableViewBottomConstraint.constant = UIScreen.main.bounds.height - endFrameValue.cgRectValue.minY
-
-                UIView.animate(withDuration: durationValue.doubleValue, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
-                    self.view.layoutIfNeeded()
-                }, completion: nil)
-            }
-        })
+        keyboardObserver = registerKeyboardObserver(bottomConstraint: tableViewBottomConstraint)
 
         splitAmountTextField.isHidden = false
         splitAmountTextField.delegate = self
-        
-        //Search
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search People"
-        searchController.hidesNavigationBarDuringPresentation = false
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
 
+        setupSearch()
+        
         sortPeople()
         updateHeaderLabels()
     }
 
+    func setupSearch() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search People"
+        searchController.hidesNavigationBarDuringPresentation = false
+        
+        navigationItem.searchController = searchController
+        
+        definesPresentationContext = true
+    }
+    
     func sortPeople() {
         people.sort { $0.name < $1.name }
     }
@@ -296,10 +289,11 @@ extension NewDebtViewController: NewDebtPersonTableViewCellDelegate {
         state = .defaultState
     }
     
+//    radi bez ovog?
     func newDebtPersonTableViewCell(_ cell: NewDebtPersonTableViewCell, didChangeCostTo cost: Double) {
-        guard let indexPath = tableView.indexPath(for: cell) else { return }
-
-        let person = getPerson(for: indexPath)
+//        guard let indexPath = tableView.indexPath(for: cell) else { return }
+//
+//        let person = getPerson(for: indexPath)
     }
     
     func newDebtPersonTableViewCell(_ cell: NewDebtPersonTableViewCell, changingCostTo cost: Double) {

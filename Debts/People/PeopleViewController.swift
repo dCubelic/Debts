@@ -46,6 +46,7 @@ class PeopleViewController: UIViewController {
     private static let comparators = [nameComparator, totalDebtComparator]
     
     var keyboardObserver: NSObjectProtocol?
+    
     deinit {
         if let keyboardObserver = keyboardObserver {
             NotificationCenter.default.removeObserver(keyboardObserver)
@@ -56,42 +57,45 @@ class PeopleViewController: UIViewController {
         super.viewDidLoad()
         
         title = "People"
+        
         navigationController?.navigationBar.prefersLargeTitles = true
         
         view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
-        tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         
+        tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         tableView.register(UINib(nibName: Constants.Cells.personCell, bundle: nil), forCellReuseIdentifier: Constants.Cells.personCell)
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPerson))
         
-        keyboardObserver = NotificationCenter.default.addObserver(forName: .UIKeyboardWillChangeFrame, object: nil, queue: nil, using: { (notification) in
-            if let userInfo = notification.userInfo,
-                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
-                let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
-                let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
-                
-                if let tabBarHeight = self.tabBarController?.tabBar.frame.height {
-                    self.tableViewBottomConstraint.constant = UIScreen.main.bounds.height - endFrameValue.cgRectValue.minY - tabBarHeight
-                }
-                
-                UIView.animate(withDuration: durationValue.doubleValue, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
-                    self.view.layoutIfNeeded()
-                }, completion: nil)
-            }
-        })
+        keyboardObserver = registerKeyboardObserver(bottomConstraint: tableViewBottomConstraint)
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(doneEditting))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
-        //Search bar
+        setupSearch()
+        setComparator()
+        
+        reloadPeople()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        navigationController?.navigationBar.tintColor = nil
+    }
+    
+    func setupSearch() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
         searchController.searchBar.placeholder = "Search People"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
         
+        navigationItem.searchController = searchController
+        
+        definesPresentationContext = true
+    }
+    
+    func setComparator() {
         NotificationCenter.default.addObserver(self, selector: #selector(reloadPeople), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
         switch UserDefaults.standard.integer(forKey: Constants.UserDefaults.peopleSortComparator) {
@@ -102,14 +106,6 @@ class PeopleViewController: UIViewController {
         default:
             break
         }
-        
-        reloadPeople()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        super.viewWillAppear(animated)
-        
-        navigationController?.navigationBar.tintColor = nil
     }
     
     func searchBarIsEmpty() -> Bool {

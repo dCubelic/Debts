@@ -12,7 +12,11 @@ class MyDebtCategoriesViewController: UIViewController {
     
     let searchController = UISearchController(searchResultsController: nil)
     
-    var debtCategories: [DebtCategory] = []
+    var debtCategories: [DebtCategory] = [] {
+        didSet {
+            filteredDebtCategories = debtCategories
+        }
+    }
     var filteredDebtCategories: [DebtCategory] = []
     var sortComparator = dateComparator {
         didSet {
@@ -34,6 +38,7 @@ class MyDebtCategoriesViewController: UIViewController {
     }
     
     var keyboardObserver: NSObjectProtocol?
+    
     deinit {
         if let keyboardObserver = keyboardObserver {
             NotificationCenter.default.removeObserver(keyboardObserver)
@@ -47,52 +52,23 @@ class MyDebtCategoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        title = "My Debts"
+        
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(doneEditting))
         tapGesture.cancelsTouchesInView = false
         view.addGestureRecognizer(tapGesture)
         
-        title = "My Debts"
         navigationController?.navigationBar.prefersLargeTitles = true
         
         tableView.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
-        
-        //Search
-        searchController.searchResultsUpdater = self
-        searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Categories"
-        navigationItem.searchController = searchController
-        definesPresentationContext = true
-        
         tableView.register(UINib(nibName: Constants.Cells.categoryCell, bundle: nil), forCellReuseIdentifier: Constants.Cells.categoryCell)
         
         NotificationCenter.default.addObserver(self, selector: #selector(reloadDebtCategories), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         
-        keyboardObserver = NotificationCenter.default.addObserver(forName: .UIKeyboardWillChangeFrame, object: nil, queue: nil, using: { (notification) in
-            if let userInfo = notification.userInfo,
-                let durationValue = userInfo[UIKeyboardAnimationDurationUserInfoKey] as? NSNumber,
-                let endFrameValue = userInfo[UIKeyboardFrameEndUserInfoKey] as? NSValue,
-                let curve = userInfo[UIKeyboardAnimationCurveUserInfoKey] as? NSNumber {
-                
-                if let tabBarHeight = self.tabBarController?.tabBar.frame.height {
-                    self.tableViewBottomConstraint.constant = UIScreen.main.bounds.height - endFrameValue.cgRectValue.minY - tabBarHeight
-                }
-                
-                UIView.animate(withDuration: durationValue.doubleValue, delay: 0, options: UIViewAnimationOptions(rawValue: UInt(curve.intValue << 16)), animations: {
-                    self.view.layoutIfNeeded()
-                }, completion: nil)
-            }
-        })
+        keyboardObserver = registerKeyboardObserver(bottomConstraint: tableViewBottomConstraint)
         
-        switch UserDefaults.standard.integer(forKey: Constants.UserDefaults.myDebtCategoriesSortComparator) {
-        case 0:
-            sortComparator = MyDebtCategoriesViewController.nameComparator
-        case 1:
-            sortComparator = MyDebtCategoriesViewController.totalDebtComparator
-        case 2:
-            sortComparator = MyDebtCategoriesViewController.dateComparator
-        default:
-            break
-        }
+        setupSearch()
+        setComparator()
         
         reloadDebtCategories()
     }
@@ -104,6 +80,27 @@ class MyDebtCategoriesViewController: UIViewController {
         navigationController?.navigationBar.tintColor = nil
     }
     
+    func setupSearch() {
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search Categories"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+    }
+    
+    func setComparator() {
+        switch UserDefaults.standard.integer(forKey: Constants.UserDefaults.myDebtCategoriesSortComparator) {
+        case 0:
+            sortComparator = MyDebtCategoriesViewController.nameComparator
+        case 1:
+            sortComparator = MyDebtCategoriesViewController.totalDebtComparator
+        case 2:
+            sortComparator = MyDebtCategoriesViewController.dateComparator
+        default:
+            break
+        }
+    }
+    
     @objc func doneEditting() {
         view.endEditing(true)
     }
@@ -111,13 +108,14 @@ class MyDebtCategoriesViewController: UIViewController {
     @objc func reloadDebtCategories() {
         debtCategories = RealmHelper.getAllMyDebtCategories()
         sortDebtCategories()
+        
         if let searchText = searchController.searchBar.text {
             filterDebtCategories(for: searchText)
         }
     }
     
     func sortDebtCategories() {
-        debtCategories.sort(by: sortComparator)
+        filteredDebtCategories.sort(by: sortComparator)
         tableView.reloadData()
     }
     
@@ -130,9 +128,13 @@ class MyDebtCategoriesViewController: UIViewController {
     }
     
     func filterDebtCategories(for searchText: String) {
-        filteredDebtCategories = debtCategories.filter({ (debtCategory) -> Bool in
-            return debtCategory.name.lowercased().contains(searchText.lowercased())
-        })
+        if !isFiltering() {
+            filteredDebtCategories = debtCategories
+        } else {
+            filteredDebtCategories = debtCategories.filter({ (debtCategory) -> Bool in
+                return debtCategory.name.lowercased().contains(searchText.lowercased())
+            })
+        }
         
         tableView.reloadData()
     }
@@ -144,6 +146,7 @@ class MyDebtCategoriesViewController: UIViewController {
         let indexPath = IndexPath(row: 0, section: 0)
         
         debtCategories.insert(newDebtCategory, at: 0)
+        
         tableView.insertRows(at: [indexPath], with: .automatic)
         tableView.scrollToRow(at: indexPath, at: .none, animated: false)
         
@@ -176,18 +179,6 @@ class MyDebtCategoriesViewController: UIViewController {
             view.endEditing(true)
         }
     }
-    
-    func getDebtCategory(for indexPath: IndexPath) -> DebtCategory {
-        var debtCategory: DebtCategory
-        
-        if isFiltering() {
-            debtCategory = filteredDebtCategories[indexPath.row]
-        } else {
-            debtCategory = debtCategories[indexPath.row]
-        }
-        
-        return debtCategory
-    }
 }
 
 extension MyDebtCategoriesViewController: UITableViewDataSource, UITableViewDelegate {
@@ -203,17 +194,13 @@ extension MyDebtCategoriesViewController: UITableViewDataSource, UITableViewDele
             emptyTableViewLabel.isHidden = true
         }
         
-        if isFiltering() {
-            return filteredDebtCategories.count
-        }
-        
-        return debtCategories.count
+        return filteredDebtCategories.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(ofType: DebtCategoryTableViewCell.self, withIdentifier: Constants.Cells.categoryCell, for: indexPath)
         
-        let debtCategory = getDebtCategory(for: indexPath)
+        let debtCategory = filteredDebtCategories[indexPath.row]
         
         cell.delegate = self
         cell.setup(with: debtCategory)
@@ -224,7 +211,7 @@ extension MyDebtCategoriesViewController: UITableViewDataSource, UITableViewDele
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateViewController(ofType: DebtCategoryDetailViewController.self, withIdentifier: Constants.Storyboard.debtCategoryDetailViewController)
         
-        let debtCategory = getDebtCategory(for: indexPath)
+        let debtCategory = filteredDebtCategories[indexPath.row]
         vc.debtCategory = debtCategory
         
         navigationController?.pushViewController(vc, animated: true)
@@ -232,7 +219,7 @@ extension MyDebtCategoriesViewController: UITableViewDataSource, UITableViewDele
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
         let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
-            let debtCategory = self.getDebtCategory(for: indexPath)
+            let debtCategory = self.filteredDebtCategories[indexPath.row]
             
             let alert = UIAlertController(title: "Remove Debt?", message: "Are you sure you want to remove '\(debtCategory.name)'?", preferredStyle: .alert)
             alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
@@ -283,7 +270,7 @@ extension MyDebtCategoriesViewController: DebtCategoryTableViewCellDelegate {
             return
         }
         
-        let debtCategory = getDebtCategory(for: indexPath)
+        let debtCategory = filteredDebtCategories[indexPath.row]
         
         RealmHelper.changeTitle(for: debtCategory, title: title)
         NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
