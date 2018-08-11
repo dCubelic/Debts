@@ -74,7 +74,7 @@ class NewDebtViewController: UIViewController {
     func setupSearch() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search People"
+        searchController.searchBar.placeholder = NSLocalizedString("search_people", comment: "")
         searchController.hidesNavigationBarDuringPresentation = false
         
         navigationItem.searchController = searchController

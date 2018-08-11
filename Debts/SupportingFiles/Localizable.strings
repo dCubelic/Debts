@@ -1,0 +1,31 @@
+/* 
+  Localizable.strings
+  Debts
+
+  Created by dominik on 11/08/2018.
+  Copyright © 2018 Dominik Cubelic. All rights reserved.
+*/
+
+"debts" = "Debts";
+"my_debts" = "My Debts";
+"search_categories" = "Search Categories";
+"sort_by" = "Sort by:";
+"name" = "Name";
+"total_debt" = "Total Debt";
+"date_created" = "Date Created";
+"date_added" = "Date Added";
+"cancel" = "Cancel";
+"done" = "Done";
+"edit_name" = "Edit\nname";
+"edit_cost" = "Edit\ncost";
+"delete" = "Delete";
+"remove_debt?" = "Remove debt?";
+"remove_person?" = "Remove person?";
+"are_you_sure_remove" = "Are you sure you want to remove";
+"and_all_their_debts" = "and all of their debts?";
+"no" = "No";
+"yes" = "Yes";
+"debt" = "Debt";
+"overview" = "Overview";
+"people" = "People";
+"search_people" = "Search People";

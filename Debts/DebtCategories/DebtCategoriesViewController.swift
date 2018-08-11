@@ -30,9 +30,9 @@ class DebtCategoriesViewController: UIViewController {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addAction(_:)))
                 navigationItem.leftBarButtonItem?.image = #imageLiteral(resourceName: "Sort")
             } else if state == .addingState || state == .editingState {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneEditting))
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("done", comment: ""), style: .done, target: self, action: #selector(doneEditting))
                 navigationItem.leftBarButtonItem?.image = nil
-                navigationItem.leftBarButtonItem?.title = "Cancel"
+                navigationItem.leftBarButtonItem?.title = NSLocalizedString("cancel", comment: "")
             }
         }
     }
@@ -52,7 +52,7 @@ class DebtCategoriesViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Debts"
+        title = NSLocalizedString("debts", comment: "")
         
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(doneEditting))
         tapGesture.cancelsTouchesInView = false
@@ -83,7 +83,7 @@ class DebtCategoriesViewController: UIViewController {
     func setupSearch() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search Categories"
+        searchController.searchBar.placeholder = NSLocalizedString("search_categories", comment: "")
         
         navigationItem.searchController = searchController
         
@@ -159,21 +159,21 @@ class DebtCategoriesViewController: UIViewController {
     
     @IBAction func leftBarButtonAction(_ sender: Any) {
         if state == .defaultState {
-            let actionSheet = UIAlertController(title: nil, message: "Sort by:", preferredStyle: .actionSheet)
+            let actionSheet = UIAlertController(title: nil, message: NSLocalizedString("sort_by", comment: ""), preferredStyle: .actionSheet)
             
-            actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in
+            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("name", comment: ""), style: .default, handler: { (_) in
                 self.sortComparator = DebtCategoriesViewController.nameComparator
                 UserDefaults.standard.set(0, forKey: Constants.UserDefaults.debtCategoriesSortComparator)
             }))
-            actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (_) in
+            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("total_debt", comment: ""), style: .default, handler: { (_) in
                 self.sortComparator = DebtCategoriesViewController.totalDebtComparator
                 UserDefaults.standard.set(1, forKey: Constants.UserDefaults.debtCategoriesSortComparator)
             }))
-            actionSheet.addAction(UIAlertAction(title: "Date Created", style: .default, handler: { (_) in
+            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("date_created", comment: ""), style: .default, handler: { (_) in
                 self.sortComparator = DebtCategoriesViewController.dateComparator
                 UserDefaults.standard.set(2, forKey: Constants.UserDefaults.debtCategoriesSortComparator)
             }))
-            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
             
             present(actionSheet, animated: true, completion: nil)
         } else {
@@ -220,22 +220,22 @@ extension DebtCategoriesViewController: UITableViewDataSource, UITableViewDelega
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
+        let delete = UIContextualAction(style: .destructive, title: NSLocalizedString("delete", comment: "")) { (_, _, completionHandler) in
             let debtCategory = self.filteredDebtCategories[indexPath.row]
             
-            let alert = UIAlertController(title: "Remove Debt?", message: "Are you sure you want to remove '\(debtCategory.name)'?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+            let alert = UIAlertController(title: NSLocalizedString("remove_debt?", comment: ""), message: NSLocalizedString("are_you_sure_remove", comment: "") + " '\(debtCategory.name)'?", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("yes", comment: ""), style: .destructive, handler: { (_) in
                 RealmHelper.removeDebtCategory(debtCategory: debtCategory)
                 NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)  
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("no", comment: ""), style: .cancel, handler: nil))
             
             self.present(alert, animated: true, completion: nil)
             completionHandler(false)
         }
         delete.backgroundColor = .red
         
-        let edit = UIContextualAction(style: .normal, title: "Edit\nName") { (_, _, completionHandler) in
+        let edit = UIContextualAction(style: .normal, title: NSLocalizedString("edit_name", comment: "")) { (_, _, completionHandler) in
             guard let cell = tableView.cellForRow(at: indexPath) as? DebtCategoryTableViewCell else { return }
             
             cell.editTitle()

@@ -10,6 +10,7 @@
 		B415C6432036C2130048F1CA /* UITableView+Debts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B415C6422036C2130048F1CA /* UITableView+Debts.swift */; };
 		B415C6452036C2400048F1CA /* UIStoryboard+Debts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B415C6442036C2400048F1CA /* UIStoryboard+Debts.swift */; };
 		B41DFABD211F0D630099D49D /* UIViewController+Debts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B41DFABC211F0D630099D49D /* UIViewController+Debts.swift */; };
+		B41DFABF211F175A0099D49D /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = B41DFABE211F175A0099D49D /* Localizable.strings */; };
 		B42296931FEDB4240067F913 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B42296921FEDB4240067F913 /* AppDelegate.swift */; };
 		B42296981FEDB4240067F913 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B42296961FEDB4240067F913 /* Main.storyboard */; };
 		B422969A1FEDB4240067F913 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B42296991FEDB4240067F913 /* Assets.xcassets */; };
@@ -77,6 +78,7 @@
 		B415C6422036C2130048F1CA /* UITableView+Debts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITableView+Debts.swift"; sourceTree = "<group>"; };
 		B415C6442036C2400048F1CA /* UIStoryboard+Debts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStoryboard+Debts.swift"; sourceTree = "<group>"; };
 		B41DFABC211F0D630099D49D /* UIViewController+Debts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Debts.swift"; sourceTree = "<group>"; };
+		B41DFABE211F175A0099D49D /* Localizable.strings */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; path = Localizable.strings; sourceTree = "<group>"; };
 		B422968F1FEDB4240067F913 /* Debts.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Debts.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B42296921FEDB4240067F913 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B42296971FEDB4240067F913 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -259,6 +261,7 @@
 		B4AAD0221FEE6EC5000519B5 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				B41DFABE211F175A0099D49D /* Localizable.strings */,
 				B422969B1FEDB4240067F913 /* LaunchScreen.storyboard */,
 				B42296991FEDB4240067F913 /* Assets.xcassets */,
 			);
@@ -380,6 +383,7 @@
 				B4958AC520049FE90016D5C7 /* NewDebtPersonTableViewCell.xib in Resources */,
 				B422969A1FEDB4240067F913 /* Assets.xcassets in Resources */,
 				B42296981FEDB4240067F913 /* Main.storyboard in Resources */,
+				B41DFABF211F175A0099D49D /* Localizable.strings in Resources */,
 				B4A9EF3A1FFF8A85006CDDB6 /* DebtDetailTableViewCell.xib in Resources */,
 				B49E42731FFD202600FAE6F4 /* PersonTableViewCell.xib in Resources */,
 			);

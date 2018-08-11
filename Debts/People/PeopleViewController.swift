@@ -27,9 +27,9 @@ class PeopleViewController: UIViewController {
                 navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addPerson))
                 leftBarButtonItem.image = #imageLiteral(resourceName: "Sort")
             } else if state == .addingState {
-                navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Done", style: .done, target: self, action: #selector(doneEditting))
+                navigationItem.rightBarButtonItem = UIBarButtonItem(title: NSLocalizedString("done", comment: ""), style: .done, target: self, action: #selector(doneEditting))
                 leftBarButtonItem.image = nil
-                leftBarButtonItem.title = "Cancel"
+                leftBarButtonItem.title = NSLocalizedString("cancel", comment: "")
             }
         }
     }
@@ -56,7 +56,7 @@ class PeopleViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "People"
+        title = NSLocalizedString("people", comment: "")
         
         navigationController?.navigationBar.prefersLargeTitles = true
         
@@ -88,7 +88,7 @@ class PeopleViewController: UIViewController {
     func setupSearch() {
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
-        searchController.searchBar.placeholder = "Search People"
+        searchController.searchBar.placeholder = NSLocalizedString("search_people", comment: "")
         
         navigationItem.searchController = searchController
         
@@ -176,17 +176,17 @@ class PeopleViewController: UIViewController {
     
     @IBAction func leftBarButtonAction(_ sender: Any) {
         if state == .defaultState {
-            let actionSheet = UIAlertController(title: nil, message: "Sort by:", preferredStyle: .actionSheet)
+            let actionSheet = UIAlertController(title: nil, message: NSLocalizedString("sort_by", comment: ""), preferredStyle: .actionSheet)
             
-            actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in
+            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("name", comment: ""), style: .default, handler: { (_) in
                 self.sortComparator = PeopleViewController.nameComparator
                 UserDefaults.standard.set(0, forKey: Constants.UserDefaults.peopleSortComparator)
             }))
-            actionSheet.addAction(UIAlertAction(title: "Total Debt", style: .default, handler: { (_) in
+            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("total_debt", comment: ""), style: .default, handler: { (_) in
                 self.sortComparator = PeopleViewController.totalDebtComparator
                 UserDefaults.standard.set(1, forKey: Constants.UserDefaults.peopleSortComparator)
             }))
-            actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+            actionSheet.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
             
             present(actionSheet, animated: true, completion: nil)
         } else if state == .addingState {
@@ -238,25 +238,25 @@ extension PeopleViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
+        let delete = UIContextualAction(style: .destructive, title: NSLocalizedString("delete", comment: "")) { (_, _, completionHandler) in
             
             let person = self.getPerson(for: indexPath)
             
-            let alert = UIAlertController(title: "Remove Person?", message: "Are you sure you wish to remove '\(person.name)' and all of their debts?", preferredStyle: .alert)
-            alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+            let alert = UIAlertController(title: NSLocalizedString("remove_person?", comment: ""), message: NSLocalizedString("are_you_sure_remove", comment: "") + " '\(person.name)' " + NSLocalizedString("and_all_their_debts", comment: ""), preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: NSLocalizedString("yes", comment: ""), style: .destructive, handler: { (_) in
                 CSSearchableIndex.default().deleteSearchableItems(withIdentifiers: [person.uuid], completionHandler: nil)
                 RealmHelper.removePerson(person: person)
                 NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
 
             }))
-            alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+            alert.addAction(UIAlertAction(title: NSLocalizedString("no", comment: ""), style: .cancel, handler: nil))
             
             self.present(alert, animated: true, completion: nil)
             
             completionHandler(false)
         }
         
-        let edit = UIContextualAction(style: .normal, title: "Edit\nName") { (_, _, completionHandler) in
+        let edit = UIContextualAction(style: .normal, title: NSLocalizedString("edit_name", comment: "")) { (_, _, completionHandler) in
             guard let cell = tableView.cellForRow(at: indexPath) as? PersonTableViewCell else { return }
             
             cell.editName()

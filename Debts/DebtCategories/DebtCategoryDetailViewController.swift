@@ -113,21 +113,21 @@ class DebtCategoryDetailViewController: UIViewController {
     }
     
     @IBAction func sortAction(_ sender: Any) {
-        let actionSheet = UIAlertController(title: nil, message: "Sort by:", preferredStyle: .actionSheet)
+        let actionSheet = UIAlertController(title: nil, message: NSLocalizedString("sort_by", comment: ""), preferredStyle: .actionSheet)
         
-        actionSheet.addAction(UIAlertAction(title: "Name", style: .default, handler: { (_) in
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("name", comment: ""), style: .default, handler: { (_) in
             self.sortComparator = DebtCategoryDetailViewController.nameComparator
             UserDefaults.standard.set(0, forKey: Constants.UserDefaults.debtCategoryDetailsSortComparator)
         }))
-        actionSheet.addAction(UIAlertAction(title: "Debt", style: .default, handler: { (_) in
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("debt", comment: ""), style: .default, handler: { (_) in
             self.sortComparator = DebtCategoryDetailViewController.debtComparator
             UserDefaults.standard.set(1, forKey: Constants.UserDefaults.debtCategoryDetailsSortComparator)
         }))
-        actionSheet.addAction(UIAlertAction(title: "Date Added", style: .default, handler: { (_) in
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("date_added", comment: ""), style: .default, handler: { (_) in
             self.sortComparator = DebtCategoryDetailViewController.dateComparator
             UserDefaults.standard.set(2, forKey: Constants.UserDefaults.debtCategoryDetailsSortComparator)
         }))
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: NSLocalizedString("cancel", comment: ""), style: .cancel, handler: nil))
         
         present(actionSheet, animated: true, completion: nil)
     }
@@ -148,7 +148,7 @@ extension DebtCategoryDetailViewController: UITableViewDelegate, UITableViewData
     }
     
     func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-        let delete = UIContextualAction(style: .destructive, title: "Delete") { (_, _, completionHandler) in
+        let delete = UIContextualAction(style: .destructive, title: NSLocalizedString("delete", comment: "")) { (_, _, completionHandler) in
             RealmHelper.removeDebt(self.debts[indexPath.row])
             
             NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
@@ -156,7 +156,7 @@ extension DebtCategoryDetailViewController: UITableViewDelegate, UITableViewData
         }
         delete.backgroundColor = .red
         
-        let edit = UIContextualAction(style: .normal, title: "Edit\nCost") { (_, _, completionHandler) in
+        let edit = UIContextualAction(style: .normal, title: NSLocalizedString("edit_cost", comment: "")) { (_, _, completionHandler) in
             guard let cell = tableView.cellForRow(at: indexPath) as? DebtDetailTableViewCell else { return }
             
             cell.editCost()

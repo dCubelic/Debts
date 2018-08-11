@@ -26,7 +26,7 @@ class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        title = "Overview"
+        title = NSLocalizedString("overview", comment: "")
         
         view.backgroundColor = UIColor(patternImage: #imageLiteral(resourceName: "paper_pattern"))
         
@@ -157,13 +157,13 @@ class HomeViewController: UIViewController {
     }
     
     @IBAction func deleteAllDataAction(_ sender: Any) {
-        let alert = UIAlertController(title: "Delete All Data?", message: "Are you sure you wish to delete ALL data?", preferredStyle: .alert)
+        let alert = UIAlertController(title: NSLocalizedString("delete_all_data?", comment: ""), message: NSLocalizedString("are_you_sure_delete_all_data", comment: ""), preferredStyle: .alert)
         
-        alert.addAction(UIAlertAction(title: "Yes", style: .destructive, handler: { (_) in
+        alert.addAction(UIAlertAction(title: NSLocalizedString("yes", comment: ""), style: .destructive, handler: { (_) in
             RealmHelper.deleteAllData()
             NotificationCenter.default.post(name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
         }))
-        alert.addAction(UIAlertAction(title: "No", style: .cancel, handler: nil))
+        alert.addAction(UIAlertAction(title: NSLocalizedString("no", comment: ""), style: .cancel, handler: nil))
         
         present(alert, animated: true, completion: nil)
     }
