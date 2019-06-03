@@ -79,7 +79,7 @@ class PersonTableViewCell: UITableViewCell {
 
 extension PersonTableViewCell: UITextFieldDelegate {
     
-    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextFieldDidEndEditingReason) {
+    func textFieldDidEndEditing(_ textField: UITextField, reason: UITextField.DidEndEditingReason) {
         guard let text = textField.text else { return }
         
         titleLabel.text = textField.text

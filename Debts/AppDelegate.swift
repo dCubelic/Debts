@@ -6,7 +6,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     
-    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         window?.tintColor = UIColor.orange
         
         NotificationCenter.default.addObserver(self, selector: #selector(reindex), name: Notification.Name(Constants.Notifications.updatedDatabase), object: nil)
@@ -14,7 +14,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([Any]?) -> Void) -> Bool {
+    func application(_ application: UIApplication, continue userActivity: NSUserActivity, restorationHandler: @escaping ([UIUserActivityRestoring]?) -> Void) -> Bool {
         let rootVc = UIStoryboard(name: Constants.Storyboard.main, bundle: nil).instantiateInitialViewController(ofType: UITabBarController.self)
         
         print(userActivity.activityType)

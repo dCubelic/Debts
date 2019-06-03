@@ -240,7 +240,7 @@ extension NewDebtViewController: UITableViewDelegate, UITableViewDataSource {
             selectedPeople.append(person)
         } else {
             view.endEditing(true)
-            if let index = selectedPeople.index(of: person) {
+            if let index = selectedPeople.firstIndex(of: person) {
                 selectedPeople.remove(at: index)
             }
         }

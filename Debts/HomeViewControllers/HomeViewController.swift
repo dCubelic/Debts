@@ -59,7 +59,7 @@ class HomeViewController: UIViewController {
         
         currencyTextField.text = Currency.loadCurrency().name
         
-        if let index = currencies.index(where: { (currency) -> Bool in
+        if let index = currencies.firstIndex(where: { (currency) -> Bool in
             currency == Currency.loadCurrency()
         }) {
             currencyPickerView?.selectRow(index, inComponent: 0, animated: true)

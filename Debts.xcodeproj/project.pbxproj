@@ -42,23 +42,6 @@
 		B4FE3EF61FFE1B03002129F8 /* UIColor+Debts.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4FE3EF51FFE1B03002129F8 /* UIColor+Debts.swift */; };
 /* End PBXBuildFile section */
 
-/* Begin PBXContainerItemProxy section */
-		B42296A41FEDB4240067F913 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B42296871FEDB4240067F913 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B422968E1FEDB4240067F913;
-			remoteInfo = Debts;
-		};
-		B42296AF1FEDB4240067F913 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = B42296871FEDB4240067F913 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = B422968E1FEDB4240067F913;
-			remoteInfo = Debts;
-		};
-/* End PBXContainerItemProxy section */
-
 /* Begin PBXCopyFilesBuildPhase section */
 		B42296C61FEDB4400067F913 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
@@ -85,8 +68,6 @@
 		B42296991FEDB4240067F913 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B422969C1FEDB4240067F913 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B422969E1FEDB4240067F913 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		B42296A31FEDB4240067F913 /* DebtsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DebtsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		B42296AE1FEDB4240067F913 /* DebtsUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DebtsUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		B42296C81FEDBE5C0067F913 /* Models.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Models.swift; sourceTree = "<group>"; };
 		B42296CC1FEDCF240067F913 /* PeopleViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PeopleViewController.swift; sourceTree = "<group>"; };
 		B42296CE1FEDD0CF0067F913 /* PersonDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonDetailViewController.swift; sourceTree = "<group>"; };
@@ -122,20 +103,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B42296A01FEDB4240067F913 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B42296AB1FEDB4240067F913 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -163,8 +130,6 @@
 			isa = PBXGroup;
 			children = (
 				B422968F1FEDB4240067F913 /* Debts.app */,
-				B42296A31FEDB4240067F913 /* DebtsTests.xctest */,
-				B42296AE1FEDB4240067F913 /* DebtsUITests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -291,42 +256,6 @@
 			productReference = B422968F1FEDB4240067F913 /* Debts.app */;
 			productType = "com.apple.product-type.application";
 		};
-		B42296A21FEDB4240067F913 /* DebtsTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B42296BA1FEDB4240067F913 /* Build configuration list for PBXNativeTarget "DebtsTests" */;
-			buildPhases = (
-				B422969F1FEDB4240067F913 /* Sources */,
-				B42296A01FEDB4240067F913 /* Frameworks */,
-				B42296A11FEDB4240067F913 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B42296A51FEDB4240067F913 /* PBXTargetDependency */,
-			);
-			name = DebtsTests;
-			productName = DebtsTests;
-			productReference = B42296A31FEDB4240067F913 /* DebtsTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
-		B42296AD1FEDB4240067F913 /* DebtsUITests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = B42296BD1FEDB4240067F913 /* Build configuration list for PBXNativeTarget "DebtsUITests" */;
-			buildPhases = (
-				B42296AA1FEDB4240067F913 /* Sources */,
-				B42296AB1FEDB4240067F913 /* Frameworks */,
-				B42296AC1FEDB4240067F913 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				B42296B01FEDB4240067F913 /* PBXTargetDependency */,
-			);
-			name = DebtsUITests;
-			productName = DebtsUITests;
-			productReference = B42296AE1FEDB4240067F913 /* DebtsUITests.xctest */;
-			productType = "com.apple.product-type.bundle.ui-testing";
-		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -339,17 +268,8 @@
 				TargetAttributes = {
 					B422968E1FEDB4240067F913 = {
 						CreatedOnToolsVersion = 9.2;
+						LastSwiftMigration = 1020;
 						ProvisioningStyle = Automatic;
-					};
-					B42296A21FEDB4240067F913 = {
-						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
-						TestTargetID = B422968E1FEDB4240067F913;
-					};
-					B42296AD1FEDB4240067F913 = {
-						CreatedOnToolsVersion = 9.2;
-						ProvisioningStyle = Automatic;
-						TestTargetID = B422968E1FEDB4240067F913;
 					};
 				};
 			};
@@ -367,8 +287,6 @@
 			projectRoot = "";
 			targets = (
 				B422968E1FEDB4240067F913 /* Debts */,
-				B42296A21FEDB4240067F913 /* DebtsTests */,
-				B42296AD1FEDB4240067F913 /* DebtsUITests */,
 			);
 		};
 /* End PBXProject section */
@@ -386,20 +304,6 @@
 				B41DFABF211F175A0099D49D /* Localizable.strings in Resources */,
 				B4A9EF3A1FFF8A85006CDDB6 /* DebtDetailTableViewCell.xib in Resources */,
 				B49E42731FFD202600FAE6F4 /* PersonTableViewCell.xib in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B42296A11FEDB4240067F913 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B42296AC1FEDB4240067F913 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -463,34 +367,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		B422969F1FEDB4240067F913 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		B42296AA1FEDB4240067F913 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 /* End PBXSourcesBuildPhase section */
-
-/* Begin PBXTargetDependency section */
-		B42296A51FEDB4240067F913 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B422968E1FEDB4240067F913 /* Debts */;
-			targetProxy = B42296A41FEDB4240067F913 /* PBXContainerItemProxy */;
-		};
-		B42296B01FEDB4240067F913 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = B422968E1FEDB4240067F913 /* Debts */;
-			targetProxy = B42296AF1FEDB4240067F913 /* PBXContainerItemProxy */;
-		};
-/* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
 		B42296961FEDB4240067F913 /* Main.storyboard */ = {
@@ -638,7 +515,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dCubelic.Debts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -658,74 +535,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.dCubelic.Debts;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
-		B42296BB1FEDB4240067F913 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5J7U5C6D83;
-				INFOPLIST_FILE = DebtsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dCubelic.DebtsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Debts.app/Debts";
-			};
-			name = Debug;
-		};
-		B42296BC1FEDB4240067F913 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5J7U5C6D83;
-				INFOPLIST_FILE = DebtsTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dCubelic.DebtsTests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/Debts.app/Debts";
-			};
-			name = Release;
-		};
-		B42296BE1FEDB4240067F913 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5J7U5C6D83;
-				INFOPLIST_FILE = DebtsUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dCubelic.DebtsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Debts;
-			};
-			name = Debug;
-		};
-		B42296BF1FEDB4240067F913 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
-				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 5J7U5C6D83;
-				INFOPLIST_FILE = DebtsUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.dCubelic.DebtsUITests;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_VERSION = 4.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-				TEST_TARGET_NAME = Debts;
 			};
 			name = Release;
 		};
@@ -746,24 +557,6 @@
 			buildConfigurations = (
 				B42296B81FEDB4240067F913 /* Debug */,
 				B42296B91FEDB4240067F913 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B42296BA1FEDB4240067F913 /* Build configuration list for PBXNativeTarget "DebtsTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B42296BB1FEDB4240067F913 /* Debug */,
-				B42296BC1FEDB4240067F913 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		B42296BD1FEDB4240067F913 /* Build configuration list for PBXNativeTarget "DebtsUITests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				B42296BE1FEDB4240067F913 /* Debug */,
-				B42296BF1FEDB4240067F913 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
